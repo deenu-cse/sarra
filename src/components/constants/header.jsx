@@ -1,5 +1,6 @@
 import React from 'react';
 import { Lock } from 'lucide-react';
+import Link from 'next/link';
 
 const Header = () => {
     return (
@@ -21,11 +22,13 @@ const Header = () => {
                     <button className="hover:text-white transition text-xs sm:text-sm">Sitemap</button>
                     <button className="hover:text-white transition text-xs sm:text-sm">RTI</button>
                     <button className="hover:text-white transition text-xs sm:text-sm">Contact</button>
-                    <button className="flex items-center gap-1 text-[#f59e0b] font-medium text-xs sm:text-sm whitespace-nowrap">
-                        <Lock size={14} fill="#f59e0b" />
-                        <span className="hidden sm:inline">Officer Login</span>
-                        <span className="sm:hidden">Login</span>
-                    </button>
+                    <Link href="/login" className="flex items-center gap-1 text-[#f59e0b] font-medium text-xs sm:text-sm whitespace-nowrap">
+                        <button className="flex items-center gap-1 text-[#f59e0b] font-medium text-xs sm:text-sm whitespace-nowrap cursor-pointer">
+                            <Lock size={14} fill="#f59e0b" />
+                            <span className="hidden sm:inline">Officer Login</span>
+                            <span className="sm:hidden">Login</span>
+                        </button>
+                    </Link>
                 </div>
             </div>
 
