@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api/v1',
+  baseURL: 'https://sarrabackend.onrender.com/api/v1',
   withCredentials: true, // Important for cookies (refreshToken, accessToken)
 });
 
@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const { data } = await axios.post('http://localhost:5000/api/v1/auth/refresh-token', {}, { withCredentials: true });
+        const { data } = await axios.post('https://sarrabackend.onrender.com/api/v1/auth/refresh-token', {}, { withCredentials: true });
         const newAccessToken = data.data.accessToken;
         localStorage.setItem('accessToken', newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
