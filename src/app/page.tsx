@@ -5,6 +5,7 @@ import SarraBanner from "@/components/about/banner";
 import ResearchSupport from "@/components/about/researchSupport";
 import NotificationSection from "@/components/notification/notificationSection";
 import GovLinks from "@/components/links/govLinks";
+import CommunityEngagement from "@/components/community/CommunityEngagement";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Department />
       <ResearchSupport />
       <NotificationSection />
+      <CommunityEngagement />
       <GovLinks />
     </div>
   );

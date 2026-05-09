@@ -1,0 +1,101 @@
+'use client';
+
+import React from 'react';
+
+const IMG = {
+    hero: '/assets/bhagirithi/banner.png',
+    infoImage: '/assets/bhagirithi/SARRA_3.jpg',
+    ui1: '/assets/bhagirithi/bhg1.png',
+    ui2: '/assets/bhagirithi/bhg2.png',
+};
+
+function HeroSection() {
+    return (
+        <section className="relative w-full overflow-hidden" style={{ minHeight: '500px' }}>
+            <img
+                src={IMG.hero}
+                alt="Bhagirath App Banner"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ zIndex: 0 }}
+            />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
+
+            <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
+                    style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+                    Bhagirath <span className="text-[#f59e0b]">App</span>
+                </h1>
+                <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-8 font-light leading-relaxed">
+                    A QR Code-based digital initiative for Jal Sanrakshan Abhiyan 2025.
+                </p>
+            </div>
+
+            <div className="absolute bottom-0 left-0 right-0 z-10">
+                <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+                    <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white" />
+                </svg>
+            </div>
+        </section>
+    );
+}
+
+function InfoSection() {
+    return (
+        <section className="w-full py-7 px-6 md:px-12 bg-white">
+            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 items-center">
+                <div className="w-full lg:w-1/2 flex justify-center">
+                    <div className="relative w-full overflow-hidden">
+                        <img
+                            src={IMG.infoImage}
+                            alt="SARRA Action"
+                            className="w-full h-auto object-cover"
+                        />
+                    </div>
+                </div>
+
+                <div className="w-full lg:w-1/2 space-y-6">
+                    <div>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1e3a5f]">
+                            Bhagirath Mobile App
+                        </h2>
+                        <h3 className="text-xl md:text-2xl font-sans font-semibold text-[#f59e0b] mt-3 italic">
+                            "Dhara mera, Naula mera, Gaon mera, Prayas mera"
+                        </h3>
+                    </div>
+
+                    <div className="space-y-5 text-gray-700 text-[15px] md:text-base leading-relaxed text-justify">
+                        <p>
+                            In the context of accelerating climate change, the natural water sources of Uttarakhand — rivers, streams (Dhara), traditional step-wells (Naula), and seasonal rivulets (Gadhera) — are being severely impacted. Human lives, forests, and wildlife across the Himalayan state are all bearing the consequences.
+                        </p>
+                        <p>
+                            To address this critical challenge, the Government of Uttarakhand took an ambitious step and established the Spring and River Rejuvenation Authority (SARRA) — a pioneering initiative of its kind. Through this authority, a unified programme of restoration and management of all natural water sources has been launched, powered by public participation and coordinated effort across multiple government departments.
+                        </p>
+                        <p>
+                            To transform this into a true people's movement, the "Jal Sanrakshan Abhiyan 2025" was launched under the theme "Dhara mera, Naula mera, Gaon mera, Prayas mera" — meaning "My stream, my step-well, my village, my effort." To enable mass participation in this Bhagirath endeavour, the QR Code–based <strong>Bhagirath Mobile App</strong> was created.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function UISection() {
+    return (
+        <section className="w-full mx-auto bg-white flex flex-col items-center pb-20">
+            <img src={IMG.ui1} alt="Bhagirath UI 1" className="w-full h-auto block" />
+            <img src={IMG.ui2} alt="Bhagirath UI 2" className="w-full h-auto block" />
+        </section>
+    );
+}
+
+export default function BhagirathPage() {
+    return (
+        <main className="w-full font-sans">
+            <HeroSection />
+            <InfoSection />
+            <UISection />
+        </main>
+    );
+}

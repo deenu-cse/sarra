@@ -13,7 +13,7 @@ const NavLinks = () => {
             title: 'About SARRA',
             type: 'dropdown',
             options: [
-                { label: 'Overview', href: '#' },
+                { label: 'Overview', href: '/about' },
                 { label: 'Organization Structure', href: '#' },
                 { label: 'Our Vision & Mission', href: '#' },
                 { label: 'Contact Us', href: '#' }
@@ -37,23 +37,23 @@ const NavLinks = () => {
                 { label: 'State Schemes', href: '#' }
             ]
         },
-        {
-            title: 'DPR',
-            type: 'dropdown',
-            options: [
-                { label: 'Spring Shed DPR', href: '/springsheddpr' },
-                { label: 'Stream Shed DPR', href: '/streamsheddpr' }
-            ]
-        },
-        {
-            title: 'MPR',
-            type: 'dropdown',
-            options: [
-                { label: 'Abstract 55', href: '/mpr/abstract55' },
-                { label: 'Head 55-01', href: '/mpr/head55-01' },
-                { label: 'Head 55-02', href: '/mpr/head55-02' }
-            ]
-        },
+        // {
+        //     title: 'DPR',
+        //     type: 'dropdown',
+        //     options: [
+        //         { label: 'Spring Shed DPR', href: '/springsheddpr' },
+        //         { label: 'Stream Shed DPR', href: '/streamsheddpr' }
+        //     ]
+        // },
+        // {
+        //     title: 'MPR',
+        //     type: 'dropdown',
+        //     options: [
+        //         { label: 'Abstract 55', href: '/mpr/abstract55' },
+        //         { label: 'Head 55-01', href: '/mpr/head55-01' },
+        //         { label: 'Head 55-02', href: '/mpr/head55-02' }
+        //     ]
+        // },
         {
             title: 'Resources',
             type: 'dropdown',
@@ -74,14 +74,16 @@ const NavLinks = () => {
                 { label: 'Guidelines', href: '#' }
             ]
         },
-        { title: 'Gallery', type: 'link', href: '#' },
+        { title: 'Knowledge Hub', type: 'link', href: '/knowledge-hub' },
+        { title: 'Bhagirath App', type: 'link', href: '/bhagirath-app' },
+        { title: 'One River One District', type: 'link', href: '/one-river-one-district' },
+        { title: 'Gallery', type: 'link', href: '/gallery' },
         { title: 'News & Events', type: 'link', href: '#' },
     ];
 
     return (
         <nav className="w-full bg-[#0a3055] shadow-lg border-t-2 border-[#f59e0b]">
             <div className="max-w-[98%] mx-auto">
-                {/* Desktop Navigation */}
                 <div className="hidden lg:flex flex-wrap">
                     {navItems.map((item, index) => (
                         <div
@@ -165,9 +167,8 @@ const NavLinks = () => {
                                             <span>{item.title}</span>
                                             <ChevronDown
                                                 size={16}
-                                                className={`transition-transform duration-200 ${
-                                                    activeDropdown === index ? 'rotate-180' : ''
-                                                }`}
+                                                className={`transition-transform duration-200 ${activeDropdown === index ? 'rotate-180' : ''
+                                                    }`}
                                             />
                                         </button>
 
