@@ -32,15 +32,6 @@ const NavLinks = () => {
             ]
         },
         {
-            title: 'Projects',
-            type: 'dropdown',
-            options: [
-                { label: 'Ongoing Projects', href: '#' },
-                { label: 'Central Schemes', href: '#' },
-                { label: 'State Schemes', href: '#' }
-            ]
-        },
-        {
             title: 'Notices & Tenders',
             type: 'dropdown',
             options: [
