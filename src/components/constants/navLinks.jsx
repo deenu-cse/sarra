@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
 
 const NavLinks = () => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const pathname = usePathname();
 
     const navItems = [
         { title: 'Home', type: 'link', href: '/' },
@@ -37,34 +40,6 @@ const NavLinks = () => {
                 { label: 'State Schemes', href: '#' }
             ]
         },
-        // {
-        //     title: 'DPR',
-        //     type: 'dropdown',
-        //     options: [
-        //         { label: 'Spring Shed DPR', href: '/springsheddpr' },
-        //         { label: 'Stream Shed DPR', href: '/streamsheddpr' }
-        //     ]
-        // },
-        // {
-        //     title: 'MPR',
-        //     type: 'dropdown',
-        //     options: [
-        //         { label: 'Abstract 55', href: '/mpr/abstract55' },
-        //         { label: 'Head 55-01', href: '/mpr/head55-01' },
-        //         { label: 'Head 55-02', href: '/mpr/head55-02' }
-        //     ]
-        // },
-        {
-            title: 'Resources',
-            type: 'dropdown',
-            options: [
-                { label: 'Research Papers', href: '#' },
-                { label: 'Case Studies', href: '#' },
-                { label: 'Training Modules', href: '#' },
-                { label: 'Downloads', href: '#' },
-                { label: 'FAQs', href: '#' }
-            ]
-        },
         {
             title: 'Notices & Tenders',
             type: 'dropdown',
@@ -77,56 +52,105 @@ const NavLinks = () => {
         { title: 'Knowledge Hub', type: 'link', href: '/knowledge-hub' },
         { title: 'Bhagirath App', type: 'link', href: '/bhagirath-app' },
         { title: 'One River One District', type: 'link', href: '/one-river-one-district' },
-        { title: 'Gallery', type: 'link', href: '/gallery' },
-        { title: 'News & Events', type: 'link', href: '#' },
+        {
+            title: 'Gallery',
+            type: 'dropdown',
+            options: [
+                { label: 'Photo Gallery', href: '/gallery' },
+                { label: 'Video Gallery', href: '/video-gallery' }
+            ]
+        },
+        { title: 'News & Events', type: 'link', href: '/news' },
     ];
+
+    const isActive = (item) => {
+        if (item.type === 'link') {
+            if (item.href === '/') return pathname === '/';
+            return pathname.startsWith(item.href) && item.href !== '#';
+        }
+        if (item.type === 'dropdown') {
+            return item.options.some(
+                (opt) => opt.href !== '#' && pathname.startsWith(opt.href)
+            );
+        }
+        return false;
+    };
+
+    const isOptionActive = (href) =>
+        href !== '#' && pathname.startsWith(href);
 
     return (
         <nav className="w-full bg-[#0a3055] shadow-lg border-t-2 border-[#f59e0b]">
             <div className="max-w-[98%] mx-auto">
+                {/* Desktop Navigation */}
                 <div className="hidden lg:flex flex-wrap">
-                    {navItems.map((item, index) => (
-                        <div
-                            key={index}
-                            className="relative group border-r border-blue-900/50 last:border-r-0"
-                            onMouseEnter={() => setActiveDropdown(index)}
-                            onMouseLeave={() => setActiveDropdown(null)}
-                        >
-                            <button
-                                className={`flex items-center justify-center px-5 py-4 text-sm font-medium transition-all duration-200 min-h-[64px] text-center
-                    ${item.title === 'Home' ? 'bg-[#f59e0b] text-white' : 'text-gray-100 hover:bg-[#154b7d]'}
-                  `}
+                    {navItems.map((item, index) => {
+                        const active = isActive(item);
+                        return (
+                            <div
+                                key={index}
+                                className="relative group border-r border-blue-900/50 last:border-r-0"
+                                onMouseEnter={() => setActiveDropdown(index)}
+                                onMouseLeave={() => setActiveDropdown(null)}
                             >
-                                <span className="max-w-[130px] leading-tight text-sm">
-                                    {item.title}
-                                </span>
-                                {item.type === 'dropdown' && (
-                                    <ChevronDown size={14} className="ml-2 opacity-70" />
+                                {item.type === 'link' ? (
+                                    <Link
+                                        href={item.href}
+                                        className={`flex items-center justify-center px-5 py-4 text-sm font-medium transition-all duration-200 min-h-[64px] text-center
+                                            ${active
+                                                ? 'bg-[#f59e0b] text-white'
+                                                : 'text-gray-100 hover:bg-[#154b7d]'
+                                            }`}
+                                    >
+                                        <span className="max-w-[130px] leading-tight text-sm">
+                                            {item.title}
+                                        </span>
+                                    </Link>
+                                ) : (
+                                    <button
+                                        className={`flex items-center justify-center px-5 py-4 text-sm font-medium transition-all duration-200 min-h-[64px] text-center w-full
+                                            ${active
+                                                ? 'bg-[#f59e0b] text-white'
+                                                : 'text-gray-100 hover:bg-[#154b7d]'
+                                            }`}
+                                    >
+                                        <span className="max-w-[130px] leading-tight text-sm">
+                                            {item.title}
+                                        </span>
+                                        <ChevronDown size={14} className="ml-2 opacity-70" />
+                                    </button>
                                 )}
-                            </button>
 
-                            {item.type === 'dropdown' && activeDropdown === index && (
-                                <ul className="absolute left-0 w-64 bg-[#0a3055] text-gray-100 z-50 shadow-xl border-t-2 border-[#f59e0b]">
-                                    {item.options.map((option, idx) => (
-                                        <li
-                                            key={idx}
-                                            className={`flex items-center justify-between px-4 py-3 border-b border-black/30 hover:bg-[#154b7d] cursor-pointer transition-colors text-[13px]
-                                                ${option.isBold ? 'font-bold bg-[#0a3055] text-[#f59e0b]' : 'font-semibold'}
-                                            `}
-                                        >
-                                            <a href={option.href} className="w-full">
-                                                {option.label}
-                                            </a>
-                                            {!option.isBold && <ChevronRight size={14} className="opacity-40 ml-2" />}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-                    ))}
+                                {item.type === 'dropdown' && activeDropdown === index && (
+                                    <ul className="absolute left-0 w-64 bg-[#0a3055] text-gray-100 z-50 shadow-xl border-t-2 border-[#f59e0b]">
+                                        {item.options.map((option, idx) => (
+                                            <li
+                                                key={idx}
+                                                className={`flex items-center justify-between border-b border-black/30 transition-colors text-[13px]
+                                                    ${option.isBold ? 'font-bold bg-[#0a3055] text-[#f59e0b]' : 'font-semibold'}
+                                                    ${isOptionActive(option.href) ? 'bg-[#154b7d]' : 'hover:bg-[#154b7d]'}
+                                                `}
+                                            >
+                                                <Link
+                                                    href={option.href}
+                                                    className="flex items-center justify-between w-full px-4 py-3"
+                                                    onClick={() => setActiveDropdown(null)}
+                                                >
+                                                    {option.label}
+                                                    {!option.isBold && (
+                                                        <ChevronRight size={14} className="opacity-40 ml-2" />
+                                                    )}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
 
-                {/* Mobile Navigation */}
+                {/* Mobile Navigation Toggle */}
                 <div className="lg:hidden flex justify-between items-center px-4 py-3">
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -140,62 +164,72 @@ const NavLinks = () => {
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
                     <div className="lg:hidden bg-[#0a3055] border-t border-blue-900/50">
-                        {navItems.map((item, index) => (
-                            <div key={index}>
-                                {item.type === 'link' ? (
-                                    <a
-                                        href={item.href}
-                                        className={`block px-4 py-3 text-sm font-medium transition-all duration-200 border-b border-blue-900/30
-                        ${item.title === 'Home' ? 'bg-[#f59e0b] text-white' : 'text-gray-100 hover:bg-[#154b7d]'}
-                      `}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                    >
-                                        {item.title}
-                                    </a>
-                                ) : (
-                                    <>
-                                        <button
-                                            onClick={() => {
-                                                if (activeDropdown === index) {
-                                                    setActiveDropdown(null);
-                                                } else {
-                                                    setActiveDropdown(index);
-                                                }
-                                            }}
-                                            className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-100 hover:bg-[#154b7d] transition-all duration-200 border-b border-blue-900/30"
+                        {navItems.map((item, index) => {
+                            const active = isActive(item);
+                            return (
+                                <div key={index}>
+                                    {item.type === 'link' ? (
+                                        <Link
+                                            href={item.href}
+                                            className={`block px-4 py-3 text-sm font-medium transition-all duration-200 border-b border-blue-900/30
+                                                ${active
+                                                    ? 'bg-[#f59e0b] text-white'
+                                                    : 'text-gray-100 hover:bg-[#154b7d]'
+                                                }`}
+                                            onClick={() => setMobileMenuOpen(false)}
                                         >
-                                            <span>{item.title}</span>
-                                            <ChevronDown
-                                                size={16}
-                                                className={`transition-transform duration-200 ${activeDropdown === index ? 'rotate-180' : ''
+                                            {item.title}
+                                        </Link>
+                                    ) : (
+                                        <>
+                                            <button
+                                                onClick={() => {
+                                                    setActiveDropdown(
+                                                        activeDropdown === index ? null : index
+                                                    );
+                                                }}
+                                                className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium transition-all duration-200 border-b border-blue-900/30
+                                                    ${active
+                                                        ? 'bg-[#f59e0b] text-white'
+                                                        : 'text-gray-100 hover:bg-[#154b7d]'
                                                     }`}
-                                            />
-                                        </button>
+                                            >
+                                                <span>{item.title}</span>
+                                                <ChevronDown
+                                                    size={16}
+                                                    className={`transition-transform duration-200 ${activeDropdown === index ? 'rotate-180' : ''}`}
+                                                />
+                                            </button>
 
-                                        {activeDropdown === index && (
-                                            <ul className="bg-[#062a45] border-l-4 border-[#f59e0b]">
-                                                {item.options.map((option, idx) => (
-                                                    <li key={idx}>
-                                                        <a
-                                                            href={option.href}
-                                                            className={`block px-6 py-2.5 text-xs transition-colors border-b border-black/20
-                                                                ${option.isBold ? 'font-bold text-[#f59e0b] bg-[#0a3055] hover:bg-[#0a3055]' : 'font-semibold text-gray-100 hover:bg-[#154b7d]'}
-                                                            `}
-                                                            onClick={() => {
-                                                                setActiveDropdown(null);
-                                                                setMobileMenuOpen(false);
-                                                            }}
-                                                        >
-                                                            {option.label}
-                                                        </a>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-                        ))}
+                                            {activeDropdown === index && (
+                                                <ul className="bg-[#062a45] border-l-4 border-[#f59e0b]">
+                                                    {item.options.map((option, idx) => (
+                                                        <li key={idx}>
+                                                            <Link
+                                                                href={option.href}
+                                                                className={`block px-6 py-2.5 text-xs transition-colors border-b border-black/20
+                                                                    ${option.isBold
+                                                                        ? 'font-bold text-[#f59e0b] bg-[#0a3055] hover:bg-[#0a3055]'
+                                                                        : isOptionActive(option.href)
+                                                                            ? 'font-semibold text-[#f59e0b] bg-[#154b7d]'
+                                                                            : 'font-semibold text-gray-100 hover:bg-[#154b7d]'
+                                                                    }`}
+                                                                onClick={() => {
+                                                                    setActiveDropdown(null);
+                                                                    setMobileMenuOpen(false);
+                                                                }}
+                                                            >
+                                                                {option.label}
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
             </div>

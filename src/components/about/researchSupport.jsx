@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
 const ResearchSupport = () => {
     const researchPartners = [
@@ -36,14 +37,20 @@ const ResearchSupport = () => {
                         __html: `
                         .hide-scroll::-webkit-scrollbar { display: none; }
                     `}} />
-                    {researchPartners.map((partner, idx) => (
-                        <div key={idx} className="hide-scroll snap-center shrink-0 w-[85%] md:w-auto bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b-[5px] border-[#1e3a5f] hover:-translate-y-2 transition-transform duration-300 flex flex-col items-center text-center group cursor-pointer relative overflow-hidden">
-
-                            <img src={partner.logo} alt={partner.name} className="w-full h-24 object-contain transition-all duration-300" onError={(e) => e.target.style.display = 'none'} />
-                            <p className="text-xs text-[#f59e0b] font-bold uppercase tracking-widest mb-2 relative z-10">{partner.role}</p>
-                            <h3 className="text-2xl font-bold text-[#1e3a5f] relative z-10">{partner.name}</h3>
-                        </div>
-                    ))}
+                    {researchPartners.map((partner, idx) => {
+                        const slug = partner.name.toLowerCase().replace(/\s+/g, '-');
+                        return (
+                            <Link
+                                key={idx}
+                                href={`/research-partners/${slug}`}
+                                className="hide-scroll snap-center shrink-0 w-[85%] md:w-auto bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b-[5px] border-[#1e3a5f] hover:-translate-y-2 transition-transform duration-300 flex flex-col items-center text-center group cursor-pointer relative overflow-hidden"
+                            >
+                                <img src={partner.logo} alt={partner.name} className="w-full h-24 object-contain transition-all duration-300" onError={(e) => e.target.style.display = 'none'} />
+                                <p className="text-xs text-[#f59e0b] font-bold uppercase tracking-widest mb-2 relative z-10">{partner.role}</p>
+                                <h3 className="text-2xl font-bold text-[#1e3a5f] relative z-10">{partner.name}</h3>
+                            </Link>
+                        );
+                    })}
                 </div>
 
                 <div className="w-full pb-2">

@@ -6,7 +6,6 @@ const Ticker = () => {
     return (
         <div className="w-full bg-[#e8832a] text-white py-1.5 overflow-hidden flex items-center relative z-10 border-t border-[#d87219]">
             <div className="animate-ticker flex w-max hover:[animation-play-state:paused] cursor-default">
-                {/* We use 2 identical blocks to create the seamless scrolling effect */}
                 {[...Array(2)].map((_, groupIndex) => (
                     <div key={groupIndex} className="flex items-center whitespace-nowrap">
                         {[...Array(4)].map((_, itemIndex) => (

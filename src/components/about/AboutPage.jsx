@@ -83,7 +83,7 @@ function HeroSection() {
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
             <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
 
-            <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
+            <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-16 md:py-32">
 
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
                     style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
@@ -114,7 +114,7 @@ function IntroductionSection() {
     ];
 
     return (
-        <section id="about-intro" className="w-full py-8 md:py-12 px-6 md:px-12 bg-white">
+        <section id="about-intro" className="w-full py-12 md:py-24 px-6 md:px-12 bg-white">
             <div ref={ref} className={`max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="space-y-8">
                     <div>
@@ -175,7 +175,7 @@ function NeedForRejuvenationSection() {
     const [ref, visible] = useReveal();
 
     return (
-        <section className="w-full py-20 px-6 md:px-12 bg-white">
+        <section className="w-full py-12 md:py-24 px-6 md:px-12 bg-white">
             <div ref={ref} className={`max-w-7xl mx-auto transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[450px] order-2 lg:order-1">
@@ -218,7 +218,7 @@ function GreenBanner() {
             <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
             <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
 
-            <div ref={ref} className={`relative z-10 max-w-4xl mx-auto text-center py-10 md:py-14 px-6 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div ref={ref} className={`relative z-10 max-w-4xl mx-auto text-center py-8 md:py-16 px-6 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                 <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
                     Conserving Water, <br className="hidden md:block" />Sustaining Life
                 </h2>
@@ -254,7 +254,7 @@ function WhySarraSection() {
     ];
 
     return (
-        <section id="why-sarra" className="w-full bg-white py-10 px-6 md:px-12 overflow-hidden">
+        <section id="why-sarra" className="w-full bg-white py-12 md:py-24 px-6 md:px-12 overflow-hidden">
             <div
                 ref={ref}
                 className={`max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -329,7 +329,7 @@ function OrganizationalStructureSection() {
 
     return (
         <section
-            className="py-12 px-4 relative overflow-hidden bg-[#fafdfa] w-full"
+            className="py-12 md:py-24 px-4 relative overflow-hidden bg-[#fafdfa] w-full"
             ref={ref}
         >
             <div
@@ -354,14 +354,12 @@ function OrganizationalStructureSection() {
                     </p>
                 </div>
 
-                {/* MAIN STRUCTURE */}
-                <div className="relative w-full min-h-[1250px] md:min-h-[850px] mt-10">
-                    {/* Connection Lines */}
+                <div className="relative w-full mt-10 md:min-h-[850px]">
+                    {/* SVG Connector - Only visible on desktop */}
                     <svg
                         className="absolute top-0 left-0 w-full h-full z-0 hidden md:block"
                         preserveAspectRatio="none"
                     >
-                        {/* Left vertical line */}
                         <path
                             d="M 340 170 L 340 670"
                             stroke="#1e3a5f"
@@ -369,8 +367,6 @@ function OrganizationalStructureSection() {
                             strokeDasharray="6 6"
                             fill="none"
                         />
-
-                        {/* Right vertical line */}
                         <path
                             d="M 930 70 L 930 730"
                             stroke="#1e3a5f"
@@ -378,8 +374,6 @@ function OrganizationalStructureSection() {
                             strokeDasharray="6 6"
                             fill="none"
                         />
-
-                        {/* Connector middle */}
                         <path
                             d="M 340 300 C 500 300, 600 230, 930 230"
                             stroke="#1e3a5f"
@@ -389,99 +383,96 @@ function OrganizationalStructureSection() {
                         />
                     </svg>
 
-                    {/* LEFT SIDE */}
+                    {/* Desktop Layout (Absolute) vs Mobile Layout (Flex Stack) */}
+                    <div className="flex flex-col md:block gap-8 relative z-10">
+                        {/* RIGHT SIDE (Policy/State Level) - Shown first on mobile if needed, or structured */}
+                        <div className="flex flex-col gap-6 md:contents">
+                            {/* HPC */}
+                            <div className="md:absolute md:top-[0px] md:right-[5%] relative w-full md:w-[460px] z-10">
+                                <div className="bg-[#1e3a5f] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
+                                    <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
+                                        High Power Committee (HPC)
+                                    </h4>
+                                    <p className="text-white/80 text-sm md:text-base mt-3">
+                                        Chaired by Chief Secretary, Uttarakhand
+                                    </p>
+                                </div>
+                            </div>
 
-                    {/* SARRA */}
-                    <div className="absolute top-[170px] left-1/2 md:left-[8%] -translate-x-1/2 md:translate-x-0 w-[92%] md:w-[420px] z-10">
-                        <div className="bg-[#1e3a5f] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
-                            <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
-                                Spring and River Rejuvenation Authority (SARRA)
-                            </h4>
+                            {/* SLEC */}
+                            <div className="md:absolute md:top-[220px] md:right-[5%] relative w-full md:w-[460px] z-10">
+                                <div className="bg-[#0f172a] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
+                                    <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
+                                        State Level Executive Committee (SLEC)
+                                    </h4>
+                                    <p className="text-white/80 text-sm md:text-base mt-3">
+                                        Chaired by Secretary, Watershed
+                                    </p>
+                                </div>
+                            </div>
 
-                            <p className="text-white/80 text-sm md:text-base mt-3">
-                                Anchored at WMD, Uttarakhand
-                            </p>
+                            {/* DLEC */}
+                            <div className="md:absolute md:top-[460px] md:right-[5%] relative w-full md:w-[460px] z-10">
+                                <div className="bg-[#1e3a5f] opacity-95 border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
+                                    <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
+                                        District Level Executive Committee (DLEC)
+                                    </h4>
+                                    <p className="text-white/80 text-sm md:text-base mt-3">
+                                        Chaired by District Magistrate Of Concerning Districts
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* DHARA */}
+                            <div className="md:absolute md:top-[720px] md:right-[5%] relative w-full md:w-[460px] z-10">
+                                <div className="bg-[#0f172a] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
+                                    <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
+                                        Dhara-Naula Sanrakshan Samiti
+                                    </h4>
+                                    <p className="text-white/80 text-sm md:text-base mt-3">
+                                        Anchored at Gram Panchayats
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* DSC */}
-                    <div className="absolute top-[420px] left-1/2 md:left-[8%] -translate-x-1/2 md:translate-x-0 w-[92%] md:w-[420px] z-10">
-                        <div className="bg-[#0f172a] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
-                            <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
-                                District SARRA Centre (DSC)
-                            </h4>
+                        {/* LEFT SIDE (Implementation Level) */}
+                        <div className="flex flex-col gap-6 md:contents mt-8 md:mt-0">
+                            {/* SARRA */}
+                            <div className="md:absolute md:top-[170px] md:left-[8%] relative w-full md:w-[420px] z-10">
+                                <div className="bg-[#1e3a5f] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
+                                    <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
+                                        Spring and River Rejuvenation Authority (SARRA)
+                                    </h4>
+                                    <p className="text-white/80 text-sm md:text-base mt-3">
+                                        Anchored at WMD, Uttarakhand
+                                    </p>
+                                </div>
+                            </div>
 
-                            <p className="text-white/80 text-sm md:text-base mt-3">
-                                Nodal Office at District Level
-                            </p>
-                        </div>
-                    </div>
+                            {/* DSC */}
+                            <div className="md:absolute md:top-[420px] md:left-[8%] relative w-full md:w-[420px] z-10">
+                                <div className="bg-[#0f172a] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
+                                    <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
+                                        District SARRA Centre (DSC)
+                                    </h4>
+                                    <p className="text-white/80 text-sm md:text-base mt-3">
+                                        Nodal Office at District Level
+                                    </p>
+                                </div>
+                            </div>
 
-                    {/* PIA */}
-                    <div className="absolute top-[670px] left-1/2 md:left-[8%] -translate-x-1/2 md:translate-x-0 w-[92%] md:w-[420px] z-10">
-                        <div className="bg-[#1e3a5f] opacity-95 border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
-                            <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
-                                Project Implementation Agencies (PIA)
-                            </h4>
-
-                            <p className="text-white/80 text-sm md:text-base mt-3">
-                                Different Line Departments
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* RIGHT SIDE */}
-
-                    {/* HPC */}
-                    <div className="absolute top-[0px] right-1/2 md:right-[5%] translate-x-1/2 md:translate-x-0 w-[92%] md:w-[460px] z-10">
-                        <div className="bg-[#1e3a5f] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
-                            <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
-                                High Power Committee (HPC)
-                            </h4>
-
-                            <p className="text-white/80 text-sm md:text-base mt-3">
-                                Chaired by Chief Secretary, Uttarakhand
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* SLEC */}
-                    <div className="absolute top-[220px] right-1/2 md:right-[5%] translate-x-1/2 md:translate-x-0 w-[92%] md:w-[460px] z-10">
-                        <div className="bg-[#0f172a] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
-                            <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
-                                State Level Executive Committee (SLEC)
-                            </h4>
-
-                            <p className="text-white/80 text-sm md:text-base mt-3">
-                                Chaired by Secretary, Watershed
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* DLEC */}
-                    <div className="absolute top-[460px] right-1/2 md:right-[5%] translate-x-1/2 md:translate-x-0 w-[92%] md:w-[460px] z-10">
-                        <div className="bg-[#1e3a5f] opacity-95 border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
-                            <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
-                                District Level Executive Committee (DLEC)
-                            </h4>
-
-                            <p className="text-white/80 text-sm md:text-base mt-3">
-                                Chaired by District Magistrate Of Concerning
-                                Districts
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* DHARA */}
-                    <div className="absolute top-[720px] right-1/2 md:right-[5%] translate-x-1/2 md:translate-x-0 w-[92%] md:w-[460px] z-10">
-                        <div className="bg-[#0f172a] border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
-                            <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
-                                Dhara-Naula Sanrakshan Samiti
-                            </h4>
-
-                            <p className="text-white/80 text-sm md:text-base mt-3">
-                                Anchored at Gram Panchayats
-                            </p>
+                            {/* PIA */}
+                            <div className="md:absolute md:top-[670px] md:left-[8%] relative w-full md:w-[420px] z-10">
+                                <div className="bg-[#1e3a5f] opacity-95 border-b-[4px] border-[#f59e0b] rounded-3xl p-6 text-center shadow-2xl">
+                                    <h4 className="font-bold text-white text-lg md:text-2xl uppercase leading-snug font-sans">
+                                        Project Implementation Agencies (PIA)
+                                    </h4>
+                                    <p className="text-white/80 text-sm md:text-base mt-3">
+                                        Different Line Departments
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
