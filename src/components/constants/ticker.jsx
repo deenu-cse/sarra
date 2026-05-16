@@ -1,18 +1,47 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Link from 'next/link';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const Ticker = () => {
+    const [tickerItems, setTickerItems] = useState([]);
+
+    useEffect(() => {
+        const fetchTickers = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/ticker`);
+                const active = res.data.filter(item => item.isActive);
+                setTickerItems(active);
+            } catch (err) {
+                console.error('Ticker fetch error:', err);
+            }
+        };
+        fetchTickers();
+    }, []);
+
+    const displayItems = tickerItems.length > 0 ? tickerItems : [
+        { text: "Bhagirath App launched by CM Shri Pushkar Singh Dhami on March 28, 2025", link: "" }
+    ];
+
     return (
         <div className="w-full bg-[#e8832a] text-white py-1.5 overflow-hidden flex items-center relative z-10 border-t border-[#d87219]">
             <div className="animate-ticker flex w-max hover:[animation-play-state:paused] cursor-default">
-                {[...Array(2)].map((_, groupIndex) => (
+                {[...Array(3)].map((_, groupIndex) => (
                     <div key={groupIndex} className="flex items-center whitespace-nowrap">
-                        {[...Array(4)].map((_, itemIndex) => (
+                        {displayItems.map((item, itemIndex) => (
                             <React.Fragment key={itemIndex}>
-                                <span className="text-[14.5px] font-medium tracking-wide px-6">Uttarakhand</span>
-                                <span className="text-white/60 text-[11px] leading-none opacity-80 pt-0.5">◆</span>
-                                <span className="text-[14.5px] font-medium tracking-wide px-6">Bhagirath App launched by CM Shri Pushkar Singh Dhami on March 28, 2025</span>
+                                <span className="text-[14.5px] font-medium tracking-wide px-6">
+                                    {item.link ? (
+                                        <Link href={item.link} className="hover:underline">
+                                            {item.text}
+                                        </Link>
+                                    ) : (
+                                        item.text
+                                    )}
+                                </span>
                                 <span className="text-white/60 text-[11px] leading-none opacity-80 pt-0.5">◆</span>
                             </React.Fragment>
                         ))}

@@ -1,7 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import axios from 'axios';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const DISTRICT_NAMES = {
     'almora': 'Almora',
@@ -35,10 +39,29 @@ const CITY_CONFIG = {
 
 export default function CityGallery({ citySlug }) {
     const [selectedImgIdx, setSelectedImgIdx] = useState(null);
+    const [dynamicImages, setDynamicImages] = useState([]);
+
     const cityName = DISTRICT_NAMES[citySlug] || citySlug;
     const config = CITY_CONFIG[citySlug] || { count: 5, ext: 'jpg' };
 
-    const images = Array.from({ length: config.count }, (_, i) => `/assets/images/${citySlug}/${i + 1}.${config.ext}`);
+    // Static images first
+    const staticImages = Array.from({ length: config.count }, (_, i) => `/assets/images/${citySlug}/${i + 1}.${config.ext}`);
+
+    // Fetch dynamic district images from API
+    useEffect(() => {
+        const fetchDistrictImages = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/gallery?type=district&district=${cityName}`);
+                setDynamicImages(res.data.map(item => item.image));
+            } catch (err) {
+                console.error('Failed to fetch district gallery:', err);
+            }
+        };
+        fetchDistrictImages();
+    }, [cityName]);
+
+    // Static first, then dynamic
+    const images = [...staticImages, ...dynamicImages];
 
     const openSlider = (idx) => setSelectedImgIdx(idx);
     const closeSlider = () => setSelectedImgIdx(null);
@@ -66,16 +89,17 @@ export default function CityGallery({ citySlug }) {
                     </Link>
                 </div>
 
+                {/* Show a divider between static and dynamic if both exist */}
                 <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
                     {images.map((img, idx) => (
-                        <div 
-                            key={idx} 
+                        <div
+                            key={idx}
                             className="break-inside-avoid relative rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
                             onClick={() => openSlider(idx)}
                         >
-                            <img 
-                                src={img} 
-                                alt={`${cityName} ${idx + 1}`} 
+                            <img
+                                src={img}
+                                alt={`${cityName} ${idx + 1}`}
                                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -83,6 +107,12 @@ export default function CityGallery({ citySlug }) {
                                     <ChevronRight size={24} />
                                 </div>
                             </div>
+                            {/* Badge for dynamic images */}
+                            {idx >= staticImages.length && (
+                                <div className="absolute top-3 left-3 bg-[#f59e0b] text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                                    New
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
@@ -90,44 +120,41 @@ export default function CityGallery({ citySlug }) {
 
             {/* Slider / Lightbox Modal */}
             {selectedImgIdx !== null && (
-                <div 
+                <div
                     className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12 animate-in fade-in duration-300"
                     onClick={closeSlider}
                 >
-                    {/* Centered Window (not full width/height) */}
-                    <div 
+                    <div
                         className="relative max-w-5xl w-full aspect-[4/3] md:aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <img 
-                            src={images[selectedImgIdx]} 
+                        <img
+                            src={images[selectedImgIdx]}
                             className="max-w-full max-h-full object-contain"
                             alt="Slider View"
                         />
 
-                        {/* Controls */}
-                        <button 
+                        <button
                             className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-black/20 p-2 rounded-full hover:bg-black/50"
                             onClick={closeSlider}
                         >
                             <X size={32} />
                         </button>
 
-                        <button 
+                        <button
                             className="absolute left-6 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all bg-black/20 hover:bg-black/50 p-4 rounded-full hover:scale-110"
                             onClick={prevImg}
                         >
                             <ChevronLeft size={48} />
                         </button>
 
-                        <button 
+                        <button
                             className="absolute right-6 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all bg-black/20 hover:bg-black/50 p-4 rounded-full hover:scale-110"
                             onClick={nextImg}
                         >
                             <ChevronRight size={48} />
                         </button>
 
-                        {/* Caption Area */}
                         <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black to-transparent">
                             <span className="text-[#f59e0b] font-bold text-sm tracking-widest uppercase">{cityName}</span>
                             <h4 className="text-white text-xl font-serif">Image {selectedImgIdx + 1} of {images.length}</h4>
@@ -136,12 +163,5 @@ export default function CityGallery({ citySlug }) {
                 </div>
             )}
         </section>
-    );
-}
-
-// Inline helper for Link since I missed importing it
-function Link({ href, children, className }) {
-    return (
-        <a href={href} className={className}>{children}</a>
     );
 }

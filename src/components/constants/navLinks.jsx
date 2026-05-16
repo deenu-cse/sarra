@@ -35,6 +35,7 @@ const NavLinks = () => {
             title: 'Notices & Tenders',
             type: 'dropdown',
             options: [
+                { label: 'Announcements', href: '/announcements' },
                 { label: 'Tender Notices', href: '#' },
                 { label: 'Notifications', href: '#' },
                 { label: 'Guidelines', href: '#' }

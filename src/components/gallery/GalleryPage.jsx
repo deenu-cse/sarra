@@ -1,19 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import axios from 'axios';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const IMG = {
     hero: '/assets/images/banner.png',
-    grid: [
-        '/assets/images/1.jpg',
-        '/assets/images/2.jpg',
-        '/assets/images/3.jpg',
-        '/assets/images/4.jpg',
-        '/assets/images/5.jpg',
-        '/assets/images/6.jpg',
-    ]
 };
 
 const DISTRICTS = [
@@ -62,33 +57,113 @@ function HeroSection() {
 }
 
 function NextSpaceSection() {
-    return (
-        <section className="w-full py-8 px-6 md:px-12 bg-white overflow-hidden">
-            <div className="max-w-7xl mx-auto">
-                <h2 className="text-xl md:text-3xl lg:text-4xl font-serif font-bold text-[#1e3a5f] text-center mb-8 leading-relaxed max-w-5xl mx-auto">
-                    At SARRA, we are passionate about creating exceptional environments and initiatives that elevate lifestyles and enrich the experience of Uttarakhand&apos;s natural heritage.
-                </h2>
+    const [galleryItems, setGalleryItems] = useState([]);
 
-                <div className="hidden md:grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
-                    <div className="md:col-span-2 md:row-span-2 rounded-2xl overflow-hidden group shadow-lg">
-                        <img src={IMG.grid[0]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gallery 1" />
-                    </div>
-                    <div className="md:col-span-2 rounded-2xl overflow-hidden group shadow-lg">
-                        <img src={IMG.grid[1]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gallery 2" />
-                    </div>
-                    <div className="rounded-2xl overflow-hidden group shadow-lg">
-                        <img src={IMG.grid[2]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gallery 3" />
-                    </div>
-                    <div className="rounded-2xl overflow-hidden group shadow-lg">
-                        <img src={IMG.grid[3]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gallery 4" />
-                    </div>
-                    <div className="md:col-span-1 rounded-2xl overflow-hidden group shadow-lg">
-                        <img src={IMG.grid[4]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gallery 5" />
-                    </div>
-                    <div className="md:col-span-3 rounded-2xl overflow-hidden group shadow-lg">
-                        <img src={IMG.grid[5]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gallery 6" />
-                    </div>
+    useEffect(() => {
+        const fetchGlobalImages = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/gallery?type=global`);
+                setGalleryItems(res.data);
+            } catch (err) {
+                console.error('Failed to fetch global gallery:', err);
+            }
+        };
+        fetchGlobalImages();
+    }, []);
+
+    // Don't render if no images from API
+    if (galleryItems.length === 0) return null;
+
+    return (
+        <section className="w-full py-12 px-6 md:px-12 bg-white overflow-hidden">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-10">
+                    <span className="text-[#f59e0b] font-sans font-bold uppercase tracking-widest text-sm mb-2 block">Our Impact</span>
+                    <h2 className="text-2xl md:text-4xl font-serif font-bold text-[#1e3a5f] leading-relaxed max-w-4xl mx-auto">
+                        At SARRA, we are passionate about creating exceptional environments and initiatives that elevate lifestyles and enrich the experience of Uttarakhand&apos;s natural heritage.
+                    </h2>
+                    <div className="w-24 h-1 bg-[#f59e0b] mx-auto mt-6 rounded-full"></div>
                 </div>
+
+                {/* Bento Grid for first 6 items */}
+                {galleryItems.length >= 6 ? (
+                    <div className="hidden md:grid grid-cols-4 gap-4 auto-rows-[250px]">
+                        <div className="col-span-2 row-span-2 rounded-2xl overflow-hidden group shadow-lg relative">
+                            <img src={galleryItems[0].image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={galleryItems[0].title} />
+                            <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white font-bold text-lg leading-tight">{galleryItems[0].title}</p>
+                            </div>
+                        </div>
+                        <div className="col-span-2 rounded-2xl overflow-hidden group shadow-lg relative">
+                            <img src={galleryItems[1].image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={galleryItems[1].title} />
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white font-semibold text-sm">{galleryItems[1].title}</p>
+                            </div>
+                        </div>
+                        <div className="rounded-2xl overflow-hidden group shadow-lg relative">
+                            <img src={galleryItems[2].image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={galleryItems[2].title} />
+                            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white font-semibold text-xs">{galleryItems[2].title}</p>
+                            </div>
+                        </div>
+                        <div className="rounded-2xl overflow-hidden group shadow-lg relative">
+                            <img src={galleryItems[3].image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={galleryItems[3].title} />
+                            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white font-semibold text-xs">{galleryItems[3].title}</p>
+                            </div>
+                        </div>
+                        <div className="col-span-1 rounded-2xl overflow-hidden group shadow-lg relative">
+                            <img src={galleryItems[4].image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={galleryItems[4].title} />
+                            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white font-semibold text-xs">{galleryItems[4].title}</p>
+                            </div>
+                        </div>
+                        <div className="col-span-3 rounded-2xl overflow-hidden group shadow-lg relative">
+                            <img src={galleryItems[5].image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={galleryItems[5].title} />
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white font-bold text-base">{galleryItems[5].title}</p>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    /* Standard grid for fewer items */
+                    <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-5">
+                        {galleryItems.map((item, idx) => (
+                            <div key={item._id || idx} className="rounded-2xl overflow-hidden group shadow-lg relative h-[300px]">
+                                <img src={item.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.title} />
+                                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                    <p className="text-white font-bold text-sm leading-tight">{item.title}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Mobile horizontal scroll */}
+                <div className="md:hidden flex overflow-x-auto gap-4 pb-4 scrollbar-hide snap-x snap-mandatory -mx-6 px-6">
+                    {galleryItems.map((item, idx) => (
+                        <div key={item._id || idx} className="min-w-[80%] snap-center shrink-0 rounded-2xl overflow-hidden shadow-lg relative h-[280px]">
+                            <img src={item.image} className="w-full h-full object-cover" alt={item.title} />
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white font-bold text-sm leading-tight">{item.title}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Extra images beyond 6 */}
+                {galleryItems.length > 6 && (
+                    <div className="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+                        {galleryItems.slice(6).map((item, idx) => (
+                            <div key={item._id || `extra-${idx}`} className="rounded-2xl overflow-hidden group shadow-lg h-[250px] relative">
+                                <img src={item.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.title} />
+                                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                                    <p className="text-white font-semibold text-xs">{item.title}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );
@@ -124,7 +199,6 @@ function DistrictCard({ city }) {
 }
 
 function DistrictsGallery() {
-    // Split into 3 chunks for carousels
     const chunks = [
         DISTRICTS.slice(0, 4),
         DISTRICTS.slice(4, 8),
@@ -139,14 +213,12 @@ function DistrictsGallery() {
                     <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#1e3a5f]">Explore Uttarakhand</h2>
                 </div>
 
-                {/* Desktop Grid View */}
                 <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-12">
                     {DISTRICTS.map((city, idx) => (
                         <DistrictCard key={idx} city={city} />
                     ))}
                 </div>
 
-                {/* Mobile Carousel View (3 carousels) */}
                 <div className="md:hidden flex flex-col gap-12 mt-10">
                     {chunks.map((chunk, cIdx) => (
                         <div key={cIdx} className="w-full">

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import EventSlider from "@/components/constants/slider";
+import MinimalAnnouncement from "@/components/announcement/MinimalAnnouncement";
 import Department from "@/components/about/aboutDepartment";
 import SarraBanner from "@/components/about/banner";
 import ResearchSupport from "@/components/about/researchSupport";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <div>
       <EventSlider />
+      <MinimalAnnouncement />
       <SarraBanner />
       <Department />
       <ResearchSupport />

@@ -1,23 +1,15 @@
 'use client';
 
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight, Download } from 'lucide-react';
+import axios from 'axios';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const IMG = {
     hero: '/assets/books/banner.png',
     promo: '/assets/books/promo.png',
 };
-
-const BOOKS = [
-    '/assets/books/T0.jpg',
-    '/assets/books/T1.jpg',
-    '/assets/books/T2.jpg',
-    '/assets/books/T3.jpg',
-    '/assets/books/T4.jpg',
-    '/assets/books/T5.jpg',
-    '/assets/books/T6.jpg',
-    '/assets/books/T8.jpeg'
-];
 
 function HeroSection() {
     return (
@@ -61,6 +53,20 @@ function PromoSection() {
 }
 
 function BooksSection() {
+    const [dynamicBooks, setDynamicBooks] = useState([]);
+
+    useEffect(() => {
+        const fetchPublications = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/publications`);
+                setDynamicBooks(res.data);
+            } catch (err) {
+                console.error('Failed to fetch publications:', err);
+            }
+        };
+        fetchPublications();
+    }, []);
+
     return (
         <section className="w-full py-6 px-6 md:px-12 pb-15">
             <div className="max-w-7xl mx-auto">
@@ -70,15 +76,36 @@ function BooksSection() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-12">
-                    {BOOKS.map((book, idx) => (
-                        <div key={idx} className="flex flex-col items-end group">
-                            <div className="w-full aspect-[3/4] overflow-hidden cursor-pointer rounded-sm">
-                                <img src={book} alt={`Book ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
+                    {dynamicBooks.map((pub) => (
+                        <div key={pub._id} className="flex flex-col items-end group">
+                            <div className="w-full aspect-[3/4] overflow-hidden cursor-pointer rounded-sm bg-slate-100">
+                                {pub.coverImage ? (
+                                    <img src={pub.coverImage} alt={pub.title} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
+                                ) : (
+                                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#1e3a5f] to-[#0a2540] text-white p-4">
+                                        <span className="text-4xl mb-3">📖</span>
+                                        <p className="text-center text-sm font-serif font-bold leading-tight line-clamp-3">{pub.title}</p>
+                                        {pub.author && <p className="text-center text-xs mt-2 opacity-70">{pub.author}</p>}
+                                    </div>
+                                )}
                             </div>
-
-                            <button className="flex items-center gap-1.5 text-sm font-semibold text-[#1e3a5f] hover:text-[#f59e0b] transition-colors cursor-pointer">
-                                Explore <ArrowRight size={16} />
-                            </button>
+                            <div className="flex flex-col items-end gap-0.5">
+                                <p className="text-xs font-medium text-slate-600 truncate max-w-full text-right">{pub.title}</p>
+                                {pub.pdfUrl ? (
+                                    <a
+                                        href={pub.pdfUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex items-center gap-1.5 text-sm font-semibold text-[#1e3a5f] hover:text-[#f59e0b] transition-colors cursor-pointer"
+                                    >
+                                        <Download size={14} /> Download PDF
+                                    </a>
+                                ) : (
+                                    <button className="flex items-center gap-1.5 text-sm font-semibold text-[#1e3a5f] hover:text-[#f59e0b] transition-colors cursor-pointer">
+                                        Explore <ArrowRight size={16} />
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     ))}
                 </div>
