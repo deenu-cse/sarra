@@ -12,6 +12,7 @@ export default async function sitemap() {
     const staticPages = [
         { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1.0 },
         { url: `${baseUrl}/news`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+        { url: `${baseUrl}/announcements`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
         { url: `${baseUrl}/gallery`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${baseUrl}/knowledge-hub`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
@@ -19,6 +20,11 @@ export default async function sitemap() {
         { url: `${baseUrl}/bhagirath-app`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/research-partners`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
         { url: `${baseUrl}/one-river-one-district`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+        // GIGW 3.0 Compliance Pages
+        { url: `${baseUrl}/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
+        { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
+        { url: `${baseUrl}/copyright`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
+        { url: `${baseUrl}/accessibility`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
     ];
 
     // District gallery pages

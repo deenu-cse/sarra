@@ -13,26 +13,42 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is logged in
-    const storedUser = localStorage.getItem('user');
-    const token = localStorage.getItem('accessToken');
-    if (storedUser && token) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const restoreSession = async () => {
+      try {
+        const { data } = await axiosInstance.post('/auth/refresh-token');
+        const { accessToken } = data.data;
+
+        if (typeof window !== 'undefined') {
+          window.__SARRA_ACCESS_TOKEN__ = accessToken;
+        }
+
+        const payload = JSON.parse(atob(accessToken.split('.')[1]));
+        setUser({
+          id: payload.adminId,
+          email: payload.email,
+          role: payload.role,
+        });
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    restoreSession();
   }, []);
 
   const login = async (email, password) => {
     try {
       const response = await axiosInstance.post('/auth/login', { email, password });
       const { user: userData, accessToken } = response.data.data;
-      
+
+      if (typeof window !== 'undefined') {
+        window.__SARRA_ACCESS_TOKEN__ = accessToken;
+      }
+
       setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('accessToken', accessToken);
-      
       toast.success('Login successful!');
-      router.push('/springsheddpr');
       return true;
     } catch (error) {
       const message = error.response?.data?.message || 'Login failed';
@@ -48,10 +64,11 @@ export const AuthProvider = ({ children }) => {
       console.error('Logout error', error);
     } finally {
       setUser(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('accessToken');
+      if (typeof window !== 'undefined') {
+        window.__SARRA_ACCESS_TOKEN__ = null;
+      }
       toast.success('Logged out successfully');
-      router.push('/login');
+      router.push('/');
     }
   };
 

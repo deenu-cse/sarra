@@ -1,8 +1,22 @@
-import React from 'react';
+"use client";
+import React, { useEffect } from 'react';
 import { Lock } from 'lucide-react';
 import Link from 'next/link';
 
 const Header = () => {
+    // Font resize logic
+    const handleResize = (step) => {
+        const root = document.documentElement;
+        const currentSize = parseFloat(getComputedStyle(root).fontSize);
+        // Base size is usually 16px. Limit range: 12px to 20px
+        const newSize = Math.max(12, Math.min(20, currentSize + step));
+        root.style.fontSize = `${newSize}px`;
+    };
+
+    const resetResize = () => {
+        document.documentElement.style.fontSize = '16px';
+    };
+
     return (
         <header className="w-full font-sans">
             {/* Top Bar - Responsive */}
@@ -11,17 +25,17 @@ const Header = () => {
                     <button className="hover:text-white transition text-sm">Skip to main content</button>
                     <button className="hover:text-white transition text-sm">Screen Reader</button>
                     <div className="flex gap-2 ml-2 border-l border-gray-600 pl-4">
-                        <button className="hover:text-white text-sm">A-</button>
-                        <button className="hover:text-white text-sm">A</button>
-                        <button className="hover:text-white text-sm">A+</button>
+                        <button onClick={() => handleResize(-1)} className="hover:text-white text-sm">A-</button>
+                        <button onClick={resetResize} className="hover:text-white text-sm">A</button>
+                        <button onClick={() => handleResize(1)} className="hover:text-white text-sm">A+</button>
                     </div>
                     <button className="ml-2 font-semibold text-sm">हिंदी</button>
                 </div>
 
                 <div className="flex gap-2 sm:gap-6 items-center w-full sm:w-auto justify-end">
-                    <button className="hover:text-white transition text-xs sm:text-sm">Sitemap</button>
+                    <Link href="/sitemap.xml" className="hover:text-white transition text-xs sm:text-sm">Sitemap</Link>
                     <button className="hover:text-white transition text-xs sm:text-sm">RTI</button>
-                    <button className="hover:text-white transition text-xs sm:text-sm">Contact</button>
+                    <Link href="/contact" className="hover:text-white transition text-xs sm:text-sm">Contact</Link>
                     <Link href="/login" className="flex items-center gap-1 text-[#f59e0b] font-medium text-xs sm:text-sm whitespace-nowrap">
                         <button className="flex items-center gap-1 text-[#f59e0b] font-medium text-xs sm:text-sm whitespace-nowrap cursor-pointer">
                             <Lock size={14} fill="#f59e0b" />

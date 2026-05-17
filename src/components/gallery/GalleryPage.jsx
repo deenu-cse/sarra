@@ -63,7 +63,7 @@ function NextSpaceSection() {
         const fetchGlobalImages = async () => {
             try {
                 const res = await axios.get(`${API_URL}/gallery?type=global`);
-                setGalleryItems(res.data);
+                setGalleryItems(res.data.data || []);
             } catch (err) {
                 console.error('Failed to fetch global gallery:', err);
             }

@@ -46,19 +46,19 @@ export default function Footer() {
             <h3 className="text-white font-bold text-lg mb-6 tracking-wide">PAGES</h3>
             <ul className="space-y-3 text-sm font-medium">
               <li>
-                <Link href="#" className="hover:text-amber-500 transition-colors">About SARRA</Link>
+                <Link href="/about" className="hover:text-amber-500 transition-colors">About SARRA</Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-amber-500 transition-colors">Knowledge Hub</Link>
+                <Link href="/knowledge-hub" className="hover:text-amber-500 transition-colors">Knowledge Hub</Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-amber-500 transition-colors">Contact Us</Link>
+                <Link href="/contact" className="hover:text-amber-500 transition-colors">Contact Us</Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-amber-500 transition-colors">Image Gallery</Link>
+                <Link href="/gallery" className="hover:text-amber-500 transition-colors">Image Gallery</Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-amber-500 transition-colors">Video Gallery</Link>
+                <Link href="/video-gallery" className="hover:text-amber-500 transition-colors">Video Gallery</Link>
               </li>
             </ul>
           </div>
@@ -68,10 +68,10 @@ export default function Footer() {
             <h3 className="text-white font-bold text-lg mb-6 tracking-wide">OTHER LINKS</h3>
             <ul className="space-y-3 text-sm font-medium">
               <li>
-                <Link href="#" className="hover:text-amber-500 transition-colors">Apuni Sarkar</Link>
+                <Link href="https://apunisarkar.uk.gov.in" target="_blank" className="hover:text-amber-500 transition-colors">Apuni Sarkar</Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-amber-500 transition-colors">Watershed Management Directorate</Link>
+                <Link href="https://wmduk.gov.in" target="_blank" className="hover:text-amber-500 transition-colors">Watershed Management Directorate</Link>
               </li>
             </ul>
           </div>
@@ -103,15 +103,15 @@ export default function Footer() {
 
           {/* Horizontal Links */}
           <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm text-gray-300">
-            <Link href="#" className="hover:text-white transition-colors">Website Policies</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Website Policies</Link>
             <span className="text-gray-600">|</span>
-            <Link href="#" className="hover:text-white transition-colors">Contact Us</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link>
             <span className="text-gray-600">|</span>
-            <Link href="#" className="hover:text-white transition-colors">Help</Link>
+            <Link href="/help" className="hover:text-white transition-colors">Help</Link>
             <span className="text-gray-600">|</span>
-            <Link href="#" className="hover:text-white transition-colors">Feedback</Link>
+            <Link href="/feedback" className="hover:text-white transition-colors">Feedback</Link>
             <span className="text-gray-600">|</span>
-            <Link href="#" className="hover:text-white transition-colors">Web Information Manager</Link>
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
           </div>
 
           {/* Ownership & Development Text */}

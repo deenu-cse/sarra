@@ -15,7 +15,7 @@ export default function AnnouncementsListPage() {
         const fetchAnnouncements = async () => {
             try {
                 const res = await axios.get(`${API_URL}/announcements`);
-                setAnnouncements(res.data);
+                setAnnouncements(res.data.data || []);
             } catch (err) {
                 console.error('Failed to fetch announcements:', err);
             } finally {

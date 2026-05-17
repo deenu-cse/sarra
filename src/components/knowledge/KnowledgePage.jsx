@@ -59,7 +59,7 @@ function BooksSection() {
         const fetchPublications = async () => {
             try {
                 const res = await axios.get(`${API_URL}/publications`);
-                setDynamicBooks(res.data);
+                setDynamicBooks(res.data.data || []);
             } catch (err) {
                 console.error('Failed to fetch publications:', err);
             }
