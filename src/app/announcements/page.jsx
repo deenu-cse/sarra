@@ -32,13 +32,36 @@ export default function AnnouncementsListPage() {
     };
 
     return (
-        <main className="w-full bg-[#f8fafc] font-sans min-h-screen pt-12 pb-24">
-            <div className="max-w-6xl mx-auto px-4 md:px-8">
-                <div className="text-center mb-16">
-                    <span className="text-[#f59e0b] font-bold uppercase tracking-widest text-sm mb-3 block">Stay Updated</span>
-                    <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1e3a5f] mb-4">Official Announcements</h1>
-                    <p className="text-slate-500 max-w-2xl mx-auto text-lg">Latest updates, notices, and important information from SARRA.</p>
+        <main className="w-full bg-[#f8fafc] font-sans min-h-screen pb-24">
+            <section className="relative w-full overflow-hidden" style={{ minHeight: '400px' }}>
+                <img
+                    src="/assets/Announcement/banner.png"
+                    alt="Announcements Banner"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ zIndex: 0 }}
+                />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
+                <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
+
+                <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32 h-full min-h-[400px]">
+                    <span className="text-[#f59e0b] font-bold uppercase tracking-widest text-sm mb-4 block">Stay Updated</span>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight"
+                        style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+                        Official Announcements
+                    </h1>
+                    <p className="text-white/80 text-lg md:text-xl max-w-2xl font-light leading-relaxed">
+                        Latest updates, notices, and important information from SARRA.
+                    </p>
                 </div>
+
+                <div className="absolute bottom-0 left-0 right-0 z-10">
+                    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+                        <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white" />
+                    </svg>
+                </div>
+            </section>
+
+            <div className="max-w-6xl mx-auto px-4 md:px-8 mt-12">
 
                 {loading ? (
                     <div className="flex justify-center py-20">
@@ -47,8 +70,8 @@ export default function AnnouncementsListPage() {
                 ) : announcements.length > 0 ? (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {announcements.map((item, idx) => (
-                            <Link 
-                                href={`/announcements/${item.slug || item._id}`} 
+                            <Link
+                                href={`/announcements/${item.slug || item._id}`}
                                 key={item._id || idx}
                                 className="group flex flex-col sm:flex-row bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 overflow-hidden"
                             >

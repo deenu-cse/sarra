@@ -26,14 +26,13 @@ const MinimalAnnouncement = () => {
         fetchAnnouncements();
     }, []);
 
-    // Auto rotate if multiple
     useEffect(() => {
         if (announcements.length <= 1) return;
-        
+
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % announcements.length);
-        }, 5000); // 5 seconds
-        
+        }, 5000);
+
         return () => clearInterval(interval);
     }, [announcements.length]);
 
@@ -53,16 +52,16 @@ const MinimalAnnouncement = () => {
                         <h4 className="text-sm md:text-base font-bold truncate pr-4">{current.title}</h4>
                     </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4 w-full sm:w-auto shrink-0 self-start sm:self-center">
-                    <Link 
+                    <Link
                         href={`/announcements/${current.slug || current._id}`}
                         className="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full transition-colors flex items-center gap-1 shrink-0"
                     >
                         View Details <ChevronRight size={14} />
                     </Link>
-                    
-                    <button 
+
+                    <button
                         onClick={() => setIsVisible(false)}
                         className="text-white/60 hover:text-white transition-colors p-1"
                         title="Dismiss"
@@ -71,20 +70,18 @@ const MinimalAnnouncement = () => {
                     </button>
                 </div>
             </div>
-            
-            {/* Background design elements */}
+
             <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-white/5 to-transparent pointer-events-none transform skew-x-12 translate-x-10 group-hover:translate-x-4 transition-transform duration-700"></div>
-            
-            {/* Progress Bar for rotation */}
+
             {announcements.length > 1 && (
                 <div className="absolute bottom-0 left-0 h-[2px] bg-[#f59e0b] opacity-70"
-                     style={{
-                         width: '100%',
-                         animation: 'progressBar 5s linear infinite'
-                     }}>
+                    style={{
+                        width: '100%',
+                        animation: 'progressBar 5s linear infinite'
+                    }}>
                 </div>
             )}
-            
+
             <style jsx>{`
                 @keyframes progressBar {
                     0% { width: 0%; }

@@ -81,21 +81,49 @@ export default function AnnouncementDetail() {
     });
 
     return (
-        <main className="w-full bg-[#f8fafc] font-sans min-h-screen pt-12 pb-24">
-            <div className="max-w-4xl mx-auto px-4 md:px-8">
-                {/* Back button */}
-                <button 
+        <main className="w-full bg-[#f8fafc] font-sans min-h-screen pb-24">
+            <section className="relative w-full overflow-hidden" style={{ minHeight: '400px', maxHeight: '600px' }}>
+                <img
+                    src={announcement.image || '/assets/bhagirithi/banner.png'}
+                    alt={announcement.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ zIndex: 0 }}
+                />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
+                <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
+
+                <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32 h-full min-h-[400px]">
+                    <span className="text-[#f59e0b] font-bold uppercase tracking-widest text-sm mb-4 block">
+                        Official Announcement
+                    </span>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight max-w-5xl"
+                        style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+                        {announcement.title}
+                    </h1>
+                    <div className="flex items-center gap-2 text-white/80 text-base font-medium bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                        <Calendar size={18} className="text-[#f59e0b]" />
+                        <span>{formattedDate}</span>
+                    </div>
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 z-10">
+                    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+                        <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white" />
+                    </svg>
+                </div>
+            </section>
+
+            <div className="md:max-w-4xl mx-auto px-4 md:px-8 mt-0 relative z-20">
+                <button
                     onClick={() => router.back()}
-                    className="flex items-center gap-2 text-slate-500 hover:text-[#1e3a5f] transition-colors font-semibold mb-8 group"
+                    className="flex items-center gap-2 text-slate-500 hover:text-[#1e3a5f] transition-colors font-semibold mb-6 group w-fit"
                 >
                     <ArrowLeft size={20} className="transform group-hover:-translate-x-1 transition-transform" />
                     Back
                 </button>
 
-                {/* Article Header */}
                 <article className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden print:shadow-none print:border-none">
-                    {/* Header Details */}
-                    <div className="p-8 md:p-12 border-b border-slate-100">
+                    <div className="p-4 md:p-6 border-b border-slate-100">
                         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                             <span className="text-xs font-bold uppercase tracking-widest text-[#f59e0b] bg-[#f59e0b]/10 px-3 py-1.5 rounded-full">
                                 Official Announcement
@@ -125,20 +153,16 @@ export default function AnnouncementDetail() {
                         </div>
                     </div>
 
-                    {/* Featured Image */}
                     {announcement.image && (
                         <div className="w-full bg-slate-100 relative group overflow-hidden max-h-[500px]">
-                            <img 
-                                src={announcement.image} 
-                                alt={announcement.title} 
+                            <img
+                                src={announcement.image}
+                                alt={announcement.title}
                                 className="w-full h-full object-contain bg-[#1e3a5f]/5"
                             />
                         </div>
                     )}
-
-                    {/* Article Body */}
-                    <div className="p-8 md:p-12 prose prose-lg prose-slate max-w-none prose-headings:text-[#1e3a5f] prose-a:text-[#0056b3]">
-                        {/* We use basic splitting for paragraphs if it's plain text. If they input HTML, it should be parsed. Assuming plain text for now. */}
+                    <div className="p-4 md:p-8 prose prose-lg prose-slate max-w-none prose-headings:text-[#1e3a5f] prose-a:text-[#0056b3]">
                         {announcement.description.split('\n').map((paragraph, idx) => (
                             paragraph.trim() ? <p key={idx} className="mb-4 text-slate-600 leading-relaxed text-lg">{paragraph}</p> : <br key={idx} />
                         ))}
