@@ -142,24 +142,73 @@ const NavLinks = () => {
                     })}
                 </div>
 
-                {/* Mobile Navigation Toggle */}
-                <div className="lg:hidden flex justify-between items-center px-4 py-3">
+                <div className="lg:hidden flex items-stretch bg-[#0a3055] border-b border-blue-900/50 relative z-50">
+                    <div className="flex flex-1 overflow-x-auto hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                        <style dangerouslySetInnerHTML={{ __html: `.hide-scroll::-webkit-scrollbar { display: none; }` }} />
+                        {navItems.slice(0, 5).map((item, index) => {
+                            const active = isActive(item);
+                            return (
+                                <div key={index} className="relative flex-none min-w-[80px] border-r border-blue-900/50">
+                                    {item.type === 'link' ? (
+                                        <Link
+                                            href={item.href}
+                                            className={`flex items-center justify-center w-full h-full px-2 py-3 text-[11px] sm:text-xs font-medium transition-all duration-200 text-center
+                                                ${active ? 'bg-[#f59e0b] text-white' : 'text-gray-100 hover:bg-[#154b7d]'}`}
+                                        >
+                                            {item.title}
+                                        </Link>
+                                    ) : (
+                                        <button
+                                            onClick={() => {
+                                                setActiveDropdown(activeDropdown === index ? null : index);
+                                                setMobileMenuOpen(false);
+                                            }}
+                                            className={`flex items-center justify-center w-full h-full px-2 py-3 text-[11px] sm:text-xs font-medium transition-all duration-200 text-center
+                                                ${active ? 'bg-[#f59e0b] text-white' : 'text-gray-100 hover:bg-[#154b7d]'}`}
+                                        >
+                                            {item.title}
+                                            <ChevronDown size={12} className={`ml-1 opacity-70 transition-transform ${activeDropdown === index ? 'rotate-180' : ''}`} />
+                                        </button>
+                                    )}
+
+                                    {item.type === 'dropdown' && activeDropdown === index && (
+                                        <ul className="absolute left-0 top-full w-[200px] bg-[#0a3055] text-gray-100 z-50 shadow-xl border-t-2 border-[#f59e0b]">
+                                            {item.options.map((option, idx) => (
+                                                <li key={idx} className="border-b border-black/30">
+                                                    <Link
+                                                        href={option.href}
+                                                        className="block px-4 py-3 text-xs font-semibold hover:bg-[#154b7d]"
+                                                        onClick={() => setActiveDropdown(null)}
+                                                    >
+                                                        {option.label}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
                     <button
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="text-white hover:text-[#f59e0b] transition"
+                        onClick={() => {
+                            setMobileMenuOpen(!mobileMenuOpen);
+                            setActiveDropdown(null);
+                        }}
+                        className={`flex-none flex items-center justify-center px-3 py-3 transition-colors border-l border-blue-900/50 ${mobileMenuOpen ? 'bg-[#154b7d] text-[#f59e0b]' : 'text-white hover:text-[#f59e0b]'}`}
                         aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
 
-                {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="lg:hidden bg-[#0a3055] border-t border-blue-900/50">
-                        {navItems.map((item, index) => {
+                    <div className="lg:hidden bg-[#0a3055] border-t border-blue-900/50 absolute left-0 w-full z-40 shadow-xl">
+                        {navItems.slice(5).map((item, index) => {
+                            const actualIndex = index + 5; // Offset by the 4 items shown above
                             const active = isActive(item);
                             return (
-                                <div key={index}>
+                                <div key={actualIndex}>
                                     {item.type === 'link' ? (
                                         <Link
                                             href={item.href}
@@ -177,7 +226,7 @@ const NavLinks = () => {
                                             <button
                                                 onClick={() => {
                                                     setActiveDropdown(
-                                                        activeDropdown === index ? null : index
+                                                        activeDropdown === actualIndex ? null : actualIndex
                                                     );
                                                 }}
                                                 className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium transition-all duration-200 border-b border-blue-900/30
@@ -189,11 +238,11 @@ const NavLinks = () => {
                                                 <span>{item.title}</span>
                                                 <ChevronDown
                                                     size={16}
-                                                    className={`transition-transform duration-200 ${activeDropdown === index ? 'rotate-180' : ''}`}
+                                                    className={`transition-transform duration-200 ${activeDropdown === actualIndex ? 'rotate-180' : ''}`}
                                                 />
                                             </button>
 
-                                            {activeDropdown === index && (
+                                            {activeDropdown === actualIndex && (
                                                 <ul className="bg-[#062a45] border-l-4 border-[#f59e0b]">
                                                     {item.options.map((option, idx) => (
                                                         <li key={idx}>

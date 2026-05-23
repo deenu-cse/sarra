@@ -1,11 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const FacebookIcon = ({ size = 24, className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -43,44 +39,11 @@ function ImageLightbox({ src, alt, onClose }) {
     );
 }
 
-const ArticlePage = () => {
-    const params = useParams();
-    const slug = params?.slug;
-
-    const [article, setArticle] = useState(null);
-    const [relatedArticles, setRelatedArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [notFound, setNotFound] = useState(false);
+const ArticlePage = ({ initialArticle, initialRelatedArticles, initialNotFound }) => {
+    const article = initialArticle;
+    const relatedArticles = initialRelatedArticles || [];
+    const notFound = initialNotFound;
     const [lightboxImg, setLightboxImg] = useState(null);
-
-    useEffect(() => {
-        if (!slug) return;
-
-        const fetchArticle = async () => {
-            try {
-                setLoading(true);
-                const res = await axios.get(`${API_URL}/news/slug/${slug}`);
-                setArticle(res.data);
-            } catch (err) {
-                console.error('Article not found:', err);
-                setNotFound(true);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        const fetchRelated = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/news`);
-                setRelatedArticles(res.data.filter(a => a.slug !== slug).slice(0, 5));
-            } catch (err) {
-                console.error('Failed to fetch related:', err);
-            }
-        };
-
-        fetchArticle();
-        fetchRelated();
-    }, [slug]);
 
     const formatDate = (dateStr) => {
         return new Date(dateStr).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
@@ -92,14 +55,6 @@ const ArticlePage = () => {
         const mins = Math.max(1, Math.ceil(totalWords / 200));
         return `${mins} min read`;
     };
-
-    if (loading) {
-        return (
-            <div className="max-w-6xl mx-auto px-4 py-20 text-center">
-                <div className="w-10 h-10 border-4 border-slate-200 border-t-[#1e3a5f] rounded-full animate-spin mx-auto"></div>
-            </div>
-        );
-    }
 
     if (notFound || !article) {
         return (

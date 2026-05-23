@@ -1,36 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Share2, Printer, Megaphone } from 'lucide-react';
-import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
-export default function AnnouncementDetail() {
-    const params = useParams();
+export default function AnnouncementDetail({ initialAnnouncement, initialError }) {
     const router = useRouter();
-    const [announcement, setAnnouncement] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        if (!params?.slug) return;
-
-        const fetchDetail = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/announcements/slug/${params.slug}`);
-                setAnnouncement(res.data);
-            } catch (err) {
-                console.error(err);
-                setError('Announcement not found or has been removed.');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchDetail();
-    }, [params?.slug]);
+    const announcement = initialAnnouncement;
+    const error = initialError;
 
     const handlePrint = () => {
         window.print();
@@ -52,14 +30,7 @@ export default function AnnouncementDetail() {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="min-h-[60vh] flex flex-col items-center justify-center bg-[#f8fafc]">
-                <div className="w-12 h-12 border-4 border-slate-200 border-t-[#1e3a5f] rounded-full animate-spin mb-4"></div>
-                <p className="text-slate-500 font-medium">Loading announcement details...</p>
-            </div>
-        );
-    }
+
 
     if (error || !announcement) {
         return (

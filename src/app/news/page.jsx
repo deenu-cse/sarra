@@ -16,8 +16,21 @@ export const metadata = {
     },
 };
 
-export default function Page() {
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
+export default async function Page() {
+    let articles = [];
+    try {
+        const res = await fetch(`${API_BASE}/news`, { cache: 'no-store' });
+        if (res.ok) {
+            const data = await res.json();
+            articles = Array.isArray(data) ? data : (data?.data || []);
+        }
+    } catch (err) {
+        console.error('Failed to fetch news:', err);
+    }
+
     return (
-        <NewsPage />
+        <NewsPage initialArticles={articles} />
     );
 }

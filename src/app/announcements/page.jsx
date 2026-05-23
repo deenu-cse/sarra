@@ -1,29 +1,25 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Megaphone, Calendar, ArrowRight, FileText } from 'lucide-react';
-import axios from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
-export default function AnnouncementsListPage() {
-    const [announcements, setAnnouncements] = useState([]);
-    const [loading, setLoading] = useState(true);
+export const metadata = {
+    title: 'Announcements | SARRA',
+    description: 'Latest official updates, notices, and important information from SARRA.',
+};
 
-    useEffect(() => {
-        const fetchAnnouncements = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/announcements`);
-                setAnnouncements(res.data.data || []);
-            } catch (err) {
-                console.error('Failed to fetch announcements:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchAnnouncements();
-    }, []);
+export default async function AnnouncementsListPage() {
+    let announcements = [];
+    try {
+        const res = await fetch(`${API_URL}/announcements`, { cache: 'no-store' });
+        if (res.ok) {
+            const data = await res.json();
+            announcements = data.data || [];
+        }
+    } catch (err) {
+        console.error('Failed to fetch announcements:', err);
+    }
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -63,11 +59,7 @@ export default function AnnouncementsListPage() {
 
             <div className="max-w-6xl mx-auto px-4 md:px-8 mt-12">
 
-                {loading ? (
-                    <div className="flex justify-center py-20">
-                        <div className="w-12 h-12 border-4 border-slate-200 border-t-[#1e3a5f] rounded-full animate-spin"></div>
-                    </div>
-                ) : announcements.length > 0 ? (
+                {announcements.length > 0 ? (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {announcements.map((item, idx) => (
                             <Link

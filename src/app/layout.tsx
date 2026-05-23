@@ -58,11 +58,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let tickerItems = [];
+  try {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+    const res = await fetch(`${API_URL}/ticker`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      tickerItems = Array.isArray(data) ? data : (data?.data || []);
+    }
+  } catch (err) {
+    console.error('Failed to fetch ticker:', err);
+  }
+
   return (
     <html
       lang="en"
@@ -77,7 +89,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <NavLinks />
-          <Ticker />
+          <Ticker initialTickerItems={tickerItems} />
           {children}
           <Footer />
         </Providers>

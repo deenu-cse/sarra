@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -12,7 +11,7 @@ const IMG = {
 
 function HeroSection() {
     return (
-        <section className="relative w-full overflow-hidden" style={{ minHeight: '400px' }}>
+        <section className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
             <img
                 src={IMG.hero}
                 alt="News Banner"
@@ -60,21 +59,9 @@ function ImageLightbox({ src, alt, onClose }) {
     );
 }
 
-const NewsLayout = () => {
-    const [articles, setArticles] = useState([]);
+const NewsLayout = ({ initialArticles }) => {
+    const articles = initialArticles || [];
     const [lightboxImg, setLightboxImg] = useState(null);
-
-    useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/news`);
-                setArticles(res.data);
-            } catch (err) {
-                console.error('Failed to fetch news:', err);
-            }
-        };
-        fetchNews();
-    }, []);
 
     if (articles.length === 0) {
         return (
@@ -197,11 +184,11 @@ const NewsLayout = () => {
     );
 };
 
-export default function NewsPage() {
+export default function NewsPage({ initialArticles }) {
     return (
         <main className="w-full bg-white">
             <HeroSection />
-            <NewsLayout />
+            <NewsLayout initialArticles={initialArticles} />
         </main>
     );
 }

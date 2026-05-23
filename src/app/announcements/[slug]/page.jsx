@@ -37,6 +37,21 @@ export async function generateMetadata({ params }) {
     }
 }
 
-export default function Page() {
-    return <AnnouncementDetail />;
+export default async function Page({ params }) {
+    const { slug } = await params;
+    let announcement = null;
+    let error = null;
+
+    try {
+        const res = await fetch(`${API_BASE}/announcements/slug/${slug}`, { next: { revalidate: 60 } });
+        if (!res.ok) {
+            error = 'Announcement not found or has been removed.';
+        } else {
+            announcement = await res.json();
+        }
+    } catch (err) {
+        error = 'Failed to fetch announcement.';
+    }
+
+    return <AnnouncementDetail initialAnnouncement={announcement} initialError={error} />;
 }

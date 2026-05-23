@@ -1,194 +1,496 @@
 'use client';
 
-import React from 'react';
-import { Mountain, Droplet } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Mountain, Droplet, MapPin } from 'lucide-react';
 
 const IMG = {
-    hero: '/assets/one_river/banner.png',
+  hero: '/assets/one_river/banner.png',
 };
 
-const KUMAON_DATA = [
-    { sr: '1.', district: 'Almora', river: 'Jata Ganga' },
-    { sr: '2.', district: 'Bageshwar', river: 'Garud Ganga' },
-    { sr: '3.', district: 'Champawat', river: 'Gaudi River' },
-    { sr: '4.', district: 'Nainital', river: 'Shipra River' },
-    { sr: '5.', district: 'Pithoragarh', river: 'Purvi Ramganga' },
+const DISTRICT_DATA = [
+  // KUMAON
+  {
+    region: 'KUMAON',
+    sr: '1.', district: 'Almora', river: 'Jata Ganga',
+    watershed: 'Jata Ganga Watershed',
+    lat: 29.617788, lng: 79.884677,
+    color: '#7280FB', fill: 'rgba(114,128,251,0.55)',
+    description: 'Flows through the sacred hills of Almora district'
+  },
+  {
+    region: 'KUMAON',
+    sr: '2.', district: 'Bageshwar', river: 'Garud Ganga',
+    watershed: 'Garud Ganga Watershed',
+    lat: 29.886732, lng: 79.563495,
+    color: '#B180BC', fill: 'rgba(177,128,188,0.55)',
+    description: 'Sacred river of Bageshwar with perennial flow'
+  },
+  {
+    region: 'KUMAON',
+    sr: '3.', district: 'Champawat', river: 'Gaudi River',
+    watershed: 'Gaudi River Watershed',
+    lat: 29.322881, lng: 80.095356,
+    color: '#69DEB3', fill: 'rgba(105,222,179,0.55)',
+    description: 'River rejuvenation in eastern Kumaon'
+  },
+  {
+    region: 'KUMAON',
+    sr: '4.', district: 'Nainital', river: 'Shipra River',
+    watershed: 'Shipra River Watershed',
+    lat: 29.446003, lng: 79.478694,
+    color: '#B3FFFF', fill: 'rgba(179,255,255,0.55)',
+    description: 'Vital water source for Nainital district'
+  },
+  {
+    region: 'KUMAON',
+    sr: '5.', district: 'Pithoragarh', river: 'Purvi Ramganga',
+    watershed: 'Ramganga East Watershed',
+    lat: 29.845337, lng: 80.146835,
+    color: '#C7D38D', fill: 'rgba(199,211,141,0.55)',
+    description: 'Eastern Ramganga basin in high altitude terrain'
+  },
+  // GARHWAL
+  {
+    region: 'GARHWAL',
+    sr: '1.', district: 'Chamoli', river: 'Chandra Bhaga',
+    watershed: 'Chandrabhaga River Watershed',
+    lat: 30.296876, lng: 79.225259,
+    color: '#0293F7', fill: 'rgba(2,147,247,0.35)',
+    description: 'High altitude river in the Garhwal Himalayas'
+  },
+  {
+    region: 'GARHWAL',
+    sr: '2.', district: 'Dehradun', river: 'Song River',
+    watershed: 'Song River Watershed',
+    lat: 30.258948, lng: 78.140235,
+    color: '#F7C262', fill: 'rgba(247,194,98,0.55)',
+    description: 'Major tributary of the Ganges in Dehradun valley'
+  },
+  {
+    region: 'GARHWAL',
+    sr: '3.', district: 'Haridwar', river: 'Pathari River',
+    watershed: 'Pathari River Watershed',
+    lat: 29.941526, lng: 78.064637,
+    color: '#DABABE', fill: 'rgba(218,186,190,0.55)',
+    description: 'River conservation in the gateway to the Himalayas'
+  },
+  {
+    region: 'GARHWAL',
+    sr: '4.', district: 'Pauri Garhwal', river: 'Nayar (East & West)',
+    watershed: 'Eastern Nayar Watershed',
+    lat: 29.934517, lng: 78.968617,
+    color: '#CCEBCC', fill: 'rgba(204,235,204,0.55)',
+    description: 'Twin rivers rejuvenation project in Pauri'
+  },
+  {
+    region: 'GARHWAL',
+    sr: '5.', district: 'Rudraprayag', river: 'Punaar Nadi',
+    watershed: 'Punad Gad Watershed',
+    lat: 30.244734, lng: 79.008431,
+    color: '#E5CDFC', fill: 'rgba(229,205,252,0.55)',
+    description: 'Sacred waters of Rudraprayag district'
+  },
+  {
+    region: 'GARHWAL',
+    sr: '6.', district: 'Tehri', river: 'Song River',
+    watershed: 'Song River Watershed',
+    lat: 30.258948, lng: 78.140235,
+    color: '#F7C262', fill: 'rgba(247,194,98,0.55)',
+    description: 'Song River conservation in Tehri district'
+  },
+  {
+    region: 'GARHWAL',
+    sr: '7.', district: 'Uttarkashi', river: 'Kamal Nadi',
+    watershed: 'Kamal Ganaga Watershed',
+    lat: 30.875950, lng: 78.063113,
+    color: '#80D3D3', fill: 'rgba(128,211,211,0.55)',
+    description: 'River in the land of ancient temples'
+  },
 ];
 
-const GARHWAL_DATA = [
-    { sr: '1.', district: 'Chamoli', river: 'Chandra Bhaga' },
-    { sr: '2.', district: 'Dehradun', river: 'Song River' },
-    { sr: '3.', district: 'Haridwar', river: 'Pathari River' },
-    { sr: '4.', district: 'Pauri Garhwal', river: 'Nayar (East & West)' },
-    { sr: '5.', district: 'Rudraprayag', river: 'Punaar Nadi' },
-    { sr: '6.', district: 'Tehri', river: 'Song River' },
-    { sr: '7.', district: 'Uttarkashi', river: 'Kamal Nadi' },
-];
+const KUMAON_DATA = DISTRICT_DATA.filter(d => d.region === 'KUMAON');
+const GARHWAL_DATA = DISTRICT_DATA.filter(d => d.region === 'GARHWAL');
+
+function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const layersRef = useRef({});
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (mapInstanceRef.current) return;
+
+    if (!document.getElementById('leaflet-css')) {
+      const link = document.createElement('link');
+      link.id = 'leaflet-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = () => initMap();
+    document.head.appendChild(script);
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  const initMap = () => {
+    if (!mapRef.current || !window.L) return;
+    if (mapInstanceRef.current) return;
+
+    const L = window.L;
+    const map = L.map(mapRef.current, {
+      center: [30.0668, 79.0193],
+      zoom: 7,
+      zoomControl: false,
+      attributionControl: false,
+    });
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      opacity: 0.7,
+    }).addTo(map);
+
+    mapInstanceRef.current = map;
+
+    fetch('/assets/one_river/ODOR 13.kml')
+      .then(r => {
+        if (!r.ok) throw new Error('KML not found');
+        return r.text();
+      })
+      .then(kmlText => parseAndRenderKML(kmlText, map, L))
+      .catch(() => {
+        renderFallbackMarkers(map, L);
+      });
+
+    setMapLoaded(true);
+  };
+
+  const parseAndRenderKML = (kmlText, map, L) => {
+    const parser = new DOMParser();
+    const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
+    const placemarks = kmlDoc.querySelectorAll('Placemark');
+
+    const styleColors = {
+      area1: { fill: 'rgba(247,2,147,0.35)', stroke: '#543070' },
+      area2: { fill: 'rgba(251,114,128,0.45)', stroke: '#543070' },
+      area3: { fill: 'rgba(128,177,211,0.45)', stroke: '#543070' },
+      area4: { fill: 'rgba(190,186,218,0.45)', stroke: '#543070' },
+      area5: { fill: 'rgba(253,180,98,0.45)', stroke: '#543070' },
+      area6: { fill: 'rgba(217,217,217,0.45)', stroke: '#543070' },
+      area7: { fill: 'rgba(204,235,197,0.45)', stroke: '#543070' },
+      area8: { fill: 'rgba(188,128,189,0.45)', stroke: '#543070' },
+      area9: { fill: 'rgba(179,222,105,0.45)', stroke: '#543070' },
+      area10: { fill: 'rgba(255,255,179,0.45)', stroke: '#543070' },
+      area11: { fill: 'rgba(141,211,199,0.45)', stroke: '#543070' },
+      area12: { fill: 'rgba(106,61,154,0.45)', stroke: '#543070' },
+      area13: { fill: 'rgba(252,205,229,0.45)', stroke: '#543070' },
+    };
+
+    placemarks.forEach((placemark) => {
+      const name = placemark.querySelector('name')?.textContent?.trim() || '';
+      const styleUrl = placemark.querySelector('styleUrl')?.textContent?.trim().replace('#', '') || 'area1';
+      const style = styleColors[styleUrl] || styleColors.area1;
+
+      const match = DISTRICT_DATA.find(d =>
+        d.watershed.toLowerCase() === name.toLowerCase() ||
+        name.toLowerCase().includes(d.river.toLowerCase().split(' ')[0])
+      );
+
+      const coordEls = placemark.querySelectorAll('Polygon outerBoundaryIs LinearRing coordinates');
+      coordEls.forEach(coordEl => {
+        const raw = coordEl.textContent.trim();
+        const latlngs = raw.split(/\s+/).map(pt => {
+          const parts = pt.split(',');
+          if (parts.length >= 2) {
+            const lng = parseFloat(parts[0]);
+            const lat = parseFloat(parts[1]);
+            if (!isNaN(lat) && !isNaN(lng)) return [lat, lng];
+          }
+          return null;
+        }).filter(Boolean);
+
+        if (latlngs.length < 3) return;
+
+        const polygon = L.polygon(latlngs, {
+          color: style.stroke,
+          weight: 1.5,
+          fillColor: style.fill.replace('rgba', 'rgb').replace(/,[^,)]+\)/, ')'),
+          fillOpacity: 0.45,
+          opacity: 0.8,
+        });
+
+        polygon.on('mouseover', function () {
+          this.setStyle({ weight: 2.5, fillOpacity: 0.7 });
+          if (match) onDistrictSelect(match);
+        });
+        polygon.on('mouseout', function () {
+          this.setStyle({ weight: 1.5, fillOpacity: 0.45 });
+        });
+
+        polygon.addTo(map);
+        if (match) layersRef.current[match.district] = polygon;
+      });
+
+      const pointEl = placemark.querySelector('Point coordinates');
+      if (pointEl && match) {
+        const pts = pointEl.textContent.trim().split(',');
+        const lat = parseFloat(pts[1]);
+        const lng = parseFloat(pts[0]);
+        if (!isNaN(lat) && !isNaN(lng)) {
+          const icon = L.divIcon({
+            html: `<div style="background:white;border:1.5px solid #0a3055;border-radius:20px;padding:3px 8px;font-size:10px;font-weight:700;color:#0a3055;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.15);cursor:pointer;display:flex;align-items:center;gap:4px;"><img src="/assets/icons/location.png" alt="River Icon" style="width:12px;height:12px;object-fit:contain;"/>${match.river.split(' ')[0]}</div>`,
+            className: '',
+            iconAnchor: [40, 10],
+          });
+          L.marker([lat, lng], { icon }).addTo(map);
+        }
+      }
+    });
+  };
+
+  const renderFallbackMarkers = (map, L) => {
+    DISTRICT_DATA.forEach(d => {
+      const marker = L.circleMarker([d.lat, d.lng], {
+        radius: 10,
+        fillColor: d.color,
+        color: '#0a3055',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.8,
+      });
+      marker.bindTooltip(`<b>${d.district}</b><br/>🌊 ${d.river}`, { permanent: false, direction: 'top' });
+      marker.on('click', () => onDistrictSelect(d));
+      marker.addTo(map);
+      layersRef.current[d.district] = marker;
+    });
+  };
+
+  useEffect(() => {
+    if (!selectedDistrict || !mapInstanceRef.current) return;
+    const map = mapInstanceRef.current;
+    map.flyTo([selectedDistrict.lat, selectedDistrict.lng], 9, {
+      duration: 1.2,
+      easeLinearity: 0.25,
+    });
+  }, [selectedDistrict]);
+
+  return (
+    <div className="relative w-full rounded-[24px] overflow-hidden shadow-sm border border-blue-100" style={{ height: '500px' }}>
+      <div ref={mapRef} className="absolute inset-0" style={{ zIndex: 1 }} />
+      <div className="absolute bottom-4 left-4 z-[400] bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-blue-100">
+        <div className="text-[11px] font-bold text-[#0a3055] mb-2 uppercase tracking-wide">Legend</div>
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-3 rounded-sm border border-[#543070]" style={{ background: 'rgba(114,128,251,0.5)' }} />
+            <span className="text-[10px] text-gray-600 font-medium">Kumaon Region</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-3 rounded-sm border border-[#543070]" style={{ background: 'rgba(2,147,247,0.35)' }} />
+            <span className="text-[10px] text-gray-600 font-medium">Garhwal Region</span>
+          </div>
+        </div>
+      </div>
+      {!mapLoaded && (
+        <div className="absolute inset-0 z-[500] bg-[#f8fafc] flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-10 h-10 border-4 border-blue-200 border-t-[#0a3055] rounded-full animate-spin mx-auto mb-3" />
+            <p className="text-sm text-[#0a3055] font-medium">Loading interactive map…</p>
+          </div>
+        </div>
+      )}
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[400]">
+        <div className="bg-[#0a3055]/90 backdrop-blur-sm text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-lg tracking-wide whitespace-nowrap">
+          🗺 One District • One River
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DistrictInfoCard({ district, onClose }) {
+  if (!district) return null;
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-blue-100 p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 relative">
+      <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full">
+        <div className="flex flex-col shrink-0 text-center md:text-left">
+          <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">{district.region} Region</div>
+          <h3 className="text-[19px] font-bold text-[#0a3055] leading-tight">{district.district}</h3>
+        </div>
+
+        <div className="hidden md:block w-px h-10 bg-gray-200 shrink-0"></div>
+
+        <div className="flex flex-col shrink-0 text-center md:text-left">
+          <div className="flex items-center justify-center md:justify-start gap-2 mb-0.5">
+            <div className="w-2.5 h-2.5 rounded-full border border-[#0a3055]" style={{ background: district.color }} />
+            <span className="text-[#0ea5e9] font-bold text-[14px]">🌊 {district.river}</span>
+          </div>
+          <div className="text-[12px] text-gray-500 font-medium">
+            {district.watershed} <span className="text-gray-300 ml-1">|</span> <span className="font-mono text-[10px] text-gray-400 ml-1">{district.lat.toFixed(3)}°N, {district.lng.toFixed(3)}°E</span>
+          </div>
+        </div>
+
+        <div className="hidden lg:block w-px h-10 bg-gray-200 shrink-0"></div>
+
+        <p className="text-[13px] text-gray-600 leading-relaxed text-center md:text-left flex-grow">
+          {district.description}
+        </p>
+      </div>
+
+      <button onClick={onClose} className="absolute top-2 right-2 md:static w-7 h-7 shrink-0 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">✕</button>
+    </div>
+  );
+}
 
 function HeroSection() {
-    return (
-        <section className="relative w-full overflow-hidden" style={{ minHeight: '450px' }}>
-            <img
-                src={IMG.hero}
-                alt="One River One District Banner"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ zIndex: 0 }}
-            />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
-            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
+  return (
+    <section className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
+      <img
+        src={IMG.hero}
+        alt="One River One District Banner"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ zIndex: 0 }}
+      />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
+      <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
 
-            <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
-                    style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
-                    One River <span className="text-[#f59e0b]">One District</span>
-                </h1>
-                <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-8 font-light leading-relaxed">
-                    A flagship initiative for holistic rejuvenation and sustainable management of rivers.
-                </p>
-            </div>
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
+          style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+          One River <span className="text-[#f59e0b]">One District</span>
+        </h1>
+        <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-8 font-light leading-relaxed">
+          A flagship initiative for holistic rejuvenation and sustainable management of rivers.
+        </p>
+      </div>
 
-            <div className="absolute bottom-0 left-0 right-0 z-10">
-                <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-                    <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white" />
-                </svg>
-            </div>
-        </section>
-    );
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+          <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white" />
+        </svg>
+      </div>
+    </section>
+  );
 }
 
 function ContentSection() {
-    return (
-        <section className="w-full py-8 px-4 md:px-8 lg:px-12 bg-white">
-            <div className="max-w-[1100px] mx-auto flex flex-col xl:flex-row gap-6">
-                <div className="w-full flex flex-col">
-                    <div className="bg-[#f8fafc] rounded-[24px] shadow-sm border border-blue-100 overflow-hidden flex-grow flex flex-col relative pb-8">
-                        <div className="p-8 relative z-10">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-14 h-14 rounded-full bg-[#0a3055] flex items-center justify-center text-white shrink-0 shadow-inner">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7"><path d="M2 12h4l3-9 5 18 3-9h5" /></svg>
-                                </div>
-                                <h2 className="text-[22px] font-bold text-[#0a3055] leading-tight">
-                                    About One River<br />One District
-                                </h2>
-                            </div>
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
 
-                            <div className="w-20 h-[3px] bg-[#5c8a3f] mb-6"></div>
+  return (
+    <section className="w-full py-8 px-4 md:px-8 lg:px-12 bg-white">
+      <div className="w-full flex flex-col gap-6 max-w-[1100px] mx-auto">
+        <div className="w-full flex flex-col gap-4 mb-2">
+          <div className="w-full">
+            <InteractiveMap selectedDistrict={selectedDistrict} onDistrictSelect={setSelectedDistrict} />
+          </div>
+          <div className="w-full">
+            {selectedDistrict ? (
+              <DistrictInfoCard district={selectedDistrict} onClose={() => setSelectedDistrict(null)} />
+            ) : (
+              <div className="bg-[#f8fafc] rounded-2xl border border-blue-100 p-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
+                <MapPin size={20} className="text-[#97c0e6]" />
+                <p className="text-[14px] text-gray-500 font-medium">Hover or click on the map areas, or select a row below to see detailed watershed information.</p>
+              </div>
+            )}
+          </div>
+        </div>
 
-                            <div className="flex flex-col lg:flex-row gap-6 items-center">
-                                <div className="w-full lg:w-3/5 space-y-4 text-[15px] lg:text-[22px] text-gray-700 leading-relaxed font-medium">
-                                    <p>
-                                        The One District-One River Scheme is a flagship initiative aimed at holistic rejuvenation, conservation, and sustainable management of rivers at the district level.
-                                    </p>
-                                    <p>
-                                        Under this scheme, each district has identified a priority river based on local hydrological significance, socio-economic dependence, and ecological value.
-                                    </p>
-                                    <p>
-                                        The scheme emphasizes river-centric planning supported by scientific, data-driven assessments.
-                                    </p>
-                                </div>
-
-                                <div className="hidden lg:flex w-full lg:w-[45%] justify-center -mr-8">
-                                    <img
-                                        src="/assets/one_river/aboutimg2.png"
-                                        alt="About Scheme"
-                                        className="max-w-full h-auto object-contain"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="absolute bottom-0 left-0 right-0 opacity-30 z-0">
-                            <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-                                <path fill="#3b82f6" fillOpacity="1" d="M0,160L48,176C96,192,192,224,288,208C384,192,480,128,576,128C672,128,768,192,864,213.3C960,235,1056,213,1152,186.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                            </svg>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 opacity-40 z-0">
-                            <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-                                <path fill="#0ea5e9" fillOpacity="1" d="M0,96L48,112C96,128,192,160,288,181.3C384,203,480,213,576,192C672,171,768,117,864,112C960,107,1056,149,1152,170.7C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+        <div className="w-full flex flex-col lg:flex-row gap-6 h-full mt-4">
+          <div className="w-full lg:w-1/2 flex flex-col">
+            <div className="bg-[#4a7c29] rounded-t-xl py-6 flex items-center justify-center gap-3 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-20 bg-[url('/assets/one_river/banner.png')] bg-cover bg-center mix-blend-overlay"></div>
+              <h3 className="text-[19px] font-bold text-white z-10 tracking-widest">KUMAON REGION</h3>
             </div>
-            <div className="w-full flex flex-col gap-6 mt-10">
-                <div className="w-full flex flex-col lg:flex-row gap-6 h-full">
-                    <div className="w-full lg:w-1/2 flex flex-col">
-                        <div className="bg-[#4a7c29] rounded-t-xl py-6 flex items-center justify-center gap-3 relative overflow-hidden">
-                            <div className="absolute inset-0 opacity-20 bg-[url('/assets/one_river/banner.png')] bg-cover bg-center mix-blend-overlay"></div>
-                            <h3 className="text-[19px] font-bold text-white z-10 tracking-widest">KUMAON REGION</h3>
-                        </div>
-                        <div className="bg-white border-x border-b border-[#4a7c29]/30 rounded-b-xl overflow-hidden shadow-sm h-full flex flex-col">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="bg-[#e9f1e1]">
-                                        <th className="py-3.5 px-4 text-[#4a7c29] font-bold text-[15px] text-center border-r border-white/60 w-20">Sr. No</th>
-                                        <th className="py-3.5 px-4 text-[#4a7c29] font-bold text-[15px] border-r border-white/60 w-40">District Name</th>
-                                        <th className="py-3.5 px-4 text-[#4a7c29] font-bold text-[15px]">Name of River</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white">
-                                    {KUMAON_DATA.map((row, idx) => (
-                                        <tr key={idx} className="border-b border-gray-100 last:border-none hover:bg-gray-50 transition-colors">
-                                            <td className="py-3.5 px-4 text-center font-bold text-gray-800 border-r border-gray-100">{row.sr}</td>
-                                            <td className="py-3.5 px-4 text-gray-700 font-medium border-r border-gray-100">{row.district}</td>
-                                            <td className="py-3.5 px-4 text-gray-700 font-medium">{row.river}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div className="w-full lg:w-1/2 flex flex-col">
-                        <div className="bg-[#05417b] rounded-t-xl py-6 flex items-center justify-center gap-3 relative overflow-hidden">
-                            <div className="absolute inset-0 opacity-20 bg-[url('/assets/one_river/banner.png')] bg-cover bg-center mix-blend-overlay"></div>
-                            <h3 className="text-[19px] font-bold text-white z-10 tracking-widest">GARHWAL REGION</h3>
-                        </div>
-                        <div className="bg-white border-x border-b border-[#05417b]/30 rounded-b-xl overflow-hidden shadow-sm h-full flex flex-col">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="bg-[#e0effe]">
-                                        <th className="py-3.5 px-4 text-[#05417b] font-bold text-[15px] text-center border-r border-white/60 w-20">Sr. No</th>
-                                        <th className="py-3.5 px-4 text-[#05417b] font-bold text-[15px] border-r border-white/60 w-40">District Name</th>
-                                        <th className="py-3.5 px-4 text-[#05417b] font-bold text-[15px]">Name of River</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white">
-                                    {GARHWAL_DATA.map((row, idx) => (
-                                        <tr key={idx} className="border-b border-gray-100 last:border-none hover:bg-gray-50 transition-colors">
-                                            <td className="py-3.5 px-4 text-center font-bold text-gray-800 border-r border-gray-100">{row.sr}</td>
-                                            <td className="py-3.5 px-4 text-gray-700 font-medium border-r border-gray-100">{row.district}</td>
-                                            <td className="py-3.5 px-4 text-gray-700 font-medium">{row.river}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-[#97c0e6] rounded-[16px] p-5 flex flex-col sm:flex-row items-center gap-5 text-white shadow-md border border-[#1a5b9e] w-[80%] mx-auto">
-                    <div className="w-[52px] h-[52px] rounded-full bg-white flex items-center justify-center shrink-0 shadow-inner">
-                        <Droplet size={26} className="text-[#0f4b89]" fill="#0f4b89" />
-                    </div>
-                    <div className="text-center sm:text-left">
-                        <p className="font-semibold text-blue-500 text-[15px]">Our rivers are our lifelines.</p>
-                        <p className="font-bold text-[17px] tracking-wide mt-0.5">
-                            Let's protect, restore and rejuvenate them – <span className="text-[#57ba47]">Together.</span>
-                        </p>
-                    </div>
-                </div>
-
+            <div className="bg-white border-x border-b border-[#4a7c29]/30 rounded-b-xl overflow-hidden shadow-sm h-full flex flex-col">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-[#e9f1e1]">
+                    <th className="py-3.5 px-4 text-[#4a7c29] font-bold text-[15px] text-center border-r border-white/60 w-20">Sr. No</th>
+                    <th className="py-3.5 px-4 text-[#4a7c29] font-bold text-[15px] border-r border-white/60 w-40">District Name</th>
+                    <th className="py-3.5 px-4 text-[#4a7c29] font-bold text-[15px]">Name of River</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white">
+                  {KUMAON_DATA.map((row, idx) => (
+                    <tr key={idx}
+                      onClick={() => setSelectedDistrict(row)}
+                      className={`border-b border-gray-100 last:border-none cursor-pointer transition-colors ${selectedDistrict?.district === row.district ? 'bg-[#e9f1e1]' : 'hover:bg-gray-50'}`}>
+                      <td className="py-3.5 px-4 text-center font-bold text-gray-800 border-r border-gray-100">{row.sr}</td>
+                      <td className="py-3.5 px-4 text-gray-700 font-medium border-r border-gray-100">{row.district}</td>
+                      <td className="py-3.5 px-4 text-gray-700 font-medium">{row.river}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-        </section>
-    );
+          </div>
+
+          <div className="w-full lg:w-1/2 flex flex-col">
+            <div className="bg-[#05417b] rounded-t-xl py-6 flex items-center justify-center gap-3 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-20 bg-[url('/assets/one_river/banner.png')] bg-cover bg-center mix-blend-overlay"></div>
+              <h3 className="text-[19px] font-bold text-white z-10 tracking-widest">GARHWAL REGION</h3>
+            </div>
+            <div className="bg-white border-x border-b border-[#05417b]/30 rounded-b-xl overflow-hidden shadow-sm h-full flex flex-col">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-[#e0effe]">
+                    <th className="py-3.5 px-4 text-[#05417b] font-bold text-[15px] text-center border-r border-white/60 w-20">Sr. No</th>
+                    <th className="py-3.5 px-4 text-[#05417b] font-bold text-[15px] border-r border-white/60 w-40">District Name</th>
+                    <th className="py-3.5 px-4 text-[#05417b] font-bold text-[15px]">Name of River</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white">
+                  {GARHWAL_DATA.map((row, idx) => (
+                    <tr key={idx}
+                      onClick={() => setSelectedDistrict(row)}
+                      className={`border-b border-gray-100 last:border-none cursor-pointer transition-colors ${selectedDistrict?.district === row.district ? 'bg-[#e0effe]' : 'hover:bg-gray-50'}`}>
+                      <td className="py-3.5 px-4 text-center font-bold text-gray-800 border-r border-gray-100">{row.sr}</td>
+                      <td className="py-3.5 px-4 text-gray-700 font-medium border-r border-gray-100">{row.district}</td>
+                      <td className="py-3.5 px-4 text-gray-700 font-medium">{row.river}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[#97c0e6] rounded-[16px] p-5 flex flex-col sm:flex-row items-center gap-5 text-white shadow-md border border-[#1a5b9e] w-[80%] mx-auto mt-6">
+          <div className="w-[52px] h-[52px] rounded-full bg-white flex items-center justify-center shrink-0 shadow-inner">
+            <Droplet size={26} className="text-[#0f4b89]" fill="#0f4b89" />
+          </div>
+          <div className="text-center sm:text-left">
+            <p className="font-semibold text-blue-500 text-[15px]">Our rivers are our lifelines.</p>
+            <p className="font-bold text-[17px] tracking-wide mt-0.5">
+              Let's protect, restore and rejuvenate them – <span className="text-[#57ba47]">Together.</span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
 }
 
 export default function OneRiverPage() {
-    return (
-        <main className="w-full font-sans">
-            <HeroSection />
-            <ContentSection />
-        </main>
-    );
+  return (
+    <main className="w-full font-sans">
+      <HeroSection />
+      <ContentSection />
+    </main>
+  );
 }

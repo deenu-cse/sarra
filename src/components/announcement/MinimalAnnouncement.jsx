@@ -3,28 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Megaphone, ChevronRight, X } from 'lucide-react';
-import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
-const MinimalAnnouncement = () => {
-    const [announcements, setAnnouncements] = useState([]);
+const MinimalAnnouncement = ({ initialAnnouncements }) => {
+    const announcements = initialAnnouncements || [];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
-
-    useEffect(() => {
-        const fetchAnnouncements = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/announcements`);
-                if (res.data && res.data.length > 0) {
-                    setAnnouncements(res.data);
-                }
-            } catch (err) {
-                console.error('Failed to fetch announcements:', err);
-            }
-        };
-        fetchAnnouncements();
-    }, []);
 
     useEffect(() => {
         if (announcements.length <= 1) return;

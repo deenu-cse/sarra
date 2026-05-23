@@ -3,8 +3,11 @@
 import React, { useState, useRef } from 'react';
 import { ChevronRight, ChevronLeft, Leaf, Sprout, Droplets, Settings, Wheat, ArrowUp } from 'lucide-react';
 
-const Department = () => {
-    const [activeTab, setActiveTab] = useState('schemes');
+import Link from 'next/link';
+
+const Department = ({ initialAnnouncements }) => {
+    const announcements = initialAnnouncements || [];
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const carouselRef = useRef(null);
 
     const scrollNext = () => {
@@ -46,13 +49,7 @@ const Department = () => {
         }
     ];
 
-    const schemes = [
-        { title: "Organic and Natural Farming" },
-        { title: "Digital Agriculture Mission in Uttarakhand" },
-        { title: "Food and Nutrition Security - Krishonnati Yojana" },
-        { title: "Sub Mission on Agriculture Mechanization (SMAM)" },
-        { title: "Agriculture Infrastructure Fund (AIF)" },
-    ];
+
 
     return (
         <section className="relative w-full min-h-screen bg-white overflow-hidden py-5 px-4 md:px-12 font-sans">
@@ -64,48 +61,30 @@ const Department = () => {
 
             <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
-                {/* Column 1: About Department */}
                 <div className="lg:col-span-3 space-y-3">
                     <h2 className="text-2xl font-serif font-bold text-[#1e3a5f] leading-tight">
                         ABOUT <br /> DEPARTMENT
                     </h2>
                     <div className="w-20 h-1 bg-[#f59e0b]"></div>
-                    <p className="text-gray-700 leading-relaxed text-lg">
-                        The organizational set up of agriculture in India started with the Department of Revenue and Agriculture and commerce in 1871 during the period of Lord Mayo (Governor-General of India).
+                    <p className="text-gray-700 leading-relaxed text-sm text-justify">
+                        Uttarakhand Government has setup Spring and River Rejuvenation Authority (SARRA) in Nov. 2023 anchored in Watershed Department Govt. of Uttarakhand. In the light of the conditions becoming increasingly difficult day by day for local life due to global climate change and man-made factors and continuously drying up water sources in the state...
                     </p>
-                    <button className="flex items-center gap-2 bg-[#0a3055] text-white px-5 py-3 rounded shadow-lg hover:bg-[#154b7d] transition-all font-bold uppercase tracking-widest text-sm">
+                    <Link href="/about" className="inline-flex items-center gap-2 bg-[#0a3055] text-white px-5 py-3 rounded shadow-lg hover:bg-[#154b7d] transition-all font-bold uppercase tracking-widest text-sm">
                         Read More <ChevronRight size={18} />
-                    </button>
+                    </Link>
                 </div>
 
-                <div className="lg:col-span-4 px-4 border-l border-gray-200">
-                    <h3 className="text-2xl font-serif font-bold text-[#1e3a5f] mb-3 tracking-wider uppercase">Information Hub</h3>
-
-                    <div className="flex gap-4 mb-6 border-b border-gray-200">
-                        <button
-                            onClick={() => setActiveTab('schemes')}
-                            className={`flex flex-col items-center gap-2 group transition-all py-2 px-4 cursor-pointer border-b-2 ${activeTab === 'schemes' ? 'border-[#f59e0b]' : 'border-transparent hover:border-gray-300'}`}
-                        >
-                            <span className={`font-bold text-sm tracking-wider ${activeTab === 'schemes' ? 'text-[#1e3a5f]' : 'text-gray-400'}`}>SCHEMES</span>
-                        </button>
-
-                        <button
-                            onClick={() => setActiveTab('notices')}
-                            className={`flex flex-col items-center gap-2 group transition-all py-2 px-4 cursor-pointer border-b-2 ${activeTab === 'notices' ? 'border-[#f59e0b]' : 'border-transparent hover:border-gray-300'}`}
-                        >
-                            <span className={`font-bold text-sm tracking-wider ${activeTab === 'notices' ? 'text-[#1e3a5f]' : 'text-gray-400'}`}>NOTICES</span>
-                        </button>
-                    </div>
-
-                    <ul className="space-y-6 list-disc pl-5">
-                        {schemes.map((item, idx) => (
-                            <li key={idx} className="cursor-pointer group text-[#f59e0b]">
-                                <span className="text-[#1e3a5f] font-semibold text-lg border-b border-transparent group-hover:border-[#f59e0b] group-hover:text-[#0a3055] transition-all">
-                                    {item.title}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
+                <div className="lg:col-span-4 px-4 border-l border-gray-200 flex flex-col space-y-3">
+                    <h2 className="text-2xl font-serif font-bold text-[#1e3a5f] leading-tight">
+                        Districtwise Map
+                    </h2>
+                    <div className="w-20 h-1 bg-[#f59e0b]"></div>
+                    <img
+                        src="/assets/maps/Districtwise.jpeg"
+                        alt="Districtwise Map"
+                        className="w-full max-w-[390px] rounded-lg shadow-md cursor-pointer hover:scale-103 transition-transform border-4 border-gray-100 cursor-pointer"
+                        onClick={() => setIsModalOpen(true)}
+                    />
                 </div>
                 <div className="lg:col-span-5 relative">
                     <div className="bg-[#0a3055] rounded-2xl p-5 px-2 text-white shadow-2xl overflow-hidden relative border-t-4 border-[#f59e0b]">
@@ -115,7 +94,6 @@ const Department = () => {
                             Dignitary Circle
                         </h3>
 
-                        {/* Desktop View */}
                         <div className="hidden md:grid grid-cols-2 gap-x-8 gap-y-12">
                             {dignitaries.map((person, idx) => (
                                 <div key={idx} className="flex flex-col items-center text-center">
@@ -133,7 +111,6 @@ const Department = () => {
                             ))}
                         </div>
 
-                        {/* Mobile View: Swipeable Carousel */}
                         <div className="md:hidden relative px-2 sm:px-4 group">
                             <div
                                 ref={carouselRef}
@@ -165,13 +142,30 @@ const Department = () => {
                                 <ChevronRight size={18} />
                             </button>
                         </div>
-
-                        <div className="mt-3 flex flex-col items-center opacity-70">
-                            <img src="/assets/icons/uk-gov-logo.png" alt="" className='w-16 h-16 object-cover ' />
-                        </div>
                     </div>
                 </div>
             </div>
+            {isModalOpen && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    <div className="relative max-w-5xl w-full max-h-[90vh] flex justify-center">
+                        <button
+                            className="absolute -top-10 right-0 md:-right-10 text-white hover:text-[#f59e0b] text-4xl font-bold transition-colors"
+                            onClick={() => setIsModalOpen(false)}
+                        >
+                            &times;
+                        </button>
+                        <img
+                            src="/assets/maps/Districtwise.jpeg"
+                            alt="Districtwise Map Large"
+                            className="w-auto h-auto max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain border-2 border-white/20"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

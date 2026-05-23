@@ -49,9 +49,38 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
+    const { slug } = await params;
+    let article = null;
+    let relatedArticles = [];
+    let notFound = false;
+
+    try {
+        const res = await fetch(`${API_BASE}/news/slug/${slug}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Not found');
+        const data = await res.json();
+        article = data?.data ? data.data : data;
+    } catch {
+        notFound = true;
+    }
+
+    try {
+        const res = await fetch(`${API_BASE}/news`, { cache: 'no-store' });
+        if (res.ok) {
+            const allNewsData = await res.json();
+            const allNews = Array.isArray(allNewsData) ? allNewsData : (allNewsData?.data || []);
+            relatedArticles = allNews.filter(a => a.slug !== slug).slice(0, 5);
+        }
+    } catch (err) {
+        console.error('Failed to fetch related:', err);
+    }
+
     return (
         <main className="min-h-screen bg-white">
-            <ArticlePage />
+            <ArticlePage 
+                initialArticle={article} 
+                initialRelatedArticles={relatedArticles} 
+                initialNotFound={notFound} 
+            />
         </main>
     );
 }

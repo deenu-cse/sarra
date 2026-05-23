@@ -16,13 +16,43 @@ const goldenYellow = '#f59e0b';
 const sliderData = [
     {
         id: 1,
-        image: "/assets/nav/ev1.jpg",
-        alt: "International Women's Day 2025 event group photo with Uttarakhand leadership",
+        image: "/assets/heroimg/1.jpeg",
+        alt: "Hero Img",
     },
     {
         id: 2,
-        image: "/assets/nav/ev2.jpg",
-        alt: "Officials and women leaders lighting the lamp at the SARRA ceremony",
+        image: "/assets/heroimg/12.jpeg",
+        alt: "Hero Img",
+    },
+    {
+        id: 3,
+        image: "/assets/heroimg/2.jpeg",
+        alt: "Hero Img",
+    },
+    {
+        id: 4,
+        image: "/assets/heroimg/3.jpeg",
+        alt: "Hero Img",
+    },
+    {
+        id: 5,
+        image: "/assets/heroimg/4.jpeg",
+        alt: "Hero Img",
+    },
+    {
+        id: 6,
+        image: "/assets/heroimg/5.jpeg",
+        alt: "Hero Img",
+    },
+    {
+        id: 7,
+        image: "/assets/heroimg/6.jpeg",
+        alt: "Hero Img",
+    },
+    {
+        id: 8,
+        image: "/assets/heroimg/7.jpeg",
+        alt: "Hero Img",
     }
 
 ];
@@ -73,7 +103,7 @@ const EventSlider = () => {
                     bulletClass: 'custom-bullet',
                     bulletActiveClass: 'custom-bullet-active',
                 }}
-                className="w-full h-[300px] md:h-[350px]" // Responsive height
+                className="w-full h-[350px] md:h-[500px]" // Responsive height
             >
                 {sliderData.map((slide) => (
                     <SwiperSlide key={slide.id} className="w-full h-full relative">

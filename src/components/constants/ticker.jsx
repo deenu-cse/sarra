@@ -1,26 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import Link from 'next/link';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
-const Ticker = () => {
-    const [tickerItems, setTickerItems] = useState([]);
-
-    useEffect(() => {
-        const fetchTickers = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/ticker`);
-                const active = res.data.filter(item => item.isActive);
-                setTickerItems(active);
-            } catch (err) {
-                console.error('Ticker fetch error:', err);
-            }
-        };
-        fetchTickers();
-    }, []);
+const Ticker = ({ initialTickerItems }) => {
+    const tickerItems = (initialTickerItems || []).filter(item => item.isActive);
 
     const displayItems = tickerItems.length > 0 ? tickerItems : [
         { text: "Bhagirath App launched by CM Shri Pushkar Singh Dhami on March 28, 2025", link: "" }

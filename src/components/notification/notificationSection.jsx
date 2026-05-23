@@ -2,51 +2,18 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
-const NotificationSection = () => {
+const NotificationSection = ({ initialNews, initialAnnouncements }) => {
     const [activeTab, setActiveTab] = useState('notifications');
     const [isPaused, setIsPaused] = useState(false);
     const scrollContainerRef = useRef(null);
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
     const [zoomLevel, setZoomLevel] = useState(1);
-    const [newsItems, setNewsItems] = useState([]);
-    const [hasFetched, setHasFetched] = useState(false);
-    const [announcements, setAnnouncements] = useState([]);
-    const [hasFetchedAnnouncements, setHasFetchedAnnouncements] = useState(false);
 
-    useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/news`);
-                if (res.data && res.data.length > 0) {
-                    setNewsItems(res.data);
-                }
-            } catch (err) {
-                console.error('Failed to fetch news for notifications:', err);
-            } finally {
-                setHasFetched(true);
-            }
-        };
-
-        const fetchAnnouncements = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/announcements`);
-                if (res.data && res.data.length > 0) {
-                    setAnnouncements(res.data);
-                }
-            } catch (err) {
-                console.error('Failed to fetch announcements:', err);
-            } finally {
-                setHasFetchedAnnouncements(true);
-            }
-        };
-
-        fetchNews();
-        fetchAnnouncements();
-    }, []);
+    const newsItems = initialNews || [];
+    const announcements = initialAnnouncements || [];
+    const hasFetched = true;
+    const hasFetchedAnnouncements = true;
 
     const staticNotifications = [
         {
@@ -66,11 +33,9 @@ const NotificationSection = () => {
         }
     ];
 
-    // Build the notifications list
     let notifications = [];
 
     if (newsItems.length > 0) {
-        // Dynamic news from the dashboard
         notifications = newsItems.map((item) => ({
             title: item.title,
             date: new Date(item.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
@@ -85,8 +50,7 @@ const NotificationSection = () => {
 
     let notificationsToDisplay = [];
     if (activeTab === 'notifications') {
-        const displayNotifications = [...notifications, ...notifications];
-        notificationsToDisplay = displayNotifications;
+        notificationsToDisplay = notifications;
     } else if (activeTab === 'announcements') {
         if (announcements.length > 0) {
             notificationsToDisplay = announcements.map(item => ({
@@ -95,12 +59,11 @@ const NotificationSection = () => {
                 slug: item.slug || item._id,
                 isAnnouncement: true
             }));
-            notificationsToDisplay = [...notificationsToDisplay, ...notificationsToDisplay]; // Duplicate for scrolling
         } else {
             notificationsToDisplay = [{ title: "No current announcements", date: new Date().toLocaleDateString('en-GB') }];
         }
     } else {
-        notificationsToDisplay = [...staticNotifications, ...staticNotifications];
+        notificationsToDisplay = staticNotifications;
     }
 
     useEffect(() => {
