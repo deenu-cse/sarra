@@ -11,14 +11,14 @@ const ResearchSupport = () => {
     ];
 
     const departments = [
-        { name: "Forest Department", logo: "/assets/icons/forest-logo.png" },
-        { name: "Minor Irrigation", logo: "/assets/icons/Minor-irrigation.png" },
-        { name: "Irrigation Department", logo: "/assets/icons/Irrigation.png" },
-        { name: "Rural Development", logo: "/assets/icons/uk-gov-logo.png" },
-        { name: "Urban Development", logo: "/assets/icons/uk-gov-logo.png" },
-        { name: "Peyjal Nigam", logo: "/assets/icons/uk-gov-logo.png" },
-        { name: "Uttarakhand Jal Sansthan", logo: "/assets/icons/uk-gov-logo.png" },
-        { name: "WMD", logo: "/assets/icons/WMD_LOGO.jpg" },
+        { name: "Forest Department", logo: "/assets/icons/forest-logo.png", url: "https://forest.uk.gov.in" },
+        { name: "Minor Irrigation", logo: "/assets/icons/Minor-irrigation.png", url: "https://minorirrigation.uk.gov.in/" },
+        { name: "Irrigation Department", logo: "/assets/icons/Irrigation.png", url: "https://irrigation.uk.gov.in/" },
+        { name: "Rural Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://rural.uk.gov.in/" },
+        { name: "Urban Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://udd.uk.gov.in/" },
+        { name: "Peyjal Nigam", logo: "/assets/icons/uk-gov-logo.png", url: "https://peyjal.uk.gov.in/" },
+        { name: "Uttarakhand Jal Sansthan", logo: "/assets/icons/uk-gov-logo.png", url: "https://ujs.uk.gov.in/" },
+        { name: "WMD", logo: "/assets/icons/WMD_LOGO.jpg", url: "https://wmduk.gov.in/" },
     ];
 
     return (
@@ -62,7 +62,7 @@ const ResearchSupport = () => {
 
                     <div className="hidden md:flex flex-wrap justify-center gap-x-12 gap-y-16 max-w-6xl mx-auto">
                         {departments.map((dept, idx) => (
-                            <div key={idx} className="flex flex-col items-center justify-start w-[150px]">
+                            <a href={dept.url} target="_blank" rel="noopener noreferrer" key={idx} className="flex flex-col items-center justify-start w-[150px] hover:-translate-y-2 transition-transform cursor-pointer">
                                 <div className="h-[88px] mb-4 flex items-center justify-center w-full">
                                     <img
                                         src={dept.logo}
@@ -74,10 +74,10 @@ const ResearchSupport = () => {
                                         }}
                                     />
                                 </div>
-                                <p className="text-center text-gray-900 text-[15px] font-medium leading-snug px-1">
+                                <p className="text-center text-gray-900 text-[15px] font-medium leading-snug px-1 hover:text-[#f59e0b] transition-colors">
                                     {dept.name}
                                 </p>
-                            </div>
+                            </a>
                         ))}
                     </div>
 
@@ -85,7 +85,7 @@ const ResearchSupport = () => {
                     <div className="md:hidden relative flex overflow-hidden w-full py-4">
                         <div className="flex animate-ticker gap-8 w-max hover:[animation-play-state:paused]">
                             {[...departments, ...departments].map((dept, idx) => (
-                                <div key={idx} className="flex flex-col items-center justify-start w-[130px] flex-shrink-0">
+                                <a href={dept.url} target="_blank" rel="noopener noreferrer" key={idx} className="flex flex-col items-center justify-start w-[130px] flex-shrink-0 cursor-pointer">
                                     <div className="h-16 mb-4 flex items-center justify-center w-full">
                                         <img
                                             src={dept.logo}
@@ -100,7 +100,7 @@ const ResearchSupport = () => {
                                     <p className="text-center text-gray-900 text-sm font-medium leading-snug px-1">
                                         {dept.name}
                                     </p>
-                                </div>
+                                </a>
                             ))}
                         </div>
                     </div>

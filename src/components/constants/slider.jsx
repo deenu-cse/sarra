@@ -48,13 +48,7 @@ const sliderData = [
         id: 7,
         image: "/assets/heroimg/6.jpeg",
         alt: "Hero Img",
-    },
-    {
-        id: 8,
-        image: "/assets/heroimg/7.jpeg",
-        alt: "Hero Img",
     }
-
 ];
 
 const EventSlider = () => {
@@ -106,7 +100,11 @@ const EventSlider = () => {
                 className="w-full h-[350px] md:h-[500px]" // Responsive height
             >
                 {sliderData.map((slide) => (
-                    <SwiperSlide key={slide.id} className="w-full h-full relative">
+                    <SwiperSlide
+                        key={slide.id}
+                        className="w-full h-full relative cursor-pointer"
+                        onClick={() => window.location.href = '/gallery'}
+                    >
                         <img
                             src={slide.image}
                             alt={slide.alt}
@@ -116,19 +114,18 @@ const EventSlider = () => {
                 ))}
             </Swiper>
 
-            <button onClick={goPrev} className={`${buttonStyle} left-10`} aria-label="Previous slide">
-                <ChevronLeft size={36} />
+            <button onClick={goPrev} className={`${buttonStyle} left-3 md:left-10 w-5 h-5 md:w-12 md:h-12`} aria-label="Previous slide">
+                <ChevronLeft size={24} className='md:w-8 md:h-8' />
             </button>
-            <button onClick={goNext} className={`${buttonStyle} right-10`} aria-label="Next slide">
-                <ChevronRight size={36} />
+            <button onClick={goNext} className={`${buttonStyle} right-3 md:right-10 w-5 h-5 md:w-12 md:h-12`} aria-label="Next slide">
+                <ChevronRight size={24} className='md:w-8 md:h-8' />
             </button>
 
             <div className="absolute bottom-8 right-12 z-30 flex items-center gap-6">
                 <div className="custom-pagination flex gap-2.5"></div>
                 <button
                     onClick={togglePlayPause}
-                    className="flex items-center justify-center w-12 h-8 rounded-full shadow-lg
-            bg-[#1a365d] border-2 border-[#f59e0b] text-white hover:bg-[#2a4d7d] transition-all"
+                    className="flex items-center justify-center w-12 h-8 rounded-full shadow-lg bg-[#1a365d] border-2 border-[#f59e0b] text-white hover:bg-[#2a4d7d] transition-all"
                     aria-label={isPlaying ? 'Pause autoplay' : 'Play autoplay'}
                 >
                     {isPlaying ? <Pause size={20} fill="white" /> : <Play size={20} fill="white" />}

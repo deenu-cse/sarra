@@ -13,7 +13,7 @@ const IMG = {
 
 function HeroSection() {
     return (
-        <section className="relative w-full overflow-hidden" style={{ minHeight: '450px' }}>
+        <section className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
             <img
                 src={IMG.hero}
                 alt="Knowledge Hub Banner"
@@ -21,7 +21,6 @@ function HeroSection() {
                 style={{ zIndex: 0 }}
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
-            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
 
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"

@@ -15,23 +15,23 @@ export default async function Home() {
   let news = [];
 
   try {
-      const res = await fetch(`${API_BASE}/announcements`, { cache: 'no-store' });
-      if (res.ok) {
-          const data = await res.json();
-          announcements = Array.isArray(data) ? data : (data?.data || []);
-      }
+    const res = await fetch(`${API_BASE}/announcements`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      announcements = Array.isArray(data) ? data : (data?.data || []);
+    }
   } catch (e) {
-      console.error('Failed to fetch announcements:', e);
+    console.error('Failed to fetch announcements:', e);
   }
 
   try {
-      const res = await fetch(`${API_BASE}/news`, { cache: 'no-store' });
-      if (res.ok) {
-          const data = await res.json();
-          news = Array.isArray(data) ? data : (data?.data || []);
-      }
+    const res = await fetch(`${API_BASE}/news`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      news = Array.isArray(data) ? data : (data?.data || []);
+    }
   } catch (e) {
-      console.error('Failed to fetch news:', e);
+    console.error('Failed to fetch news:', e);
   }
 
   return (

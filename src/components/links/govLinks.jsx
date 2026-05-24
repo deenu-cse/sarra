@@ -13,7 +13,7 @@ export default function GovLinks() {
           id="myMarquee"
           onMouseOver={() => marqueeRef.current?.stop()}
           onMouseOut={() => marqueeRef.current?.start()}
-          scrollAmount="5"
+          scrollamount="5"
           className="w-full flex items-center"
         >
           <div className="w-full flex items-center justify-center gap-10 whitespace-nowrap">

@@ -19,7 +19,6 @@ function HeroSection() {
                 style={{ zIndex: 0 }}
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
-            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
 
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
@@ -81,6 +80,37 @@ function InfoSection() {
     );
 }
 
+function LaunchPhotosSection() {
+    const photos = [
+        '/assets/bhagirithi/gal1.jpeg',
+        '/assets/bhagirithi/gal2.jpeg',
+        '/assets/bhagirithi/gal3.jpeg',
+    ];
+
+    return (
+        <section className="w-full py-16 px-6 md:px-12 bg-gray-50 border-t border-gray-200">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1e3a5f]">
+                        App Launch & Training Programs
+                    </h2>
+                    <p className="text-gray-600 mt-4 font-medium text-lg">
+                        Glimpses from the official launch and training sessions of Bhagirath App
+                    </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {photos.map((img, idx) => (
+                        <div key={idx} className="group relative rounded-2xl overflow-hidden shadow-xl border-4 border-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                            <img src={img} alt={`Launch Photo ${idx + 1}`} className="w-full h-[300px] object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
 function UISection() {
     return (
         <section className="w-full mx-auto bg-white flex flex-col items-center pb-20">
@@ -95,6 +125,7 @@ export default function BhagirathPage() {
         <main className="w-full font-sans">
             <HeroSection />
             <InfoSection />
+            <LaunchPhotosSection />
             <UISection />
         </main>
     );

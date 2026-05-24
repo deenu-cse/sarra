@@ -54,7 +54,6 @@ const Department = ({ initialAnnouncements }) => {
     return (
         <section className="relative w-full min-h-screen bg-white overflow-hidden py-5 px-4 md:px-12 font-sans">
 
-            {/* Background Terrace Lines Effect */}
             <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
                 <img src="your-terrace-bg-url.png" className="object-cover w-full h-full" alt="" />
             </div>

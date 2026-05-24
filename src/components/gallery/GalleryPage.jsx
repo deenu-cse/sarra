@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import axios from 'axios';
+import TrenchesGallery from './TrenchesGallery'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -71,7 +72,6 @@ function NextSpaceSection() {
         fetchGlobalImages();
     }, []);
 
-    // Don't render if no images from API
     if (galleryItems.length === 0) return null;
 
     return (
@@ -85,7 +85,6 @@ function NextSpaceSection() {
                     <div className="w-24 h-1 bg-[#f59e0b] mx-auto mt-6 rounded-full"></div>
                 </div>
 
-                {/* Bento Grid for first 6 items */}
                 {galleryItems.length >= 6 ? (
                     <div className="hidden md:grid grid-cols-4 gap-4 auto-rows-[250px]">
                         <div className="col-span-2 row-span-2 rounded-2xl overflow-hidden group shadow-lg relative">
@@ -243,6 +242,7 @@ export default function GalleryPage() {
             <HeroSection />
             <NextSpaceSection />
             <DistrictsGallery />
+            <TrenchesGallery />
         </main>
     );
 }

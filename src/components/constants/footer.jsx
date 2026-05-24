@@ -114,14 +114,15 @@ export default function Footer() {
           </div>
 
           <div className="text-xs text-gray-400 space-y-1 mt-4">
-            <p>Content Owned by <Link href="https://wmduk.gov.in" target="_blank" className="text-blue-400 hover:underline">Watershed Management Directorate</Link>, Government of Uttarakhand</p>
+            <p>Content Owned by <Link href="3" target="_blank" className="text-blue-400 hover:underline">Spring and River Rejuvenation Authority
+            </Link>, Government of Uttarakhand</p>
             <p>
               SARRA — State Aquifer Recharge & River Rejuvenation Agency, Dehradun
             </p>
             <p>
               Under the aegis of <Link href="https://uk.gov.in" target="_blank" className="text-blue-400 hover:underline">Government of Uttarakhand</Link>
             </p>
-            <p className="pt-2 text-gray-300 font-medium">Last Updated: May 2025</p>
+            <p className="pt-2 text-gray-300 font-medium">Last Updated: May 2026</p>
           </div>
 
           <div className="flex flex-wrap justify-center items-center gap-6 mt-5 pt-2">

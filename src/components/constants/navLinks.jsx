@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
@@ -8,7 +8,28 @@ import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
 const NavLinks = () => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(5);
+    const navContainerRef = useRef(null);
     const pathname = usePathname();
+
+    useEffect(() => {
+        const updateVisibleItems = () => {
+            if (window.innerWidth >= 1024) return;
+            if (!navContainerRef.current) return;
+
+            const containerWidth = navContainerRef.current.offsetWidth;
+            const availableWidth = containerWidth - 50;
+
+            let maxItems = Math.floor(availableWidth / 90);
+            maxItems = Math.max(1, Math.min(maxItems, navItems.length));
+
+            setVisibleCount(maxItems);
+        };
+
+        updateVisibleItems();
+        window.addEventListener('resize', updateVisibleItems);
+        return () => window.removeEventListener('resize', updateVisibleItems);
+    }, []);
 
     const navItems = [
         { title: 'Home', type: 'link', href: '/' },
@@ -53,6 +74,7 @@ const NavLinks = () => {
             ]
         },
         { title: 'News & Events', type: 'link', href: '/news' },
+        { title: 'Contact', type: 'link', href: '/contact' },
     ];
 
     const isActive = (item) => {
@@ -72,9 +94,8 @@ const NavLinks = () => {
         href !== '#' && pathname.startsWith(href);
 
     return (
-        <nav className="w-full bg-[#0a3055] shadow-lg border-t-2 border-[#f59e0b]">
+        <nav className="w-full bg-[#0a3055] shadow-lg border-t-2 border-[#f59e0b] relative z-[100]">
             <div className="max-w-[98%] mx-auto">
-                {/* Desktop Navigation */}
                 <div className="hidden lg:flex flex-wrap">
                     {navItems.map((item, index) => {
                         const active = isActive(item);
@@ -143,9 +164,9 @@ const NavLinks = () => {
                 </div>
 
                 <div className="lg:hidden flex items-stretch bg-[#0a3055] border-b border-blue-900/50 relative z-50">
-                    <div className="flex flex-1 overflow-x-auto hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <div ref={navContainerRef} className="flex flex-1 overflow-x-auto hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                         <style dangerouslySetInnerHTML={{ __html: `.hide-scroll::-webkit-scrollbar { display: none; }` }} />
-                        {navItems.slice(0, 5).map((item, index) => {
+                        {navItems.slice(0, visibleCount).map((item, index) => {
                             const active = isActive(item);
                             return (
                                 <div key={index} className="relative flex-none min-w-[80px] border-r border-blue-900/50">
@@ -170,22 +191,6 @@ const NavLinks = () => {
                                             <ChevronDown size={12} className={`ml-1 opacity-70 transition-transform ${activeDropdown === index ? 'rotate-180' : ''}`} />
                                         </button>
                                     )}
-
-                                    {item.type === 'dropdown' && activeDropdown === index && (
-                                        <ul className="absolute left-0 top-full w-[200px] bg-[#0a3055] text-gray-100 z-50 shadow-xl border-t-2 border-[#f59e0b]">
-                                            {item.options.map((option, idx) => (
-                                                <li key={idx} className="border-b border-black/30">
-                                                    <Link
-                                                        href={option.href}
-                                                        className="block px-4 py-3 text-xs font-semibold hover:bg-[#154b7d]"
-                                                        onClick={() => setActiveDropdown(null)}
-                                                    >
-                                                        {option.label}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
                                 </div>
                             );
                         })}
@@ -200,12 +205,30 @@ const NavLinks = () => {
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
+
+                    {activeDropdown !== null && activeDropdown < visibleCount && !mobileMenuOpen && navItems[activeDropdown].type === 'dropdown' && (
+                        <div className="absolute left-0 top-full w-full bg-[#0a3055] z-50 shadow-xl border-t-2 border-[#f59e0b]">
+                            <ul className="flex flex-col">
+                                {navItems[activeDropdown].options?.map((option, idx) => (
+                                    <li key={idx} className="border-b border-black/30">
+                                        <Link
+                                            href={option.href}
+                                            className="block px-6 py-3 text-xs font-semibold text-gray-100 hover:bg-[#154b7d]"
+                                            onClick={() => setActiveDropdown(null)}
+                                        >
+                                            {option.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
 
                 {mobileMenuOpen && (
-                    <div className="lg:hidden bg-[#0a3055] border-t border-blue-900/50 absolute left-0 w-full z-40 shadow-xl">
-                        {navItems.slice(5).map((item, index) => {
-                            const actualIndex = index + 5; // Offset by the 4 items shown above
+                    <div className="lg:hidden bg-[#0a3055] border-t border-blue-900/50 absolute top-full left-0 w-full z-50 shadow-xl">
+                        {navItems.slice(visibleCount).map((item, index) => {
+                            const actualIndex = index + visibleCount;
                             const active = isActive(item);
                             return (
                                 <div key={actualIndex}>

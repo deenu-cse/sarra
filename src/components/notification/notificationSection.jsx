@@ -8,12 +8,10 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
     const [isPaused, setIsPaused] = useState(false);
     const scrollContainerRef = useRef(null);
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-    const [zoomLevel, setZoomLevel] = useState(1);
 
     const newsItems = initialNews || [];
     const announcements = initialAnnouncements || [];
     const hasFetched = true;
-    const hasFetchedAnnouncements = true;
 
     const staticNotifications = [
         {
@@ -49,19 +47,21 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
     }
 
     let notificationsToDisplay = [];
-    if (activeTab === 'notifications') {
-        notificationsToDisplay = notifications;
-    } else if (activeTab === 'announcements') {
+    if (activeTab === 'news_announcements') {
+        const combined = [...notifications];
+
         if (announcements.length > 0) {
-            notificationsToDisplay = announcements.map(item => ({
+            const mappedAnnouncements = announcements.map(item => ({
                 title: item.title,
                 date: new Date(item.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
                 slug: item.slug || item._id,
                 isAnnouncement: true
             }));
-        } else {
-            notificationsToDisplay = [{ title: "No current announcements", date: new Date().toLocaleDateString('en-GB') }];
+            combined.push(...mappedAnnouncements);
         }
+
+        // Simple sort isn't perfect for "dd-mmm-yyyy", but good enough for display order
+        notificationsToDisplay = combined.length > 0 ? combined : staticNotifications;
     } else {
         notificationsToDisplay = staticNotifications;
     }
@@ -86,53 +86,24 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
         return () => cancelAnimationFrame(animationFrameId);
     }, [isPaused, activeTab]);
 
-    const handleZoomIn = () => setZoomLevel(prev => Math.min(prev + 0.5, 4));
-    const handleZoomOut = () => setZoomLevel(prev => Math.max(prev - 0.5, 0.5));
-    const handleResetZoom = () => setZoomLevel(1);
 
     return (
-        <div className="bg-[#e9f0f7] p-5 min-h-[90vh] font-sans">
+        <div className="bg-[#e9f0f7] px-5 py-10 md:py-16 font-sans">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-6">
 
                 <div className="flex-1 bg-white shadow-sm rounded-sm overflow-hidden flex flex-col relative">
                     <div className="flex justify-between items-center border-b overflow-x-auto no-scrollbar">
                         <div className="flex whitespace-nowrap">
                             <button
-                                onClick={() => setActiveTab('notifications')}
-                                className={`px-6 py-3 font-semibold text-sm transition-colors ${activeTab === 'notifications'
+                                onClick={() => setActiveTab('news_announcements')}
+                                className={`px-6 py-3 font-semibold text-sm transition-colors ${activeTab === 'news_announcements' || activeTab === 'notifications' || activeTab === 'announcements'
                                     ? 'bg-white text-[#0056b3] border-t-2 border-t-[#0056b3]'
                                     : 'bg-[#f8f9fa] text-gray-600 border-t-2 border-t-transparent hover:bg-gray-100'
                                     }`}
                             >
-                                Notifications
+                                News & Announcements
                             </button>
-                            <button
-                                onClick={() => setActiveTab('announcements')}
-                                className={`px-6 py-3 font-semibold text-sm transition-colors ${activeTab === 'announcements'
-                                    ? 'bg-white text-[#0056b3] border-t-2 border-t-[#0056b3]'
-                                    : 'bg-[#f8f9fa] text-gray-600 border-t-2 border-t-transparent hover:bg-gray-100'
-                                    }`}
-                            >
-                                Announcements
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('tenders')}
-                                className={`px-6 py-3 font-semibold text-sm transition-colors ${activeTab === 'tenders'
-                                    ? 'bg-white text-[#0056b3] border-t-2 border-t-[#0056b3]'
-                                    : 'bg-[#f8f9fa] text-gray-600 border-t-2 border-t-transparent hover:bg-gray-100'
-                                    }`}
-                            >
-                                Tenders
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('ongoingprojects')}
-                                className={`px-6 py-3 font-semibold text-sm transition-colors ${activeTab === 'ongoingprojects'
-                                    ? 'bg-white text-[#0056b3] border-t-2 border-t-[#0056b3]'
-                                    : 'bg-[#f8f9fa] text-gray-600 border-t-2 border-t-transparent hover:bg-gray-100'
-                                    }`}
-                            >
-                                Projects
-                            </button>
+
                         </div>
                         <div className="pr-4 flex items-center shrink-0">
                             <button
@@ -231,13 +202,12 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                     </div>
                 </div>
 
-                {/* Right Section: Image */}
                 <div
                     className="hidden md:block w-full md:w-[350px] bg-white rounded-lg shadow-md overflow-hidden relative min-h-[450px] cursor-pointer group"
                     onClick={() => setIsImageModalOpen(true)}
                 >
                     <img
-                        src="/assets/rivermap.png"
+                        src="/assets/maps/Major Watershed.jpeg"
                         alt="Section Feature"
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -252,37 +222,28 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
 
             {/* Image Modal */}
             {isImageModalOpen && (
-                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/90 backdrop-blur-sm transition-opacity">
-                    <div className="absolute top-6 right-6 flex gap-4 z-[110]">
-                        <div className="flex bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-                            <button onClick={handleZoomOut} className="text-white hover:bg-gray-700 p-3 transition-colors flex items-center justify-center" title="Zoom Out">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM13.5 10.5h-6" /></svg>
-                            </button>
-                            <div className="w-px bg-gray-700"></div>
-                            <button onClick={handleResetZoom} className="text-white hover:bg-gray-700 p-3 transition-colors flex items-center justify-center text-sm font-semibold min-w-[60px]" title="Reset Zoom">
-                                {Math.round(zoomLevel * 100)}%
-                            </button>
-                            <div className="w-px bg-gray-700"></div>
-                            <button onClick={handleZoomIn} className="text-white hover:bg-gray-700 p-3 transition-colors flex items-center justify-center" title="Zoom In">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
-                            </button>
-                        </div>
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm p-4 bg-black/80"
+                    onClick={() => setIsImageModalOpen(false)}
+                >
+                    <div
+                        className="relative w-full max-w-6xl max-h-[92vh] bg-transparent rounded-3xl overflow-hidden"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <button
-                            onClick={() => { setIsImageModalOpen(false); handleResetZoom(); }}
-                            className="text-white bg-red-600 hover:bg-red-700 p-3 rounded-lg transition-colors flex items-center justify-center"
-                            title="Close"
+                            onClick={() => setIsImageModalOpen(false)}
+                            className="absolute top-4 right-4 z-30 w-11 h-11 rounded-full bg-black/60 hover:bg-[#f59e0b] text-white flex items-center justify-center transition-all cursor-pointer"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                         </button>
-                    </div>
 
-                    <div className="w-full h-full overflow-auto flex items-center justify-center p-8 relative scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
-                        <img
-                            src="/assets/rivermap.png"
-                            alt="Section Feature Full"
-                            className="max-w-none transition-transform duration-300 ease-out origin-center"
-                            style={{ transform: `scale(${zoomLevel})` }}
-                        />
+                        <div className="relative w-full h-[60vh] md:h-[80vh] bg-transparent flex items-center justify-center">
+                            <img
+                                src="/assets/maps/Major Watershed.jpeg"
+                                alt="Section Feature Full"
+                                className="max-w-full max-h-full object-contain"
+                            />
+                        </div>
                     </div>
                 </div>
             )}

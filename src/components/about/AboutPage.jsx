@@ -22,14 +22,12 @@ const C = {
 
 const IMG = {
     hero: '/assets/about/hero-bg.png',
-    collage1: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
-    collage2: 'https://images.unsplash.com/photo-1542332213-31f87348057f?w=600&q=80',
-    collage3: 'https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=600&q=80',
-    why1: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',
-    why2: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80',
-    why3: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80',
-    vision: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=600&q=80',
-    mission: 'https://images.unsplash.com/photo-1504567961542-e24d9439a724?w=600&q=80',
+    collage1: '/assets/about/DJI_20250411113213_0031_D.jpg',
+    collage2: '/assets/about/sarra_front.jpeg',
+    collage3: '/assets/about/wmd.jpg',
+    why1: '/assets/about/DJI_20250411113213_0031_D.jpg',
+    why2: '/assets/about/sarra_front.jpeg',
+    vision: '/assets/about/sarrabanner.png',
 };
 
 /* ─── Animate-on-scroll hook ─── */
@@ -73,7 +71,7 @@ function Counter({ end, suffix = '' }) {
    ═══════════════════════════════════════════════════════ */
 function HeroSection() {
     return (
-        <section id="about-hero" className="relative w-full overflow-hidden" style={{ minHeight: '420px' }}>
+        <section id="about-hero" className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
             <img
                 src={IMG.hero}
                 alt="Uttarakhand Himalayan river landscape"
@@ -81,7 +79,6 @@ function HeroSection() {
                 style={{ zIndex: 0 }}
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
-            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c8 0 15 12 15 25s-7 25-15 25S15 43 15 30 22 5 30 5z' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E")`, backgroundSize: '80px 80px', zIndex: 2 }} />
 
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-16 md:py-32">
 
@@ -106,12 +103,6 @@ function HeroSection() {
 function IntroductionSection() {
     const [ref, visible] = useReveal();
 
-    const stats = [
-        { num: 500, suffix: '+', label: 'Springs Revived' },
-        { num: 13, suffix: '', label: 'Districts' },
-        { num: 2400, suffix: '+', label: 'Volunteers' },
-        { num: 8, suffix: '+', label: 'Years' },
-    ];
 
     return (
         <section id="about-intro" className="w-full py-12 md:py-24 px-6 md:px-12 bg-white">
@@ -131,22 +122,8 @@ function IntroductionSection() {
                             The purpose of establishment of Spring and River Rejuvenation Authority (SARRA) at State level is to identify all the water sources of the state which need to be rejuvenated on priority to ensure increase in water discharge and perennially of the spring and rain-fed rivers measurement and monitoring by ensuring community participation of local people for sustainable flow of rain-fed rivers etc.
                         </p>
                     </div>
-
-                    <div className="grid grid-cols-4 gap-y-8 gap-x-4 border-t border-gray-100 pt-8">
-                        {stats.map((s, i) => (
-                            <div key={i} className="flex flex-col">
-                                <span className="text-2xl font-bold text-[#1e3a5f]">
-                                    <Counter end={s.num} suffix={s.suffix} />
-                                </span>
-                                <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mt-1">
-                                    {s.label}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
                 </div>
 
-                {/* Right Content / Collage */}
                 <div className="relative h-[500px] flex items-center justify-center">
                     <div className="absolute top-0 left-0 w-[60%] h-[40%] rounded-2xl overflow-hidden shadow-xl z-10">
                         <img src={IMG.collage1} alt="Landscape" className="w-full h-full object-cover" />
