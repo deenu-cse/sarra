@@ -4,7 +4,7 @@ import React from 'react';
 
 const IMG = {
     hero: '/assets/bhagirithi/banner.png',
-    infoImage: '/assets/bhagirithi/SARRA_3.jpg',
+    infoImage: '/assets/bhagirithi/SARRA_3.jpeg',
     ui1: '/assets/bhagirithi/bhg1.png',
     ui2: '/assets/bhagirithi/bhg2.png',
 };
@@ -88,7 +88,7 @@ function LaunchPhotosSection() {
     ];
 
     return (
-        <section className="w-full py-16 px-6 md:px-12 bg-gray-50 border-t border-gray-200">
+        <section className="w-full py-12 px-6 md:px-12 bg-gray-50 border-t border-gray-200">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1e3a5f]">

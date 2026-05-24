@@ -57,20 +57,25 @@ function HeroSection() {
     );
 }
 
-function NextSpaceSection() {
-    const [galleryItems, setGalleryItems] = useState([]);
+function NextSpaceSection({ initialGalleryItems = [] }) {
+    const [galleryItems, setGalleryItems] = useState(initialGalleryItems);
 
     useEffect(() => {
-        const fetchGlobalImages = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/gallery?type=global`);
-                setGalleryItems(res.data.data || []);
-            } catch (err) {
-                console.error('Failed to fetch global gallery:', err);
-            }
-        };
-        fetchGlobalImages();
-    }, []);
+        // Only fetch if no initial data provided
+        if (initialGalleryItems.length === 0) {
+            const fetchGlobalImages = async () => {
+                try {
+                    const res = await axios.get(`${API_URL}/gallery?type=global`);
+                    setGalleryItems(res.data.data || []);
+                } catch (err) {
+                    console.error('Failed to fetch global gallery:', err);
+                }
+            };
+            fetchGlobalImages();
+        } else {
+            setGalleryItems(initialGalleryItems);
+        }
+    }, [initialGalleryItems]);
 
     if (galleryItems.length === 0) return null;
 
@@ -236,11 +241,11 @@ function DistrictsGallery() {
     );
 }
 
-export default function GalleryPage() {
+export default function GalleryPage({ initialGalleryItems = [] }) {
     return (
         <main className="w-full font-sans">
             <HeroSection />
-            <NextSpaceSection />
+            <NextSpaceSection initialGalleryItems={initialGalleryItems} />
             <DistrictsGallery />
             <TrenchesGallery />
         </main>

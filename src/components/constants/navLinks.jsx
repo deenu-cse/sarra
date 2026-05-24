@@ -43,24 +43,18 @@ const NavLinks = () => {
                 { label: 'Contact Us', href: '#' }
             ]
         },
+        // {
+        //     title: 'Initiatives',
+        //     type: 'dropdown',
+        //     options: [
+        //         { label: 'Spring Rejuvenation', href: '#' },
+        //         { label: 'River Conservation', href: '#' },
+        //         { label: 'Watershed Management', href: '#' }
+        //     ]
+        // },
         {
-            title: 'Initiatives',
-            type: 'dropdown',
-            options: [
-                { label: 'Spring Rejuvenation', href: '#' },
-                { label: 'River Conservation', href: '#' },
-                { label: 'Watershed Management', href: '#' }
-            ]
-        },
-        {
-            title: 'Notices & Tenders',
-            type: 'dropdown',
-            options: [
-                { label: 'Announcements', href: '/announcements' },
-                { label: 'Tender Notices', href: '#' },
-                { label: 'Notifications', href: '#' },
-                { label: 'Guidelines', href: '#' }
-            ]
+            title: 'Announcements',
+            type: 'link', href: '/announcements'
         },
         { title: 'Knowledge Hub', type: 'link', href: '/knowledge-hub' },
         { title: 'Bhagirath App', type: 'link', href: '/bhagirath-app' },

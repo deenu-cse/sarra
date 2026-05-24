@@ -51,20 +51,25 @@ function PromoSection() {
     );
 }
 
-function BooksSection() {
-    const [dynamicBooks, setDynamicBooks] = useState([]);
+function BooksSection({ initialPublications = [] }) {
+    const [dynamicBooks, setDynamicBooks] = useState(initialPublications);
 
     useEffect(() => {
-        const fetchPublications = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/publications`);
-                setDynamicBooks(res.data.data || []);
-            } catch (err) {
-                console.error('Failed to fetch publications:', err);
-            }
-        };
-        fetchPublications();
-    }, []);
+        // Only fetch if no initial data provided
+        if (initialPublications.length === 0) {
+            const fetchPublications = async () => {
+                try {
+                    const res = await axios.get(`${API_URL}/publications`);
+                    setDynamicBooks(res.data.data || []);
+                } catch (err) {
+                    console.error('Failed to fetch publications:', err);
+                }
+            };
+            fetchPublications();
+        } else {
+            setDynamicBooks(initialPublications);
+        }
+    }, [initialPublications]);
 
     return (
         <section className="w-full py-6 px-6 md:px-12 pb-15">
@@ -113,12 +118,12 @@ function BooksSection() {
     );
 }
 
-export default function KnowledgePage() {
+export default function KnowledgePage({ initialPublications = [] }) {
     return (
         <main className="w-full font-sans">
             <HeroSection />
             <PromoSection />
-            <BooksSection />
+            <BooksSection initialPublications={initialPublications} />
         </main>
     );
 }
