@@ -81,7 +81,7 @@ const Department = ({ initialAnnouncements }) => {
                     <img
                         src="/assets/maps/Districtwise.jpeg"
                         alt="Districtwise Map"
-                        className="w-full max-w-[390px] rounded-lg shadow-md cursor-pointer hover:scale-103 transition-transform border-4 border-gray-100 cursor-pointer"
+                        className="w-full rounded-lg shadow-md cursor-pointer hover:scale-105 transition-transform border-4 border-gray-100"
                         onClick={() => setIsModalOpen(true)}
                     />
                 </div>
@@ -103,9 +103,9 @@ const Department = ({ initialAnnouncements }) => {
                                     </div>
                                     <h4 className="font-bold text-base mb-1">{person.name}</h4>
                                     <p className="text-[#f59e0b] text-xs font-semibold mb-2">{person.title}</p>
-                                    <p className="text-gray-300 italic text-[11px] leading-tight px-2">
+                                    {/* <p className="text-gray-300 italic text-[11px] leading-tight px-2">
                                         {person.slogan}
-                                    </p>
+                                    </p> */}
                                 </div>
                             ))}
                         </div>
@@ -127,9 +127,9 @@ const Department = ({ initialAnnouncements }) => {
                                         </div>
                                         <h4 className="font-bold text-[13px] sm:text-sm mb-1 leading-tight">{person.name}</h4>
                                         <p className="text-[#f59e0b] text-[10px] sm:text-[11px] font-semibold mb-1">{person.title}</p>
-                                        <p className="text-gray-300 italic text-[9px] sm:text-[10px] leading-tight px-1">
+                                        {/* <p className="text-gray-300 italic text-[9px] sm:text-[10px] leading-tight px-1">
                                             {person.slogan}
-                                        </p>
+                                        </p> */}
                                     </div>
                                 ))}
                             </div>
