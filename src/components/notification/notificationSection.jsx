@@ -11,60 +11,25 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
 
     const newsItems = initialNews || [];
     const announcements = initialAnnouncements || [];
-    const hasFetched = true;
-
-    const staticNotifications = [
-        {
-            title: "Publicity of enhancement of EWS income criteria to Rs. 5,00,000/- in compliance of High Court Order dated 02.01.2026",
-            date: "17-Mar-2026",
-            size: "189.5 KB"
-        },
-        {
-            title: "NOTICE INVITING APPLICATIONS FROM CBC/DIP EMPANELLED AGENCIES BASED IN DELHI NCR FOR EMPANELMENT IN THE OFFICE OF CHIEF ELECTORAL OFFICER (CEO)-DELHI ...",
-            date: "16-Mar-2026",
-            size: "1.49 MB"
-        },
-        {
-            title: "NOTICE INVITING APPLICATIONS FROM CBC/DIP EMPANELLED AGENCIES BASED IN DELHI NCR FOR EMPANELMENT IN THE OFFICE OF CHIEF ELECTORAL OFFICER CEO DELHI FO...",
-            date: "16-Mar-2026",
-            size: "1.4 MB"
-        }
-    ];
-
-    let notifications = [];
-
-    if (newsItems.length > 0) {
-        notifications = newsItems.map((item) => ({
-            title: item.title,
-            date: new Date(item.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-            slug: item.slug || item._id,
-            isArticle: true,
-        }));
-    } else if (hasFetched) {
-        notifications = staticNotifications;
-    } else {
-        notifications = staticNotifications;
-    }
 
     let notificationsToDisplay = [];
-    if (activeTab === 'news_announcements') {
-        const combined = [...notifications];
+    
+    // Combine news and announcements
+    const mappedNews = newsItems.map((item) => ({
+        title: item.title,
+        date: new Date(item.createdAt || item.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        slug: item.slug || item._id,
+        isArticle: true,
+    }));
 
-        if (announcements.length > 0) {
-            const mappedAnnouncements = announcements.map(item => ({
-                title: item.title,
-                date: new Date(item.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-                slug: item.slug || item._id,
-                isAnnouncement: true
-            }));
-            combined.push(...mappedAnnouncements);
-        }
+    const mappedAnnouncements = announcements.map(item => ({
+        title: item.title,
+        date: new Date(item.date || item.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        slug: item.slug || item._id,
+        isAnnouncement: true
+    }));
 
-        // Simple sort isn't perfect for "dd-mmm-yyyy", but good enough for display order
-        notificationsToDisplay = combined.length > 0 ? combined : staticNotifications;
-    } else {
-        notificationsToDisplay = staticNotifications;
-    }
+    notificationsToDisplay = [...mappedNews, ...mappedAnnouncements];
 
     useEffect(() => {
         const container = scrollContainerRef.current;
@@ -130,58 +95,64 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                         onMouseEnter={() => setIsPaused(true)}
                         onMouseLeave={() => setIsPaused(false)}
                     >
-                        {notificationsToDisplay.map((item, index) => (
-                            <div key={index} className="p-5 border-b flex justify-between items-start gap-4 hover:bg-gray-50 transition-colors">
-                                <div className="space-y-2">
-                                    <h3 className="text-[#1a1a1a] font-bold text-[15px] leading-tight">
-                                        {item.title}
-                                    </h3>
-                                    <div className="flex items-center text-sm text-gray-600 gap-2">
-                                        <span>Date : {item.date}</span>
-                                        {item.size && (
-                                            <>
-                                                <span className="text-gray-300">|</span>
-                                                <span className="flex items-center text-red-600">
-                                                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12V6h-4V2H4v16zm2-2V4h4v4h4v8H6z" /></svg>
-                                                    {item.size}
-                                                </span>
-                                            </>
-                                        )}
-                                        {item.isArticle && (
-                                            <>
-                                                <span className="text-gray-300">|</span>
-                                                <span className="text-[#0056b3] text-xs font-semibold">📰 News Article</span>
-                                            </>
-                                        )}
-                                        {item.isAnnouncement && (
-                                            <>
-                                                <span className="text-gray-300">|</span>
-                                                <span className="text-orange-500 text-xs font-bold uppercase">📢 Announcement</span>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                                {item.isArticle ? (
-                                    <Link
-                                        href={`/news/${item.slug}`}
-                                        className="border border-[#0056b3] text-[#0056b3] px-6 py-1 rounded-sm text-sm font-semibold hover:bg-[#0056b3] hover:text-white transition-all whitespace-nowrap"
-                                    >
-                                        Read
-                                    </Link>
-                                ) : item.isAnnouncement ? (
-                                    <Link
-                                        href={`/announcements/${item.slug}`}
-                                        className="border border-orange-500 text-orange-500 px-6 py-1 rounded-sm text-sm font-bold hover:bg-orange-500 hover:text-white transition-all whitespace-nowrap"
-                                    >
-                                        View
-                                    </Link>
-                                ) : (
-                                    <button className="border border-[#0056b3] text-[#0056b3] px-6 py-1 rounded-sm text-sm font-semibold hover:bg-[#0056b3] hover:text-white transition-all whitespace-nowrap">
-                                        View
-                                    </button>
-                                )}
+                        {notificationsToDisplay.length === 0 ? (
+                            <div className="p-8 text-center text-gray-500 font-medium">
+                                No news or announcements at this time.
                             </div>
-                        ))}
+                        ) : (
+                            notificationsToDisplay.map((item, index) => (
+                                <div key={index} className="p-5 border-b flex justify-between items-start gap-4 hover:bg-gray-50 transition-colors">
+                                    <div className="space-y-2">
+                                        <h3 className="text-[#1a1a1a] font-bold text-[15px] leading-tight">
+                                            {item.title}
+                                        </h3>
+                                        <div className="flex items-center text-sm text-gray-600 gap-2">
+                                            <span>Date : {item.date}</span>
+                                            {item.size && (
+                                                <>
+                                                    <span className="text-gray-300">|</span>
+                                                    <span className="flex items-center text-red-600">
+                                                        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12V6h-4V2H4v16zm2-2V4h4v4h4v8H6z" /></svg>
+                                                        {item.size}
+                                                    </span>
+                                                </>
+                                            )}
+                                            {item.isArticle && (
+                                                <>
+                                                    <span className="text-gray-300">|</span>
+                                                    <span className="text-[#0056b3] text-xs font-semibold">📰 News Article</span>
+                                                </>
+                                            )}
+                                            {item.isAnnouncement && (
+                                                <>
+                                                    <span className="text-gray-300">|</span>
+                                                    <span className="text-orange-500 text-xs font-bold uppercase">📢 Announcement</span>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                    {item.isArticle ? (
+                                        <Link
+                                            href={`/news/${item.slug}`}
+                                            className="border border-[#0056b3] text-[#0056b3] px-6 py-1 rounded-sm text-sm font-semibold hover:bg-[#0056b3] hover:text-white transition-all whitespace-nowrap"
+                                        >
+                                            Read
+                                        </Link>
+                                    ) : item.isAnnouncement ? (
+                                        <Link
+                                            href={`/announcements/${item.slug}`}
+                                            className="border border-orange-500 text-orange-500 px-6 py-1 rounded-sm text-sm font-bold hover:bg-orange-500 hover:text-white transition-all whitespace-nowrap"
+                                        >
+                                            View
+                                        </Link>
+                                    ) : (
+                                        <button className="border border-[#0056b3] text-[#0056b3] px-6 py-1 rounded-sm text-sm font-semibold hover:bg-[#0056b3] hover:text-white transition-all whitespace-nowrap">
+                                            View
+                                        </button>
+                                    )}
+                                </div>
+                            ))
+                        )}
                     </div>
                     <div className="p-4 flex justify-between md:justify-end items-center bg-white border-t">
                         <button

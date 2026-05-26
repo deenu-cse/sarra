@@ -12,13 +12,15 @@ const ResearchSupport = () => {
 
     const departments = [
         { name: "Forest Department", logo: "/assets/icons/forest-logo.png", url: "https://forest.uk.gov.in" },
-        { name: "Minor Irrigation", logo: "/assets/icons/Minor-irrigation.png", url: "https://minorirrigation.uk.gov.in/" },
+        { name: "Minor Irrigation", logo: "/assets/icons/Minor-Irrigation.png", url: "https://minorirrigation.uk.gov.in/" },
         { name: "Irrigation Department", logo: "/assets/icons/Irrigation.png", url: "https://irrigation.uk.gov.in/" },
         { name: "Rural Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://rural.uk.gov.in/" },
         { name: "Urban Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://udd.uk.gov.in/" },
         { name: "Peyjal Nigam", logo: "/assets/icons/uk-gov-logo.png", url: "https://peyjal.uk.gov.in/" },
         { name: "Uttarakhand Jal Sansthan", logo: "/assets/icons/uk-gov-logo.png", url: "https://ujs.uk.gov.in/" },
         { name: "WMD", logo: "/assets/icons/WMD_LOGO.jpg", url: "https://wmduk.gov.in/" },
+        { name: "shm", logo: "/assets/icons/horticulture.png", url: "https://shm.uk.gov.in/" },
+        { name: "agriculture", logo: "/assets/icons/agriculture.jpg", url: "https://agriculture.uk.gov.in/" },
     ];
 
     return (

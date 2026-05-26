@@ -8,7 +8,6 @@ const IMG = {
 };
 
 const DISTRICT_DATA = [
-  // KUMAON
   {
     region: 'KUMAON',
     sr: '1.', district: 'Almora', river: 'Jata Ganga',
@@ -117,6 +116,69 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
   const layersRef = useRef({});
   const [mapLoaded, setMapLoaded] = useState(false);
 
+  // Styled popup HTML for click interactions
+  const createPopupHTML = (data) => `
+    <div style="min-width:210px;max-width:270px;font-family:system-ui,-apple-system,sans-serif;">
+      <div style="background:linear-gradient(135deg,#0a3055,#1e3a5f);color:white;padding:10px 14px;border-radius:6px 6px 0 0;margin:-14px -20px 10px -20px;">
+        <div style="font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px;">${data.region} Region</div>
+        <div style="font-size:16px;font-weight:800;letter-spacing:0.3px;">${data.district}</div>
+      </div>
+      <div style="padding:2px 0 0;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+          <span style="color:#0ea5e9;font-weight:700;font-size:14px;">🌊 ${data.river}</span>
+        </div>
+        <div style="font-size:11px;color:#666;margin-bottom:6px;display:flex;align-items:center;gap:4px;">
+          📍 ${data.watershed}
+        </div>
+        <div style="font-size:11px;color:#888;line-height:1.4;">${data.description}</div>
+        <div style="font-size:10px;color:#aaa;margin-top:8px;border-top:1px solid #eee;padding-top:6px;font-family:monospace;">
+          ${data.lat.toFixed(4)}°N, ${data.lng.toFixed(4)}°E
+        </div>
+    </div>`;
+
+  const addUttarakhandBoundary = (map, L) => {
+    fetch('/assets/one_river/Uk_Boundary.kml')
+      .then(r => {
+        if (!r.ok) throw new Error('Boundary KML not found');
+        return r.text();
+      })
+      .then(kmlText => {
+        const parser = new DOMParser();
+        const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
+        let placemarks = kmlDoc.getElementsByTagName('Placemark');
+        if (!placemarks || placemarks.length === 0) {
+          placemarks = kmlDoc.getElementsByTagNameNS('*', 'Placemark');
+        }
+
+        Array.from(placemarks).forEach((placemark) => {
+          let coordsNodes = placemark.getElementsByTagName('coordinates');
+          if (!coordsNodes || coordsNodes.length === 0) {
+            coordsNodes = placemark.getElementsByTagNameNS('*', 'coordinates');
+          }
+
+          Array.from(coordsNodes).forEach(node => {
+            const coordsText = node.textContent.trim();
+            const coordPairs = coordsText.split(/\s+/);
+            const latLngs = coordPairs.map(pair => {
+              const [lng, lat] = pair.split(',');
+              return [parseFloat(lat), parseFloat(lng)];
+            }).filter(ll => !isNaN(ll[0]) && !isNaN(ll[1]));
+
+            if (latLngs.length > 0) {
+              L.polygon(latLngs, {
+                color: '#0a3055',
+                weight: 2.5,
+                dashArray: '10, 5',
+                fillColor: 'transparent',
+                interactive: false,
+              }).addTo(map);
+            }
+          });
+        });
+      })
+      .catch(err => console.error('Error loading boundary:', err));
+  };
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (mapInstanceRef.current) return;
@@ -148,10 +210,12 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
 
     const L = window.L;
     const map = L.map(mapRef.current, {
-      center: [30.0668, 79.0193],
-      zoom: 7,
+      center: [30.1, 79.0],
+      zoom: 8,
       zoomControl: false,
       attributionControl: false,
+      maxBounds: [[27.5, 76.0], [32.5, 82.0]],
+      minZoom: 7,
     });
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -166,6 +230,9 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
     }).addTo(map);
 
     mapInstanceRef.current = map;
+
+    // Add Uttarakhand state boundary highlight
+    addUttarakhandBoundary(map, L);
 
     fetch('/assets/one_river/ODOR 13.kml')
       .then(r => {
@@ -234,12 +301,27 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
           opacity: 0.8,
         });
 
+        if (match) {
+          polygon.bindTooltip(
+            `<div style="font-family:system-ui;padding:2px 0;"><b style="font-size:13px;color:#0a3055;">${match.district}</b><br/><span style="color:#0ea5e9;font-size:12px;">🌊 ${match.river}</span><br/><span style="font-size:10px;color:#888;">${match.watershed}</span></div>`,
+            { sticky: true, direction: 'top', offset: [0, -10], className: 'district-tooltip' }
+          );
+          polygon.bindPopup(createPopupHTML(match), {
+            maxWidth: 280,
+            className: 'district-info-popup',
+            closeButton: true,
+          });
+        }
+
         polygon.on('mouseover', function () {
           this.setStyle({ weight: 2.5, fillOpacity: 0.7 });
           if (match) onDistrictSelect(match);
         });
         polygon.on('mouseout', function () {
           this.setStyle({ weight: 1.5, fillOpacity: 0.45 });
+        });
+        polygon.on('click', function () {
+          if (match) onDistrictSelect(match);
         });
 
         polygon.addTo(map);
@@ -257,7 +339,14 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
             className: '',
             iconAnchor: [40, 10],
           });
-          L.marker([lat, lng], { icon }).addTo(map);
+          const marker = L.marker([lat, lng], { icon });
+          marker.bindPopup(createPopupHTML(match), {
+            maxWidth: 280,
+            className: 'district-info-popup',
+            closeButton: true,
+          });
+          marker.on('click', () => onDistrictSelect(match));
+          marker.addTo(map);
         }
       }
     });
@@ -273,7 +362,15 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
         opacity: 1,
         fillOpacity: 0.8,
       });
-      marker.bindTooltip(`<b>${d.district}</b><br/>🌊 ${d.river}`, { permanent: false, direction: 'top' });
+      marker.bindTooltip(
+        `<div style="font-family:system-ui;padding:2px 0;"><b style="font-size:13px;color:#0a3055;">${d.district}</b><br/><span style="color:#0ea5e9;font-size:12px;">🌊 ${d.river}</span></div>`,
+        { permanent: false, direction: 'top', className: 'district-tooltip' }
+      );
+      marker.bindPopup(createPopupHTML(d), {
+        maxWidth: 280,
+        className: 'district-info-popup',
+        closeButton: true,
+      });
       marker.on('click', () => onDistrictSelect(d));
       marker.addTo(map);
       layersRef.current[d.district] = marker;
@@ -292,6 +389,46 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
   return (
     <div className="relative w-full rounded-[24px] overflow-hidden shadow-sm border border-blue-100" style={{ height: '500px' }}>
       <div ref={mapRef} className="absolute inset-0" style={{ zIndex: 1 }} />
+
+      {/* Custom popup and tooltip styles */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        .district-info-popup .leaflet-popup-content-wrapper {
+          border-radius: 10px;
+          padding: 0;
+          overflow: hidden;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+          border: 1px solid rgba(10,48,85,0.1);
+        }
+        .district-info-popup .leaflet-popup-content {
+          margin: 14px 20px;
+          line-height: 1.4;
+        }
+        .district-info-popup .leaflet-popup-tip {
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .district-info-popup .leaflet-popup-close-button {
+          color: white !important;
+          font-size: 18px;
+          top: 6px !important;
+          right: 8px !important;
+          z-index: 10;
+        }
+        .district-info-popup .leaflet-popup-close-button:hover {
+          color: #f59e0b !important;
+        }
+        .district-tooltip {
+          background: white !important;
+          border: 1px solid rgba(10,48,85,0.12) !important;
+          border-radius: 10px !important;
+          padding: 8px 12px !important;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.12) !important;
+        }
+        .district-tooltip::before {
+          border-top-color: white !important;
+        }
+      `}} />
+
       <div className="absolute bottom-4 left-4 z-[400] bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-blue-100">
         <div className="text-[11px] font-bold text-[#0a3055] mb-2 uppercase tracking-wide">Legend</div>
         <div className="space-y-1.5">
@@ -302,6 +439,10 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
           <div className="flex items-center gap-2">
             <div className="w-4 h-3 rounded-sm border border-[#543070]" style={{ background: 'rgba(2,147,247,0.35)' }} />
             <span className="text-[10px] text-gray-600 font-medium">Garhwal Region</span>
+          </div>
+          <div className="flex items-center gap-2 mt-1 pt-1 border-t border-gray-100">
+            <div className="w-4 h-0 border-t-2 border-dashed border-[#0a3055]" />
+            <span className="text-[10px] text-gray-600 font-medium">State Boundary</span>
           </div>
         </div>
       </div>
@@ -318,40 +459,6 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
           🗺 One District • One River
         </div>
       </div>
-    </div>
-  );
-}
-
-function DistrictInfoCard({ district, onClose }) {
-  if (!district) return null;
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-blue-100 p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 relative">
-      <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full">
-        <div className="flex flex-col shrink-0 text-center md:text-left">
-          <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">{district.region} Region</div>
-          <h3 className="text-[19px] font-bold text-[#0a3055] leading-tight">{district.district}</h3>
-        </div>
-
-        <div className="hidden md:block w-px h-10 bg-gray-200 shrink-0"></div>
-
-        <div className="flex flex-col shrink-0 text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start gap-2 mb-0.5">
-            <div className="w-2.5 h-2.5 rounded-full border border-[#0a3055]" style={{ background: district.color }} />
-            <span className="text-[#0ea5e9] font-bold text-[14px]">🌊 {district.river}</span>
-          </div>
-          <div className="text-[12px] text-gray-500 font-medium">
-            {district.watershed} <span className="text-gray-300 ml-1">|</span> <span className="font-mono text-[10px] text-gray-400 ml-1">{district.lat.toFixed(3)}°N, {district.lng.toFixed(3)}°E</span>
-          </div>
-        </div>
-
-        <div className="hidden lg:block w-px h-10 bg-gray-200 shrink-0"></div>
-
-        <p className="text-[13px] text-gray-600 leading-relaxed text-center md:text-left flex-grow">
-          {district.description}
-        </p>
-      </div>
-
-      <button onClick={onClose} className="absolute top-2 right-2 md:static w-7 h-7 shrink-0 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">✕</button>
     </div>
   );
 }
@@ -396,16 +503,7 @@ function ContentSection() {
           <div className="w-full">
             <InteractiveMap selectedDistrict={selectedDistrict} onDistrictSelect={setSelectedDistrict} />
           </div>
-          <div className="w-full">
-            {selectedDistrict ? (
-              <DistrictInfoCard district={selectedDistrict} onClose={() => setSelectedDistrict(null)} />
-            ) : (
-              <div className="bg-[#f8fafc] rounded-2xl border border-blue-100 p-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
-                <MapPin size={20} className="text-[#97c0e6]" />
-                <p className="text-[14px] text-gray-500 font-medium">Hover or click on the map areas, or select a row below to see detailed watershed information.</p>
-              </div>
-            )}
-          </div>
+
         </div>
 
         <div className="w-full flex flex-col lg:flex-row gap-6 h-full mt-4">

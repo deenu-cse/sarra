@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect, useMemo, Fragment } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "../../../lib/axiosInstance";
 import { toast } from "sonner";
-import { useAuth } from "../../../context/AuthContext";
 
 // ─── CONSTANTS ───────────────────────────────────────────────────────────────
 const FINANCIAL_YEARS = ['2024-25', '2025-26', '2026-27', '2027-28'];
@@ -52,7 +51,6 @@ const tableHead = "bg-gradient-to-r from-blue-700 to-blue-800 text-white text-xs
 
 export default function MPRAbstract55() {
   const router = useRouter();
-  const { user } = useAuth();
 
   const [financialYear, setFinancialYear] = useState('2025-26');
   const [month, setMonth] = useState('April');
@@ -66,7 +64,7 @@ export default function MPRAbstract55() {
 
   // Restore from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem(`sarra_mpr_abstract55_${user?._id || 'guest'}`);
+    const saved = localStorage.getItem(`sarra_mpr_abstract55_guest`);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -79,12 +77,12 @@ export default function MPRAbstract55() {
         console.error("Failed to parse localStorage draft", e);
       }
     }
-  }, [user]);
+  }, []);
 
   // Save to localStorage whenever critical state changes
   useEffect(() => {
     const timer = setTimeout(() => {
-      localStorage.setItem(`sarra_mpr_abstract55_${user?._id || 'guest'}`, JSON.stringify({
+      localStorage.setItem(`sarra_mpr_abstract55_guest`, JSON.stringify({
         financialYear,
         month,
         formData,
@@ -93,7 +91,7 @@ export default function MPRAbstract55() {
       }));
     }, 500);
     return () => clearTimeout(timer);
-  }, [financialYear, month, formData, activeDeptIdx, user]);
+  }, [financialYear, month, formData, activeDeptIdx]);
 
   // Keyboard shortcut
   useEffect(() => {
@@ -350,8 +348,8 @@ export default function MPRAbstract55() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <button onClick={() => router.push('/dashboard/mnd/mpr')} className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all">
-              View Submitted MPR
+            <button onClick={() => router.push('/')} className="w-full py-3 bg-slate-600 text-white rounded-xl font-bold hover:bg-slate-700 transition-all">
+              Go to Home
             </button>
             <button onClick={() => window.location.reload()} className="w-full py-3 bg-white text-slate-600 border-2 border-slate-200 rounded-xl font-bold hover:bg-slate-50 transition-all">
               Start New MPR

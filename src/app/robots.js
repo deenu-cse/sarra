@@ -4,7 +4,7 @@ export default function robots() {
             {
                 userAgent: '*',
                 allow: '/',
-                disallow: ['/login', '/api/'],
+                disallow: ['/api/'],
             },
         ],
         sitemap: 'https://sarra.uk.gov.in/sitemap.xml',

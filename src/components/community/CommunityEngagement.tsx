@@ -107,9 +107,13 @@ const CommunityEngagement = () => {
         <Swiper
           modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
           effect="coverflow"
-          grabCursor={true}
           centeredSlides={true}
           slidesPerView="auto"
+          onClick={(swiper) => {
+            if (typeof swiper.clickedIndex === 'number' && swiper.clickedIndex >= 0) {
+              openLightbox(swiper.clickedIndex);
+            }
+          }}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
@@ -136,13 +140,12 @@ const CommunityEngagement = () => {
             1024: { slidesPerView: 3, spaceBetween: 40 },
             1440: { slidesPerView: 4, spaceBetween: 50 },
           }}
-          className="community-swiper !pb-8"
+          className="community-swiper !pb-8 cursor-pointer"
         >
           {communityData.map((item, index) => (
             <SwiperSlide key={item.id} className="w-[320px] md:w-[400px]">
               <div
-                className="group relative bg-white rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(245,158,11,0.15)] transition-all duration-500 border border-slate-100 flex flex-col h-full transform hover:-translate-y-2 cursor-pointer"
-                onClick={() => openLightbox(index)}
+                className="group relative bg-white rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(245,158,11,0.15)] transition-all duration-500 border border-slate-100 flex flex-col h-full transform hover:-translate-y-2"
               >
                 <div className="relative h-72 overflow-hidden">
                   <Image

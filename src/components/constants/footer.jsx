@@ -117,7 +117,7 @@ export default function Footer() {
             <p>Content Owned by <Link href="3" target="_blank" className="text-blue-400 hover:underline">Spring and River Rejuvenation Authority
             </Link>, Government of Uttarakhand</p>
             <p>
-              SARRA — State Aquifer Recharge & River Rejuvenation Agency, Dehradun
+              SARRA — Spring and River Rejuvenation Authority, Dehradun
             </p>
             <p>
               Under the aegis of <Link href="https://uk.gov.in" target="_blank" className="text-blue-400 hover:underline">Government of Uttarakhand</Link>

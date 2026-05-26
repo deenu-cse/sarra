@@ -4,7 +4,6 @@ import React, { useState, useCallback, useEffect, useMemo, Fragment } from "reac
 import { useRouter } from "next/navigation";
 import axiosInstance from "../../../lib/axiosInstance";
 import { toast } from "sonner";
-import { useAuth } from "../../../context/AuthContext";
 
 // ─── CONSTANTS ───────────────────────────────────────────────────────────────
 const FINANCIAL_YEARS = ['2024-25', '2025-26', '2026-27', '2027-28'];
@@ -73,7 +72,6 @@ const initFormData = () => {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function MPRPraroop1A() {
   const router = useRouter();
-  const { user } = useAuth();
 
   const [financialYear, setFinancialYear] = useState('2025-26');
   const [month, setMonth] = useState('April');
@@ -92,7 +90,7 @@ export default function MPRPraroop1A() {
 
   // Restore from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem(`sarra_mpr_praroop1a_${user?._id || 'guest'}_${financialYear}_${month}`);
+    const saved = localStorage.getItem(`sarra_mpr_praroop1a_guest_${financialYear}_${month}`);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -109,7 +107,7 @@ export default function MPRPraroop1A() {
         // Fetch baseline data if no draft
         fetchBaseline();
     }
-  }, [user, financialYear, month]);
+  }, [financialYear, month]);
 
   const fetchBaseline = async () => {
       try {
@@ -141,7 +139,7 @@ export default function MPRPraroop1A() {
   // Save to localStorage whenever critical state changes
   useEffect(() => {
     const timer = setTimeout(() => {
-      localStorage.setItem(`sarra_mpr_praroop1a_${user?._id || 'guest'}_${financialYear}_${month}`, JSON.stringify({
+      localStorage.setItem(`sarra_mpr_praroop1a_guest_${financialYear}_${month}`, JSON.stringify({
         formData,
         totalApprovedSchemes,
         totalSpringsUnderSchemes,
@@ -151,7 +149,7 @@ export default function MPRPraroop1A() {
       }));
     }, 500);
     return () => clearTimeout(timer);
-  }, [financialYear, month, formData, totalApprovedSchemes, totalSpringsUnderSchemes, springsCurrentlyBeingTreated, activeActivityIdx, user]);
+  }, [financialYear, month, formData, totalApprovedSchemes, totalSpringsUnderSchemes, springsCurrentlyBeingTreated, activeActivityIdx]);
 
   // Keyboard shortcut
   useEffect(() => {
@@ -403,8 +401,8 @@ export default function MPRPraroop1A() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <button onClick={() => router.push('/dashboard/mnd/mpr')} className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all">
-              Back to Dashboard
+            <button onClick={() => router.push('/')} className="w-full py-3 bg-slate-600 text-white rounded-xl font-bold hover:bg-slate-700 transition-all">
+              Go to Home
             </button>
             <button onClick={() => window.location.reload()} className="w-full py-3 bg-white text-slate-600 border-2 border-slate-200 rounded-xl font-bold hover:bg-slate-50 transition-all">
               Start New MPR
