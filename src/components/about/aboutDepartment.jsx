@@ -120,13 +120,13 @@ const Department = ({ initialAnnouncements }) => {
                                     animation: cardsVisible ? `fadeSlideUp 0.7s ${idx * 0.15}s both` : 'none'
                                 }}
                             >
-                                <div className="relative w-full aspect-[3/4] md:aspect-[3/4] lg:aspect-[3/4] overflow-hidden bg-[#154b7d]">
+                                <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-[#154b7d]">
                                     <img
                                         src={person.img}
                                         alt={person.name}
                                         className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a1e33] via-[#0a1e33]/30 to-transparent opacity-80" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                     <div className="absolute top-0 left-0 w-10 h-10 md:w-14 md:h-14">
                                         <div className="absolute top-0 left-0 w-full h-[2px] bg-[#f59e0b]"></div>
@@ -136,20 +136,19 @@ const Department = ({ initialAnnouncements }) => {
                                         <div className="absolute top-0 right-0 w-full h-[2px] bg-[#f59e0b]"></div>
                                         <div className="absolute top-0 right-0 h-full w-[2px] bg-[#f59e0b]"></div>
                                     </div>
+                                </div>
 
-                                    <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#f59e0b] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5 z-10">
-                                        <h4 className="font-bold text-white text-sm md:text-base lg:text-lg leading-tight mb-1 drop-shadow-lg">
-                                            {person.name}
-                                        </h4>
-                                        <p className="text-[#f59e0b] text-xs md:text-sm font-semibold tracking-wide">
-                                            {person.title}
-                                        </p>
-                                        <p className="text-white/50 text-[10px] md:text-xs mt-0.5 font-light">
-                                            {person.subtitle}
-                                        </p>
-                                    </div>
+                                {/* Info section under the image */}
+                                <div className="relative flex-grow flex flex-col items-center justify-center text-center p-4 bg-[#0a1e33] z-10 border-t-2 border-[#0a1e33] group-hover:border-[#f59e0b] transition-colors duration-500">
+                                    <h4 className="font-bold text-white text-sm md:text-base lg:text-lg leading-tight mb-1 drop-shadow-lg group-hover:text-[#f59e0b] transition-colors">
+                                        {person.name}
+                                    </h4>
+                                    <p className="text-[#f59e0b] text-xs md:text-sm font-semibold tracking-wide">
+                                        {person.title}
+                                    </p>
+                                    <p className="text-white/60 text-[10px] md:text-xs mt-1 font-light uppercase tracking-wider">
+                                        {person.subtitle}
+                                    </p>
                                 </div>
                             </div>
                         ))}
