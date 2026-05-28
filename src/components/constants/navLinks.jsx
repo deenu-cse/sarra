@@ -38,9 +38,9 @@ const NavLinks = () => {
             type: 'dropdown',
             options: [
                 { label: 'Overview', href: '/about' },
-                { label: 'Organization Structure', href: '#' },
-                { label: 'Our Vision & Mission', href: '#' },
-                { label: 'Contact Us', href: '#' }
+                // { label: 'Organization Structure', href: '#' },
+                // { label: 'Our Vision & Mission', href: '#' },
+                { label: 'Contact Us', href: '/contact' }
             ]
         },
         // {
@@ -68,7 +68,7 @@ const NavLinks = () => {
             ]
         },
         { title: 'News & Events', type: 'link', href: '/news' },
-        { title: 'Contact', type: 'link', href: '/contact' },
+        { title: 'Contact Us', type: 'link', href: '/contact' },
     ];
 
     const isActive = (item) => {
@@ -88,7 +88,7 @@ const NavLinks = () => {
         href !== '#' && pathname.startsWith(href);
 
     return (
-        <nav className="w-full bg-[#0a3055] shadow-lg border-t-2 border-[#f59e0b] relative z-[100]">
+        <nav className="w-full bg-[#1f4e79] shadow-lg border-t-2 border-[#f59e0b] relative z-[100]">
             <div className="max-w-[98%] mx-auto">
                 <div className="hidden lg:flex flex-wrap">
                     {navItems.map((item, index) => {
@@ -106,22 +106,22 @@ const NavLinks = () => {
                                         className={`flex items-center justify-center px-5 py-4 text-sm font-medium transition-all duration-200 min-h-[64px] text-center
                                             ${active
                                                 ? 'bg-[#f59e0b] text-white'
-                                                : 'text-gray-100 hover:bg-[#154b7d]'
+                                                : 'text-gray-100 hover:bg-[#0a3055]'
                                             }`}
                                     >
-                                        <span className="max-w-[130px] leading-tight text-sm">
+                                        <span className="max-w-[130px] leading-tight text-[16px] font-medium">
                                             {item.title}
                                         </span>
                                     </Link>
                                 ) : (
                                     <button
-                                        className={`flex items-center justify-center px-5 py-4 text-sm font-medium transition-all duration-200 min-h-[64px] text-center w-full
+                                        className={`flex items-center justify-center px-5 py-4 text-[16px] font-medium transition-all duration-200 min-h-[64px] text-center w-full
                                             ${active
                                                 ? 'bg-[#f59e0b] text-white'
-                                                : 'text-gray-100 hover:bg-[#154b7d]'
+                                                : 'text-gray-100 hover:bg-[#0a3055]'
                                             }`}
                                     >
-                                        <span className="max-w-[130px] leading-tight text-sm">
+                                        <span className="max-w-[130px] leading-tight text-[16px]">
                                             {item.title}
                                         </span>
                                         <ChevronDown size={14} className="ml-2 opacity-70" />
@@ -129,13 +129,13 @@ const NavLinks = () => {
                                 )}
 
                                 {item.type === 'dropdown' && activeDropdown === index && (
-                                    <ul className="absolute left-0 w-64 bg-[#0a3055] text-gray-100 z-50 shadow-xl border-t-2 border-[#f59e0b]">
+                                    <ul className="absolute left-0 w-64 bg-[#1f4e79] text-gray-100 z-50 shadow-xl border-t-2 border-[#f59e0b]">
                                         {item.options.map((option, idx) => (
                                             <li
                                                 key={idx}
                                                 className={`flex items-center justify-between border-b border-black/30 transition-colors text-[13px]
-                                                    ${option.isBold ? 'font-bold bg-[#0a3055] text-[#f59e0b]' : 'font-semibold'}
-                                                    ${isOptionActive(option.href) ? 'bg-[#154b7d]' : 'hover:bg-[#154b7d]'}
+                                                    ${option.isBold ? 'font-medium bg-[#1f4e79] text-[#f59e0b]' : 'font-medium'}
+                                                    ${isOptionActive(option.href) ? 'bg-[#1f4e79]' : 'hover:bg-[#0a3055]'}
                                                 `}
                                             >
                                                 <Link
@@ -157,7 +157,7 @@ const NavLinks = () => {
                     })}
                 </div>
 
-                <div className="lg:hidden flex items-stretch bg-[#0a3055] border-b border-blue-900/50 relative z-50">
+                <div className="lg:hidden flex items-stretch bg-[#1f4e79] border-b border-blue-900/50 relative z-50">
                     <div ref={navContainerRef} className="flex flex-1 overflow-x-auto hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                         <style dangerouslySetInnerHTML={{ __html: `.hide-scroll::-webkit-scrollbar { display: none; }` }} />
                         {navItems.slice(0, visibleCount).map((item, index) => {
@@ -167,7 +167,7 @@ const NavLinks = () => {
                                     {item.type === 'link' ? (
                                         <Link
                                             href={item.href}
-                                            className={`flex items-center justify-center w-full h-full px-2 py-3 text-[11px] sm:text-xs font-medium transition-all duration-200 text-center
+                                            className={`flex items-center justify-center w-full h-full px-2 py-3 text-[15px] sm:text-sm font-medium transition-all duration-200 text-center 
                                                 ${active ? 'bg-[#f59e0b] text-white' : 'text-gray-100 hover:bg-[#154b7d]'}`}
                                         >
                                             {item.title}
@@ -178,8 +178,8 @@ const NavLinks = () => {
                                                 setActiveDropdown(activeDropdown === index ? null : index);
                                                 setMobileMenuOpen(false);
                                             }}
-                                            className={`flex items-center justify-center w-full h-full px-2 py-3 text-[11px] sm:text-xs font-medium transition-all duration-200 text-center
-                                                ${active ? 'bg-[#f59e0b] text-white' : 'text-gray-100 hover:bg-[#154b7d]'}`}
+                                            className={`flex items-center justify-center w-full h-full px-2 py-3 text-[15px] sm:text-sm font-medium transition-all duration-200 text-center
+                                                ${active ? 'bg-[#f59e0b] text-white' : 'text-gray-100 hover:bg-[#0a3055]'}`}
                                         >
                                             {item.title}
                                             <ChevronDown size={12} className={`ml-1 opacity-70 transition-transform ${activeDropdown === index ? 'rotate-180' : ''}`} />
@@ -201,13 +201,13 @@ const NavLinks = () => {
                     </button>
 
                     {activeDropdown !== null && activeDropdown < visibleCount && !mobileMenuOpen && navItems[activeDropdown].type === 'dropdown' && (
-                        <div className="absolute left-0 top-full w-full bg-[#0a3055] z-50 shadow-xl border-t-2 border-[#f59e0b]">
+                        <div className="absolute left-0 top-full w-full bg-[#1f4e79] z-50 shadow-xl border-t-2 border-[#f59e0b]">
                             <ul className="flex flex-col">
                                 {navItems[activeDropdown].options?.map((option, idx) => (
                                     <li key={idx} className="border-b border-black/30">
                                         <Link
                                             href={option.href}
-                                            className="block px-6 py-3 text-xs font-semibold text-gray-100 hover:bg-[#154b7d]"
+                                            className="block px-6 py-3 text-sm font-medium text-gray-100 hover:bg-[#0a3055]"
                                             onClick={() => setActiveDropdown(null)}
                                         >
                                             {option.label}
@@ -220,7 +220,7 @@ const NavLinks = () => {
                 </div>
 
                 {mobileMenuOpen && (
-                    <div className="lg:hidden bg-[#0a3055] border-t border-blue-900/50 absolute top-full left-0 w-full z-50 shadow-xl">
+                    <div className="lg:hidden bg-[#1f4e79] border-t border-blue-900/50 absolute top-full left-0 w-full z-50 shadow-xl">
                         {navItems.slice(visibleCount).map((item, index) => {
                             const actualIndex = index + visibleCount;
                             const active = isActive(item);
@@ -229,10 +229,10 @@ const NavLinks = () => {
                                     {item.type === 'link' ? (
                                         <Link
                                             href={item.href}
-                                            className={`block px-4 py-3 text-sm font-medium transition-all duration-200 border-b border-blue-900/30
+                                            className={`block px-4 py-3 text-sm font-medium transition-all duration-200 border-b border-blue-900/30 font-medium
                                                 ${active
                                                     ? 'bg-[#f59e0b] text-white'
-                                                    : 'text-gray-100 hover:bg-[#154b7d]'
+                                                    : 'text-gray-100 hover:bg-[#0a3055]'
                                                 }`}
                                             onClick={() => setMobileMenuOpen(false)}
                                         >
@@ -249,7 +249,7 @@ const NavLinks = () => {
                                                 className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium transition-all duration-200 border-b border-blue-900/30
                                                     ${active
                                                         ? 'bg-[#f59e0b] text-white'
-                                                        : 'text-gray-100 hover:bg-[#154b7d]'
+                                                        : 'text-gray-100 hover:bg-[#0a3055]'
                                                     }`}
                                             >
                                                 <span>{item.title}</span>
@@ -260,17 +260,17 @@ const NavLinks = () => {
                                             </button>
 
                                             {activeDropdown === actualIndex && (
-                                                <ul className="bg-[#062a45] border-l-4 border-[#f59e0b]">
+                                                <ul className="bg-[#1f4e79] border-l-4 border-[#f59e0b]">
                                                     {item.options.map((option, idx) => (
                                                         <li key={idx}>
                                                             <Link
                                                                 href={option.href}
-                                                                className={`block px-6 py-2.5 text-xs transition-colors border-b border-black/20
+                                                                className={`block px-6 py-2.5 text-sm transition-colors border-b border-black/20
                                                                     ${option.isBold
-                                                                        ? 'font-bold text-[#f59e0b] bg-[#0a3055] hover:bg-[#0a3055]'
+                                                                        ? 'font-medium text-[#f59e0b] bg-[#1f4e79] hover:bg-[#0a3055]'
                                                                         : isOptionActive(option.href)
-                                                                            ? 'font-semibold text-[#f59e0b] bg-[#154b7d]'
-                                                                            : 'font-semibold text-gray-100 hover:bg-[#154b7d]'
+                                                                            ? 'font-medium text-[#f59e0b] bg-[#1f4e79]'
+                                                                            : 'font-medium text-gray-100 hover:bg-[#0a3055]'
                                                                     }`}
                                                                 onClick={() => {
                                                                     setActiveDropdown(null);

@@ -89,7 +89,7 @@ export default async function RootLayout({
         <Providers>
           <Header />
           <NavLinks />
-          <Ticker initialTickerItems={tickerItems} />
+          {/* <Ticker initialTickerItems={tickerItems} /> */}
           {children}
           <Footer />
         </Providers>

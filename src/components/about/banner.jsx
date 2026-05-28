@@ -2,7 +2,7 @@ import React from "react";
 
 const SarraBanner = () => {
     return (
-        <section className="w-full relative overflow-hidden bg-white shadow-sm border-b-4 border-[#f59e0b]">
+        <section className="w-full relative overflow-hidden bg-white shadow-sm border-b-4 border-[#1f4e79]">
             <img
                 src="/assets/about/sarrabanner.png"
                 alt="SARRA Uttarakhand"

@@ -22,10 +22,10 @@ const Header = () => {
                     <div className="text-white">
                         <h1 className="text-sm sm:text-2xl font-serif font-bold leading-tight">
                             <span className="hidden sm:inline">Spring and River Rejuvenation Authority</span>
-                            <span className="sm:hidden">SARRA</span>
+                            <span className="sm:hidden text-xs">Spring and River Rejuvenation Authority</span>
                         </h1>
                         <p className="text-[#f59e0b] text-xs sm:text-sm font-semibold mt-1 hidden sm:block">
-                            Watershed Management Directorate, Government of Uttarakhand
+                            Anchored in watershed management directory, Government of Uttarakhand
                         </p>
                     </div>
                 </div>

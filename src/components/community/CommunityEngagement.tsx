@@ -58,7 +58,7 @@ const communityData = [
     id: 7,
     title: "Harela at WMD",
     description: "Harela Festival 2025 at WMD, Dehradun",
-    image: "/assets/homeimgslider/Hrela at wmd.jpg",
+    image: "/assets/homeimgslider/2.jpg",
     link: "#",
   },
 ];

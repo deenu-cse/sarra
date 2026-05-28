@@ -25,6 +25,7 @@ const DISTRICTS = [
     { name: 'Tehri Garhwal', slug: 'tehri-garhwal', img: '/assets/images/10.jpg' },
     { name: 'Udham Singh Nagar', slug: 'udham-singh-nagar', img: '/assets/images/11.jpg' },
     { name: 'Uttarkashi', slug: 'uttarkashi', img: '/assets/images/12.jpg' },
+    { name: 'Rudraprayag', slug: 'Rudraprayag', img: '/assets/images/13.jpeg' },
 ];
 
 function HeroSection() {

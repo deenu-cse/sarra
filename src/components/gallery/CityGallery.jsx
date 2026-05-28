@@ -19,7 +19,8 @@ const DISTRICT_NAMES = {
     'pithoragarh': 'Pithoragarh',
     'tehri-garhwal': 'Tehri Garhwal',
     'udham-singh-nagar': 'Udham Singh Nagar',
-    'uttarkashi': 'Uttarkashi'
+    'uttarkashi': 'Uttarkashi',
+    'Rudraprayag': 'Rudraprayag'
 };
 
 const CITY_CONFIG = {
@@ -34,7 +35,8 @@ const CITY_CONFIG = {
     'pithoragarh': { count: 10, ext: 'jpg' },
     'tehri-garhwal': { count: 10, ext: 'jpg' },
     'udham-singh-nagar': { count: 5, ext: 'jpg' },
-    'uttarkashi': { count: 6, ext: 'jpg' }
+    'uttarkashi': { count: 6, ext: 'jpg' },
+    'Rudraprayag': { count: 9, ext: 'jpeg' }
 };
 
 export default function CityGallery({ citySlug }) {
@@ -44,10 +46,8 @@ export default function CityGallery({ citySlug }) {
     const cityName = DISTRICT_NAMES[citySlug] || citySlug;
     const config = CITY_CONFIG[citySlug] || { count: 5, ext: 'jpg' };
 
-    // Static images first
     const staticImages = Array.from({ length: config.count }, (_, i) => `/assets/images/${citySlug}/${i + 1}.${config.ext}`);
 
-    // Fetch dynamic district images from API
     useEffect(() => {
         const fetchDistrictImages = async () => {
             try {
@@ -60,7 +60,6 @@ export default function CityGallery({ citySlug }) {
         fetchDistrictImages();
     }, [cityName]);
 
-    // Static first, then dynamic
     const images = [...staticImages, ...dynamicImages];
 
     const openSlider = (idx) => setSelectedImgIdx(idx);

@@ -13,7 +13,7 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
     const announcements = initialAnnouncements || [];
 
     let notificationsToDisplay = [];
-    
+
     // Combine news and announcements
     const mappedNews = newsItems.map((item) => ({
         title: item.title,
@@ -155,15 +155,6 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                         )}
                     </div>
                     <div className="p-4 flex justify-between md:justify-end items-center bg-white border-t">
-                        <button
-                            onClick={() => setIsImageModalOpen(true)}
-                            className="md:hidden text-[#0056b3] font-bold text-sm flex items-center gap-2 hover:underline"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clipRule="evenodd" />
-                            </svg>
-                            See River Map
-                        </button>
                         <Link
                             href="/news"
                             className="bg-[#ffc107] hover:bg-[#e0a800] text-black font-bold px-8 py-2 rounded-sm text-sm transition-colors uppercase tracking-wider"
@@ -173,7 +164,7 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                     </div>
                 </div>
 
-                <div
+                {/* <div
                     className="hidden md:block w-full md:w-[350px] bg-white rounded-lg shadow-md overflow-hidden relative min-h-[450px] cursor-pointer group"
                     onClick={() => setIsImageModalOpen(true)}
                 >
@@ -187,12 +178,10 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                             Click to View
                         </span>
                     </div>
-                </div>
+                </div> */}
 
             </div>
-
-            {/* Image Modal */}
-            {isImageModalOpen && (
+            {/* {isImageModalOpen && (
                 <div
                     className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm p-4 bg-black/80"
                     onClick={() => setIsImageModalOpen(false)}
@@ -217,7 +206,7 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

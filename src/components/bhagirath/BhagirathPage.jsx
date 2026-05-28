@@ -59,7 +59,7 @@ function InfoSection() {
                             Bhagirath Mobile App
                         </h2>
                         <h3 className="text-xl md:text-2xl font-sans font-semibold text-[#f59e0b] mt-3 italic">
-                            "Dhara mera, Naula mera, Gaon mera, Prayas mera"
+                            "धारा मेरा, नौला मेरा, गांव मेरा, प्रयास मेरा"
                         </h3>
                     </div>
 
@@ -113,7 +113,7 @@ function LaunchPhotosSection() {
 
 function UISection() {
     return (
-        <section className="w-full mx-auto bg-white flex flex-col items-center pb-20">
+        <section className="w-full md:w-[82%] mx-auto bg-white flex flex-col items-center pb-20">
             <img src={IMG.ui1} alt="Bhagirath UI 1" className="w-full h-auto block" />
             <img src={IMG.ui2} alt="Bhagirath UI 2" className="w-full h-auto block" />
         </section>

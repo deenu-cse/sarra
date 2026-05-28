@@ -48,6 +48,23 @@ const DISTRICT_DATA = [
     color: '#C7D38D', fill: 'rgba(199,211,141,0.55)',
     description: 'Eastern Ramganga basin in high altitude terrain'
   },
+  {
+    region: 'KUMAON',
+    sr: '6.',
+    district: 'Udham Singh Nagar',
+    river: 'Fika River',
+
+    watershed: 'Fika River Sub-Watershed (Ramganga Basin)',
+
+    lat: 29.1600,
+    lng: 79.6500,
+
+    color: '#6FB98F',
+    fill: 'rgba(111,185,143,0.55)',
+
+    description:
+      'The watershed supports agriculture, groundwater recharge, wetlands, and local biodiversity before contributing to the larger Ramganga river system.'
+  },
   // GARHWAL
   {
     region: 'GARHWAL',

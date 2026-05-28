@@ -14,13 +14,13 @@ const ResearchSupport = () => {
         { name: "Forest Department", logo: "/assets/icons/forest-logo.png", url: "https://forest.uk.gov.in" },
         { name: "Minor Irrigation", logo: "/assets/icons/Minor-Irrigation.png", url: "https://minorirrigation.uk.gov.in/" },
         { name: "Irrigation Department", logo: "/assets/icons/Irrigation.png", url: "https://irrigation.uk.gov.in/" },
-        { name: "Rural Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://rural.uk.gov.in/" },
+        { name: "Rural Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://ukrd.uk.gov.in/" },
         { name: "Urban Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://udd.uk.gov.in/" },
-        { name: "Peyjal Nigam", logo: "/assets/icons/uk-gov-logo.png", url: "https://peyjal.uk.gov.in/" },
-        { name: "Uttarakhand Jal Sansthan", logo: "/assets/icons/uk-gov-logo.png", url: "https://ujs.uk.gov.in/" },
+        { name: "Peyjal Nigam", logo: "/assets/icons/peyjal.jpg", url: "https://peyjal.uk.gov.in/" },
+        { name: "Uttarakhand Jal Sansthan", logo: "/assets/icons/jal-sansthan.png", url: "https://ujs.uk.gov.in/" },
         { name: "WMD", logo: "/assets/icons/WMD_LOGO.jpg", url: "https://wmduk.gov.in/" },
-        { name: "shm", logo: "/assets/icons/horticulture.png", url: "https://shm.uk.gov.in/" },
-        { name: "agriculture", logo: "/assets/icons/agriculture.jpg", url: "https://agriculture.uk.gov.in/" },
+        { name: "Horticulture", logo: "/assets/icons/horticulture.png", url: "https://shm.uk.gov.in/" },
+        { name: "Agriculture", logo: "/assets/icons/agriculture.jpg", url: "https://agriculture.uk.gov.in/" },
     ];
 
     return (
@@ -28,7 +28,7 @@ const ResearchSupport = () => {
             <div className="max-w-[1200px] mx-auto">
                 <div className="text-center mb-8 relative">
                     <h2 className="text-[32px] font-bold text-[#1e3a5f] tracking-tight">
-                        Research & Support
+                        Research Partners
                     </h2>
 
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-blue-400/10 blur-3xl rounded-full pointer-events-none"></div>

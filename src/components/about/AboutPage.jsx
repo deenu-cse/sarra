@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
     Droplets, Mountain, Users, Calendar, ChevronRight,
     Leaf, FlaskConical, ShieldCheck, ArrowRight, Waves, TreePine, Network,
-    Eye, Target
+    Eye, Target, X, ChevronLeft
 } from 'lucide-react';
 
 const C = {
@@ -22,15 +22,24 @@ const C = {
 
 const IMG = {
     hero: '/assets/about/hero-bg.png',
-    collage1: '/assets/about/DJI_20250411113213_0031_D.jpg',
+    collage1: '/assets/about/5.jpg',
     collage2: '/assets/about/sarra_front.jpeg',
     collage3: '/assets/about/wmd.jpg',
     why1: '/assets/about/DJI_20250411113213_0031_D.jpg',
     why2: '/assets/about/sarra_front.jpeg',
-    vision: '/assets/about/sarrabanner.png',
+    vision: '/assets/about/7.jpg',
 };
 
-/* ─── Animate-on-scroll hook ─── */
+const allImages = [
+    { image: IMG.hero, title: "About SARRA Hero", description: "Uttarakhand Himalayan river landscape" },
+    { image: IMG.collage1, title: "Introduction", description: "Landscape view" },
+    { image: IMG.collage2, title: "Fieldwork", description: "Embrace the tradition" },
+    { image: IMG.collage3, title: "Spring", description: "Natural spring" },
+    { image: IMG.vision, title: "Need for Rejuvenation", description: "Long-term sustainability of state's river systems" },
+    { image: IMG.why1, title: "Why SARRA", description: "Scenic Landscape" },
+    { image: IMG.why2, title: "Conservation", description: "Perfect Destination for Peaceful Conservation" },
+];
+
 function useReveal() {
     const ref = useRef(null);
     const [visible, setVisible] = useState(false);
@@ -47,7 +56,6 @@ function useReveal() {
     return [ref, visible];
 }
 
-/* ─── Animated counter ─── */
 function Counter({ end, suffix = '' }) {
     const [count, setCount] = useState(0);
     const [ref, visible] = useReveal();
@@ -66,10 +74,7 @@ function Counter({ end, suffix = '' }) {
     return <span ref={ref}>{count}{suffix}</span>;
 }
 
-/* ═══════════════════════════════════════════════════════
-   SECTION 1 — HERO
-   ═══════════════════════════════════════════════════════ */
-function HeroSection() {
+function HeroSection({ openLightbox }) {
     return (
         <section id="about-hero" className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
             <img
@@ -78,7 +83,11 @@ function HeroSection() {
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ zIndex: 0 }}
             />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
+            <div
+                className="absolute inset-0 cursor-pointer"
+                style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }}
+                onClick={() => openLightbox(0)}
+            />
 
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-16 md:py-32">
 
@@ -100,7 +109,7 @@ function HeroSection() {
     );
 }
 
-function IntroductionSection() {
+function IntroductionSection({ openLightbox }) {
     const [ref, visible] = useReveal();
 
 
@@ -125,12 +134,12 @@ function IntroductionSection() {
                 </div>
 
                 <div className="relative h-[500px] flex items-center justify-center">
-                    <div className="absolute top-0 left-0 w-[60%] h-[40%] rounded-2xl overflow-hidden shadow-xl z-10">
-                        <img src={IMG.collage1} alt="Landscape" className="w-full h-full object-cover" />
+                    <div className="absolute top-0 left-0 w-[60%] h-[40%] rounded-2xl overflow-hidden shadow-xl z-10 cursor-pointer" onClick={() => openLightbox(1)}>
+                        <img src={IMG.collage1} alt="Landscape" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     </div>
 
-                    <div className="absolute top-[20%] right-0 w-[65%] h-[55%] rounded-2xl overflow-hidden shadow-2xl z-20 border-[6px] border-white">
-                        <img src={IMG.collage2} alt="Fieldwork" className="w-full h-full object-cover" />
+                    <div className="absolute top-[20%] right-0 w-[65%] h-[55%] rounded-2xl overflow-hidden shadow-2xl z-20 border-[6px] border-white cursor-pointer" onClick={() => openLightbox(2)}>
+                        <img src={IMG.collage2} alt="Fieldwork" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                         <div className="absolute bottom-6 -left-4 bg-[#1e3a5f] border-b-4 border-[#f59e0b] p-4 rounded-xl shadow-xl flex flex-col items-center justify-center min-w-[120px] z-30">
                             <Leaf className="text-white mb-1" size={24} />
                             <p className="text-white text-[10px] font-bold uppercase text-center leading-tight">
@@ -139,8 +148,8 @@ function IntroductionSection() {
                         </div>
                     </div>
 
-                    <div className="absolute bottom-0 left-10 w-[50%] h-[35%] rounded-2xl overflow-hidden shadow-xl z-10">
-                        <img src={IMG.collage3} alt="Spring" className="w-full h-full object-cover" />
+                    <div className="absolute bottom-0 left-10 w-[50%] h-[35%] rounded-2xl overflow-hidden shadow-xl z-10 cursor-pointer" onClick={() => openLightbox(3)}>
+                        <img src={IMG.collage3} alt="Spring" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     </div>
                 </div>
             </div>
@@ -148,17 +157,17 @@ function IntroductionSection() {
     );
 }
 
-function NeedForRejuvenationSection() {
+function NeedForRejuvenationSection({ openLightbox }) {
     const [ref, visible] = useReveal();
 
     return (
         <section className="w-full py-12 md:py-24 px-6 md:px-12 bg-white">
             <div ref={ref} className={`max-w-7xl mx-auto transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[450px] order-2 lg:order-1">
+                    <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[450px] order-2 lg:order-1 cursor-pointer" onClick={() => openLightbox(4)}>
                         <img src={IMG.vision} alt="Need for Rejuvenation" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                        <div className="absolute bottom-6 left-6 right-6">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+                        <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
                             <div className="bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-lg border-b-4 border-[#f59e0b]">
                                 <p className="text-[#1e3a5f] font-semibold text-sm">Long-term sustainability of state's river systems.</p>
                             </div>
@@ -166,7 +175,7 @@ function NeedForRejuvenationSection() {
                     </div>
                     <div className="space-y-6 order-1 lg:order-2 font-sans">
                         <div>
-                            <span className="text-sm font-bold tracking-widest uppercase text-[#f59e0b] block mb-2 flex items-center gap-2">
+                            <span className="text-xl font-bold tracking-widest uppercase text-[#f59e0b] block mb-2 flex items-center gap-2">
                                 <Users size={16} /> Community Engagement
                             </span>
                             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1e3a5f] mb-6 leading-tight">Need for Rejuvenation</h2>
@@ -209,7 +218,7 @@ function GreenBanner() {
         </section>
     );
 }
-function WhySarraSection() {
+function WhySarraSection({ openLightbox }) {
     const [ref, visible] = useReveal(); // Assuming custom hook
 
     const features = [
@@ -239,35 +248,19 @@ function WhySarraSection() {
             >
 
                 <div className="relative">
-                    <div className="absolute -top-12 -left-4 w-56 h-44 rounded-2xl overflow-hidden shadow-lg z-20 hidden md:block">
-                        <img src={IMG.why1} alt="Landscape" className="w-full h-full object-cover" />
+                    <div className="absolute -top-12 -left-4 w-56 h-44 rounded-2xl overflow-hidden shadow-lg z-20 hidden md:block cursor-pointer" onClick={() => openLightbox(5)}>
+                        <img src={IMG.why1} alt="Landscape" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     </div>
 
-                    <div className="relative w-[75%] mx-auto aspect-[5/4] rounded-3xl overflow-hidden shadow-2xl z-10">
-                        <img src={IMG.why2} alt="Conservation" className="w-full h-full object-cover" />
+                    <div className="relative w-[75%] mx-auto aspect-[5/4] rounded-3xl overflow-hidden shadow-2xl z-10 cursor-pointer" onClick={() => openLightbox(6)}>
+                        <img src={IMG.why2} alt="Conservation" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     </div>
 
-                    <div className="absolute -bottom-10 right-0 md:right-10 bg-white/95 backdrop-blur-sm p-6 px-4 rounded-3xl shadow-xl z-30 w-[80%] md:w-[60%] border-b-4 border-[#f59e0b]">
-                        <div className="grid grid-cols-2 gap-3">
-                            <div>
-                                <h4 className="text-xl font-bold text-[#1e3a5f] mb-1">Serenity</h4>
-                                <p className="text-xs text-gray-500 leading-relaxed">
-                                    Preserving the quietude of Himalayan water sources.
-                                </p>
-                            </div>
-                            <div className="border-l border-gray-200 pl-8">
-                                <h4 className="text-xl font-bold text-[#1e3a5f] mb-1">Tranquility</h4>
-                                <p className="text-xs text-gray-500 leading-relaxed">
-                                    Ensuring sustainable flow for future generations.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div className="space-y-8 lg:pl-8 font-sans">
                     <div className="space-y-4">
-                        <span className="text-sm font-bold text-[#f59e0b] tracking-widest uppercase">Why SARRA</span>
+                        <span className="text-xl font-bold text-[#f59e0b] tracking-widest uppercase">Why SARRA</span>
                         <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1e3a5f] leading-[1.15]">
                             Perfect Destination <br /> for Peaceful <br /> Conservation
                         </h2>
@@ -318,7 +311,7 @@ function OrganizationalStructureSection() {
                 <div className="text-center md:text-left mb-16 relative z-20 font-sans">
                     <div className="inline-flex items-center space-x-2 bg-amber-50 text-[#f59e0b] px-4 py-1 rounded-full text-sm font-semibold mb-4 border border-[#f59e0b]/20">
                         <Network size={16} />
-                        <span>ORGANIZATION</span>
+                        <span className='text-xl'>ORGANIZATION</span>
                     </div>
 
                     <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1e3a5f]">
@@ -459,13 +452,100 @@ function OrganizationalStructureSection() {
 }
 
 export default function AboutPage() {
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const openLightbox = (index) => {
+        setCurrentImageIndex(index);
+        setIsLightboxOpen(true);
+    };
+
+    const closeLightbox = () => {
+        setIsLightboxOpen(false);
+    };
+
+    const showNextImage = (e) => {
+        e?.stopPropagation();
+        setCurrentImageIndex((prev) =>
+            prev === allImages.length - 1 ? 0 : prev + 1
+        );
+    };
+
+    const showPrevImage = (e) => {
+        e?.stopPropagation();
+        setCurrentImageIndex((prev) =>
+            prev === 0 ? allImages.length - 1 : prev - 1
+        );
+    };
+
+    const currentImage = allImages[currentImageIndex];
+
     return (
-        <main className="w-full">
-            <HeroSection />
-            <IntroductionSection />
-            <NeedForRejuvenationSection />
-            <WhySarraSection />
+        <main className="w-full relative">
+            <HeroSection openLightbox={openLightbox} />
+            <IntroductionSection openLightbox={openLightbox} />
+            <NeedForRejuvenationSection openLightbox={openLightbox} />
+            <WhySarraSection openLightbox={openLightbox} />
             <OrganizationalStructureSection />
+
+            {isLightboxOpen && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm p-4 lightbox-fade-in"
+                    onClick={closeLightbox}
+                >
+                    <div
+                        className="relative w-full max-w-6xl max-h-[92vh] bg-transparent rounded-3xl overflow-hidden lightbox-slide-up"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            onClick={closeLightbox}
+                            className="absolute top-4 right-4 z-30 w-11 h-11 rounded-full bg-black/60 hover:bg-[#f59e0b] text-white flex items-center justify-center transition-all"
+                        >
+                            <X size={24} />
+                        </button>
+
+                        <button
+                            onClick={showPrevImage}
+                            className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-[#f59e0b] text-white flex items-center justify-center transition-all"
+                        >
+                            <ChevronLeft size={30} />
+                        </button>
+
+                        <button
+                            onClick={showNextImage}
+                            className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-[#f59e0b] text-white flex items-center justify-center transition-all"
+                        >
+                            <ChevronRight size={30} />
+                        </button>
+
+                        <div className="relative w-full h-[60vh] md:h-[72vh] bg-transparent">
+                            <img
+                                src={currentImage.image}
+                                alt={currentImage.title}
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
+
+                    </div>
+                </div>
+            )}
+
+            <style jsx global>{`
+                .lightbox-fade-in {
+                    animation: fadeIn 0.3s ease-out forwards;
+                }
+                .lightbox-slide-up {
+                    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+                    to { opacity: 1; transform: translateY(0) scale(1); }
+                }
+            `}</style>
         </main>
     );
 }
