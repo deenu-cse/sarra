@@ -1,6 +1,6 @@
 "use client";
 
-
+import Link from "next/link";
 const Header = () => {
     const handleResize = (step) => {
         const root = document.documentElement;
@@ -16,7 +16,7 @@ const Header = () => {
     return (
         <header className="w-full font-sans">
             <div className="bg-[#1f4e79] p-3 sm:p-4 flex justify-between items-center border-b-[3px] border-[#f59e0b]">
-                <div className="flex items-center gap-2 sm:gap-6 flex-1">
+                <Link href="/" className="flex items-center gap-2 sm:gap-6 flex-1 hover:opacity-90 transition-opacity cursor-pointer">
                     <img src='/assets/nav/logo.png' alt="Logo" className="h-12 sm:h-16 w-auto" />
 
                     <div className="text-white">
@@ -28,7 +28,7 @@ const Header = () => {
                             Anchored in watershed management directory, Government of Uttarakhand
                         </p>
                     </div>
-                </div>
+                </Link>
 
                 <div className="flex items-center gap-2 sm:gap-4">
                     <img src='/assets/icons/ukgov.png' alt="Emblem" className="h-10 sm:h-20 w-auto" />

@@ -131,7 +131,6 @@ function NextSpaceSection({ initialGalleryItems = [] }) {
                         </div>
                     </div>
                 ) : (
-                    /* Standard grid for fewer items */
                     <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-5">
                         {galleryItems.map((item, idx) => (
                             <div key={item._id || idx} className="rounded-2xl overflow-hidden group shadow-lg relative h-[300px]">
@@ -144,7 +143,6 @@ function NextSpaceSection({ initialGalleryItems = [] }) {
                     </div>
                 )}
 
-                {/* Mobile horizontal scroll */}
                 <div className="md:hidden flex overflow-x-auto gap-4 pb-4 scrollbar-hide snap-x snap-mandatory -mx-6 px-6">
                     {galleryItems.map((item, idx) => (
                         <div key={item._id || idx} className="min-w-[80%] snap-center shrink-0 rounded-2xl overflow-hidden shadow-lg relative h-[280px]">
@@ -156,10 +154,9 @@ function NextSpaceSection({ initialGalleryItems = [] }) {
                     ))}
                 </div>
 
-                {/* Extra images beyond 6 */}
                 {galleryItems.length > 6 && (
                     <div className="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-                        {galleryItems.slice(6).map((item, idx) => (
+                        {galleryItems.slice(7).map((item, idx) => (
                             <div key={item._id || `extra-${idx}`} className="rounded-2xl overflow-hidden group shadow-lg h-[250px] relative">
                                 <img src={item.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.title} />
                                 <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
@@ -204,11 +201,10 @@ function DistrictCard({ city }) {
 }
 
 function DistrictsGallery() {
-    const chunks = [
-        DISTRICTS.slice(0, 4),
-        DISTRICTS.slice(4, 8),
-        DISTRICTS.slice(8, 12)
-    ];
+    const chunks = [];
+    for (let i = 0; i < DISTRICTS.length; i += 4) {
+        chunks.push(DISTRICTS.slice(i, i + 4));
+    }
 
     return (
         <section className="w-full py-10 px-6 md:px-12 bg-[#f8fafc]">

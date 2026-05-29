@@ -109,7 +109,7 @@ const NavLinks = () => {
                                                 : 'text-gray-100 hover:bg-[#0a3055]'
                                             }`}
                                     >
-                                        <span className="max-w-[130px] leading-tight text-[16px] font-medium">
+                                        <span className="max-w-[200px] leading-tight text-[16px] font-medium">
                                             {item.title}
                                         </span>
                                     </Link>
@@ -121,7 +121,7 @@ const NavLinks = () => {
                                                 : 'text-gray-100 hover:bg-[#0a3055]'
                                             }`}
                                     >
-                                        <span className="max-w-[130px] leading-tight text-[16px]">
+                                        <span className="max-w-[200px] leading-tight text-[16px]">
                                             {item.title}
                                         </span>
                                         <ChevronDown size={14} className="ml-2 opacity-70" />
