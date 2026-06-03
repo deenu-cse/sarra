@@ -75,22 +75,22 @@ const Dignitaries = () => {
 
                     <div
                         ref={cardsRef}
-                        className={`grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-5 lg:gap-7 transition-all duration-1000 ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                        className={`grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-5 lg:gap-7 justify-items-center transition-all duration-1000 ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                     >
                         {dignitaries.map((person, idx) => (
                             <div
                                 key={idx}
-                                className="group relative flex flex-col rounded-2xl overflow-hidden shadow-2xl"
+                                className="group relative flex flex-col rounded-2xl overflow-hidden shadow-lg w-[220px]"
                                 style={{
                                     transitionDelay: `${idx * 150}ms`,
                                     animation: cardsVisible ? `fadeSlideUp 0.7s ${idx * 0.15}s both` : 'none'
                                 }}
                             >
-                                <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-[#154b7d]">
+                                <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-white flex items-center justify-center p-4 shadow-xl">
                                     <img
                                         src={person.img}
                                         alt={person.name}
-                                        className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                                        className="max-w-[100%] max-h-[100%] object-contain transition-transform duration-700 ease-out group-hover:scale-105 dignitary-img"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -104,14 +104,14 @@ const Dignitaries = () => {
                                     </div>
                                 </div>
 
-                                <div className="relative flex-grow flex flex-col items-center justify-center text-center p-2 md:p-4 bg-[#0a1e33] z-10 border-t-2 border-[#0a1e33] group-hover:border-[#f59e0b] transition-colors duration-500 ">
-                                    <h4 className="font-bold text-white text-sm md:text-base lg:text-lg leading-tight mb-1 drop-shadow-lg group-hover:text-[#f59e0b] transition-colors">
+                                <div className="relative flex-grow flex flex-col items-center justify-center text-center p-2 md:p-3 md:pt-1 bg-white z-10 border-t-2 border-white group-hover:border-[#f59e0b] transition-colors duration-500">
+                                    <h4 className="font-bold text-[#0a1e33] text-sm md:text-base lg:text-lg leading-tight mb-1 drop-shadow-sm transition-colors">
                                         {person.name}
                                     </h4>
                                     <p className="text-[#f59e0b] text-xs md:text-sm font-semibold tracking-wide">
                                         {person.title}
                                     </p>
-                                    <p className="text-white/60 text-[10px] md:text-xs mt-1 font-light uppercase tracking-wider">
+                                    <p className="text-[#374151] text-[10px] md:text-xs mt-1 font-light uppercase tracking-wider">
                                         "{person.subtitle}"
                                     </p>
                                 </div>
@@ -136,6 +136,11 @@ const Dignitaries = () => {
                         opacity: 1;
                         transform: translateY(0);
                     }
+                }
+                .dignitary-img {
+                    image-rendering: -webkit-optimize-contrast;
+                    image-rendering: crisp-edges;
+                    image-rendering: pixelated;
                 }
             `}} />
         </>

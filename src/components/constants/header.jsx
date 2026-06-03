@@ -23,9 +23,9 @@ const Header = () => {
                         <h1 className="text-sm sm:text-2xl font-serif font-bold leading-tight">
                             <span className="hidden sm:inline">Spring and River Rejuvenation Authority</span>
                             <span className="sm:hidden text-xs">Spring and River Rejuvenation Authority</span>
-                        </h1>
+                        </h1>                        
                         <p className="text-[#f59e0b] text-xs sm:text-sm font-semibold mt-1 hidden sm:block">
-                            Anchored in watershed management directory, Government of Uttarakhand
+                            Anchored in Watershed Management Directorate, Government of Uttarakhand
                         </p>
                     </div>
                 </Link>

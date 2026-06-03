@@ -11,6 +11,7 @@ const IMG = {
     promo: '/assets/books/promo.png',
 };
 
+
 function HeroSection() {
     return (
         <section className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>

@@ -22,12 +22,12 @@ const C = {
 
 const IMG = {
     hero: '/assets/about/hero-bg.png',
-    collage1: '/assets/about/5.jpg',
+    collage1: '/assets/about/5.jpeg',
     collage2: '/assets/about/sarra_front.jpeg',
     collage3: '/assets/about/wmd.jpg',
     why1: '/assets/about/DJI_20250411113213_0031_D.jpg',
     why2: '/assets/about/sarra_front.jpeg',
-    vision: '/assets/about/7.jpg',
+    vision: '/assets/about/7.jpeg',
 };
 
 const allImages = [
@@ -248,10 +248,6 @@ function WhySarraSection({ openLightbox }) {
             >
 
                 <div className="relative">
-                    <div className="absolute -top-12 -left-4 w-56 h-44 rounded-2xl overflow-hidden shadow-lg z-20 hidden md:block cursor-pointer" onClick={() => openLightbox(5)}>
-                        <img src={IMG.why1} alt="Landscape" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                    </div>
-
                     <div className="relative w-[75%] mx-auto aspect-[5/4] rounded-3xl overflow-hidden shadow-2xl z-10 cursor-pointer" onClick={() => openLightbox(6)}>
                         <img src={IMG.why2} alt="Conservation" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     </div>

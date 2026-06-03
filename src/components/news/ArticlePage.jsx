@@ -56,6 +56,14 @@ const ArticlePage = ({ initialArticle, initialRelatedArticles, initialNotFound }
         return `${mins} min read`;
     };
 
+    // Share URL helpers
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const articleUrl = `${origin}/news/${article?.slug || article?._id || ''}`;
+
+    const getFacebookShareUrl = (url) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    const getTwitterShareUrl = (url, text) => `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text || '')}`;
+    const getLinkedinShareUrl = (url) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+
     if (notFound || !article) {
         return (
             <div className="max-w-6xl mx-auto px-4 py-20 text-center">
@@ -82,9 +90,38 @@ const ArticlePage = ({ initialArticle, initialRelatedArticles, initialNotFound }
                             <span>{estimateReadTime(article)}</span>
                         </div>
                         <div className="flex gap-4 text-gray-600">
-                            <FacebookIcon size={18} className="cursor-pointer hover:text-[#f59e0b] transition-colors" />
-                            <TwitterIcon size={18} className="cursor-pointer hover:text-[#f59e0b] transition-colors" />
-                            <LinkedinIcon size={18} className="cursor-pointer hover:text-[#f59e0b] transition-colors" />
+                            <a
+                                href={getFacebookShareUrl(articleUrl)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on Facebook"
+                                title="Share on Facebook"
+                                className="hover:text-[#f59e0b]"
+                            >
+                                <FacebookIcon size={18} className="cursor-pointer transition-colors" />
+                            </a>
+
+                            <a
+                                href={getTwitterShareUrl(articleUrl, article.title)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on Twitter"
+                                title="Share on Twitter"
+                                className="hover:text-[#f59e0b]"
+                            >
+                                <TwitterIcon size={18} className="cursor-pointer transition-colors" />
+                            </a>
+
+                            <a
+                                href={getLinkedinShareUrl(articleUrl)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on LinkedIn"
+                                title="Share on LinkedIn"
+                                className="hover:text-[#f59e0b]"
+                            >
+                                <LinkedinIcon size={18} className="cursor-pointer transition-colors" />
+                            </a>
                         </div>
                     </div>
 

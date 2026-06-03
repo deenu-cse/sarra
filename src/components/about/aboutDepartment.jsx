@@ -25,15 +25,11 @@ const Department = ({ initialAnnouncements }) => {
                         Read More <ChevronRight size={18} />
                     </Link>
                 </div>
-                <div className="space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#1e3a5f] leading-tight">
-                        Department
-                    </h2>
-                    <div className="w-20 h-1 bg-[#1f4e79]"></div>
+                <div className="space-y-4 rounded-2xl">
                     <img
                         src="/assets/about/sarra_front.jpeg"
                         alt="Districtwise Map"
-                        className="w-full max-h-[420px] object-contain rounded-lg shadow-md cursor-pointer hover:scale-[1.02] transition-transform duration-500 border-4 border-gray-100"
+                        className="w-full max-h-[420px] object-contain rounded-2xl shadow-md cursor-pointer hover:scale-[1.02] transition-transform duration-500 border-4 border-gray-100"
                         onClick={() => setIsModalOpen(true)}
                     />
                 </div>

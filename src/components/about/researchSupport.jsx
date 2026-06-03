@@ -21,6 +21,10 @@ const ResearchSupport = () => {
         { name: "WMD", logo: "/assets/icons/WMD_LOGO.jpg", url: "https://wmduk.gov.in/" },
         { name: "Horticulture", logo: "/assets/icons/horticulture.png", url: "https://shm.uk.gov.in/" },
         { name: "Agriculture", logo: "/assets/icons/agriculture.jpg", url: "https://agriculture.uk.gov.in/" },
+        { name: "FRI", logo: "/assets/icons/fri.png", url: "https://fridu.edu.in" },
+        { name: "IISWC", logo: "/assets/icons/iswc.png", url: "#" },
+        { name: "Earth Science", logo: "/assets/icons/earth_science.jpeg", url: "https://es.iitr.ac.in/" },
+        { name: "WII", logo: "/assets/icons/wii.png", url: "https://wii.gov.in/" },
     ];
 
     return (

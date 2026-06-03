@@ -52,15 +52,12 @@ const DISTRICT_DATA = [
     region: 'KUMAON',
     sr: '6.',
     district: 'Udham Singh Nagar',
-    river: 'Fika River',
-
-    watershed: 'Fika River Sub-Watershed (Ramganga Basin)',
-
-    lat: 29.1600,
-    lng: 79.6500,
-
-    color: '#6FB98F',
-    fill: 'rgba(111,185,143,0.55)',
+    river: 'Phica River',
+    watershed: 'Phica River Watershed',
+    lat: 29.3322,
+    lng: 78.8664,
+    color: '#BEBADA',
+    fill: 'rgba(190,186,218,0.55)',
 
     description:
       'The watershed supports agriculture, groundwater recharge, wetlands, and local biodiversity before contributing to the larger Ramganga river system.'
@@ -133,7 +130,6 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
   const layersRef = useRef({});
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  // Styled popup HTML for click interactions
   const createPopupHTML = (data) => `
     <div style="min-width:210px;max-width:270px;font-family:system-ui,-apple-system,sans-serif;">
       <div style="background:linear-gradient(135deg,#0a3055,#1e3a5f);color:white;padding:10px 14px;border-radius:6px 6px 0 0;margin:-14px -20px 10px -20px;">
