@@ -5,40 +5,34 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const communityData = [
   {
-    id: 2,
-    title: "Checkdam on Song River",
-    description: "Checkdam on Song River at Tehri Garhwal",
+    id: 1,
+    title: "Jal Utsav Pakhwada",
+    description: "Jal utasw pakhwada at Ghamsali, Chamoli",
     image: "/assets/homeimgslider/Jal utasw pakhwada at ghamsali, chamoli.jpeg",
   },
   {
-    id: 3,
-    title: "Jal Utsav Pakhwada",
-    description: "Jal utasw pakhwada at Ghamsali, Chamoli",
+    id: 2,
+    title: "Jal Utsav 2025",
+    description: "Jal Utsav 2025 at Tehri Garhwal",
     image: "/assets/homeimgslider/Jal utsav 25 tehri.jpg",
   },
   {
-    id: 4,
-    title: "Jal Utsav 2025",
-    description: "Jal Utsav 2025 at Tehri Garhwa",
-    image: "/assets/homeimgslider/nadi mahotsaw at Pati Jairoli, champawat.jpeg",
-  },
-  {
-    id: 5,
+    id: 3,
     title: "Nadi Mahotsav",
     description: "Nadi Mahotsav at Pati Jairoli, Champawat",
     image: "/assets/homeimgslider/nadi mahotsaw at Pati Jairoli, champawat.jpeg",
   },
   {
-    id: 6,
+    id: 4,
     title: "Plantation Drive",
     description: "Plantation Drive at Pithoragarh",
     image: "/assets/homeimgslider/Plantation drive at Pithoragarh.jpg",
   },
   {
-    id: 7,
+    id: 5,
     title: "Harela at WMD",
     description: "Harela Festival 2025 at WMD, Dehradun",
-    image: "/assets/homeimgslider/2.jpg",
+    image: "/assets/homeimgslider/Hrela at wmd.jpg",
   },
 ];
 

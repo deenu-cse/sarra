@@ -1,11 +1,26 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Mountain, Droplet, MapPin } from 'lucide-react';
+import { Mountain, Droplet, MapPin, ChevronRight, ChevronLeft, X } from 'lucide-react';
 
 const IMG = {
   hero: '/assets/one_river/banner.png',
 };
+
+const riverImages = [
+  { image: '/assets/one_river/Jata Ganga.png', title: 'Jata Ganga' },
+  { image: '/assets/one_river/gaur ganga.jpg.jpeg', title: 'Gaur Ganga' },
+  { image: '/assets/one_river/Gaudi.png', title: 'Gaudi' },
+  { image: '/assets/one_river/Shipra.jpg.jpeg', title: 'Shipra' },
+  { image: '/assets/one_river/Poorvi Ramganga.webp', title: 'Poorvi Ramganga' },
+  { image: '/assets/one_river/fika us nagar.jpeg', title: 'Fika Us Nagar' },
+  { image: '/assets/one_river/chandrabhaga chmoli.jpeg', title: 'Chandrabhaga Chmoli' },
+  { image: '/assets/one_river/Song.jpg.jpeg', title: 'Song' },
+  { image: '/assets/one_river/pathari haridwar.jpeg', title: 'Pathari Haridwar' },
+  { image: '/assets/one_river/Nayar.png', title: 'Nayar' },
+  { image: '/assets/one_river/punaar rudraprayag.jpeg', title: 'Punaar Rudraprayag' },
+  { image: '/assets/one_river/kamal ganga.jpg.jpeg', title: 'Kamal Ganga' },
+];
 
 const DISTRICT_DATA = [
   {
@@ -52,8 +67,8 @@ const DISTRICT_DATA = [
     region: 'KUMAON',
     sr: '6.',
     district: 'Udham Singh Nagar',
-    river: 'Phica River',
-    watershed: 'Phica River Watershed',
+    river: 'Fika River',
+    watershed: 'Fika River Watershed',
     lat: 29.3322,
     lng: 78.8664,
     color: '#BEBADA',
@@ -596,11 +611,203 @@ function ContentSection() {
   );
 }
 
+function RiverImageCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsPerView, setItemsPerView] = useState(3);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  useEffect(() => {
+    const updateItemsPerView = () => {
+      if (window.innerWidth < 640) setItemsPerView(1);
+      else if (window.innerWidth < 1024) setItemsPerView(2);
+      else setItemsPerView(3);
+    };
+
+    updateItemsPerView();
+    window.addEventListener('resize', updateItemsPerView);
+    return () => window.removeEventListener('resize', updateItemsPerView);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % riverImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + riverImages.length) % riverImages.length);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getVisibleImages = () => {
+    return Array.from({ length: itemsPerView }).map((_, offset) => {
+      const index = (currentIndex + offset) % riverImages.length;
+      return { ...riverImages[index], index };
+    });
+  };
+
+  const openLightbox = (index) => {
+    setLightboxIndex(index);
+    setIsLightboxOpen(true);
+  };
+
+  const closeLightbox = () => setIsLightboxOpen(false);
+
+  const nextLightboxSlide = (e) => {
+    e?.stopPropagation();
+    setLightboxIndex((prev) => (prev + 1) % riverImages.length);
+  };
+
+  const prevLightboxSlide = (e) => {
+    e?.stopPropagation();
+    setLightboxIndex((prev) => (prev - 1 + riverImages.length) % riverImages.length);
+  };
+
+  return (
+    <section className="w-full py-12 bg-white relative overflow-hidden">
+      <div className="w-full px-4 md:px-8">
+        <div className="relative group">
+          <div className="overflow-hidden">
+            <div
+              className="flex gap-5 transition-transform duration-700 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
+              }}
+            >
+              {riverImages.concat(riverImages).map((item, index) => (
+                <div
+                  key={index}
+                  className={`
+                    flex-shrink-0
+                    ${itemsPerView === 1
+                      ? 'w-full'
+                      : itemsPerView === 2
+                        ? 'w-[calc(50%-10px)]'
+                        : 'w-[calc(33.333%-14px)]'
+                    }
+                  `}
+                  onClick={() => openLightbox(index % riverImages.length)}
+                >
+                  <div className="w-full h-[280px] overflow-hidden rounded-lg">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                  <h3 className="mt-3 text-left text-sm md:text-base font-semibold text-gray-800">
+                    {item.title}
+                  </h3>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={prevSlide}
+            className="absolute left-2 top-[42%] -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-[#f59e0b] text-white rounded-full flex items-center justify-center transition-all z-10"
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="absolute right-2 top-[42%] -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-[#f59e0b] text-white rounded-full flex items-center justify-center transition-all z-10"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+      </div>
+
+      {isLightboxOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 river-lightbox-fade-in"
+          onClick={closeLightbox}
+        >
+          <div
+            className="relative w-full max-w-6xl max-h-[92vh] bg-transparent rounded-3xl overflow-hidden river-lightbox-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-30 w-11 h-11 rounded-full bg-black/60 hover:bg-[#f59e0b] text-white flex items-center justify-center transition-all"
+            >
+              <X size={24} />
+            </button>
+
+            <button
+              onClick={prevLightboxSlide}
+              className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-[#f59e0b] text-white flex items-center justify-center transition-all"
+            >
+              <ChevronLeft size={30} />
+            </button>
+
+            <button
+              onClick={nextLightboxSlide}
+              className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-[#f59e0b] text-white flex items-center justify-center transition-all"
+            >
+              <ChevronRight size={30} />
+            </button>
+
+            <div className="relative w-full h-[60vh] md:h-[72vh] bg-transparent">
+              <img
+                src={riverImages[lightboxIndex].image}
+                alt={riverImages[lightboxIndex].title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="absolute bottom-8 left-0 right-0 text-center">
+              <h3 className="text-white text-lg md:text-xl font-semibold bg-black/60 inline-block px-6 py-2 rounded-full backdrop-blur-md">
+                {riverImages[lightboxIndex].title}
+              </h3>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style jsx global>{`
+        .river-lightbox-fade-in {
+          animation: riverFadeIn 0.3s ease-out forwards;
+        }
+
+        .river-lightbox-slide-up {
+          animation: riverSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes riverFadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes riverSlideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
+
 export default function OneRiverPage() {
   return (
     <main className="w-full font-sans">
       <HeroSection />
       <ContentSection />
+      <RiverImageCarousel />
     </main>
   );
 }

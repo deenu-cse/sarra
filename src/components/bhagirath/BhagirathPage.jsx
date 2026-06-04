@@ -5,8 +5,8 @@ import React from 'react';
 const IMG = {
     hero: '/assets/bhagirithi/banner.png',
     infoImage: '/assets/bhagirithi/SARRA_3.jpeg',
-    ui1: '/assets/bhagirithi/bhg1.png',
-    ui2: '/assets/bhagirithi/bhg2.png',
+    ui1: '/assets/bhagirithi/bhg1.jpeg',
+    ui2: '/assets/bhagirithi/bhg2.jpeg',
 };
 
 function HeroSection() {

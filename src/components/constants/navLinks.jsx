@@ -60,7 +60,7 @@ const NavLinks = () => {
         { title: 'Bhagirath App', type: 'link', href: '/bhagirath-app' },
         { title: 'One River One District', type: 'link', href: '/one-river-one-district' },
         {
-            title: 'Gallery',
+            title: 'Media Corner',
             type: 'dropdown',
             options: [
                 { label: 'Photo Gallery', href: '/gallery' },

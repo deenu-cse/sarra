@@ -175,9 +175,10 @@
     <name>Area Features</name>
     <description>Area Features</description>
     <Placemark>
-      <description>PHICA River WS
+      <description>Fik River WS
+
 WATERSHED AREA : 213.58 sq km</description>
-      <name>PHICA River WS</name>
+      <name>Fika River WS</name>
       <styleUrl>#area1</styleUrl>
       <MultiGeometry>
       <Point>
@@ -1681,7 +1682,8 @@ WATERSHED AREA : 213.58 sq km</description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Jata Ganga Watershed
+      <description>Jata Ganga Watershed
+
 WATERSHED AREA : </description>
       <name>Jata Ganga Watershed</name>
       <styleUrl>#area2</styleUrl>
@@ -2034,7 +2036,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Garud Ganga Watershed
+      <description>Garud Ganga Watershed
+
 WATERSHED AREA : </description>
       <name>Garud Ganga Watershed</name>
       <styleUrl>#area3</styleUrl>
@@ -2391,7 +2394,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Shipra River Watershed
+      <description>Shipra River Watershed
+
 WATERSHED AREA : </description>
       <name>Shipra River Watershed</name>
       <styleUrl>#area4</styleUrl>
@@ -2646,7 +2650,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Gaudi River Watershed
+      <description>Gaudi River Watershed
+
 WATERSHED AREA : </description>
       <name>Gaudi River Watershed</name>
       <styleUrl>#area5</styleUrl>
@@ -2783,7 +2788,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Ramganga East Watershed
+      <description>Ramganga East Watershed
+
 WATERSHED AREA : </description>
       <name>Ramganga East Watershed</name>
       <styleUrl>#area6</styleUrl>
@@ -5015,7 +5021,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Eastern Nayar Watershed
+      <description>Eastern Nayar Watershed
+
 WATERSHED AREA : </description>
       <name>Eastern Nayar Watershed</name>
       <styleUrl>#area7</styleUrl>
@@ -6611,7 +6618,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Western Nayar Watershed
+      <description>Western Nayar Watershed
+
 WATERSHED AREA : </description>
       <name>Western Nayar Watershed</name>
       <styleUrl>#area8</styleUrl>
@@ -7752,7 +7760,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Song River Watershed
+      <description>Song River Watershed
+
 WATERSHED AREA : </description>
       <name>Song River Watershed</name>
       <styleUrl>#area9</styleUrl>
@@ -8800,7 +8809,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Pathari River Watershed
+      <description>Pathari River Watershed
+
 WATERSHED AREA : </description>
       <name>Pathari River Watershed</name>
       <styleUrl>#area10</styleUrl>
@@ -9505,7 +9515,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Kamal Ganaga Watershed
+      <description>Kamal Ganaga Watershed
+
 WATERSHED AREA : </description>
       <name>Kamal Ganaga Watershed</name>
       <styleUrl>#area11</styleUrl>
@@ -10008,7 +10019,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Chandrabhaga River Watershed
+      <description>Chandrabhaga River Watershed
+
 WATERSHED AREA : </description>
       <name>Chandrabhaga River Watershed</name>
       <styleUrl>#area12</styleUrl>
@@ -10199,7 +10211,8 @@ WATERSHED AREA : </description>
       </MultiGeometry>
     </Placemark>
     <Placemark>
-      <description>Punad Gad Watershed
+      <description>Punad Gad Watershed
+
 WATERSHED AREA : </description>
       <name>Punad Gad Watershed</name>
       <styleUrl>#area13</styleUrl>
