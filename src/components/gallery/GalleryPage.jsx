@@ -242,7 +242,7 @@ export default function GalleryPage({ initialGalleryItems = [] }) {
     return (
         <main className="w-full font-sans">
             <HeroSection />
-            <NextSpaceSection initialGalleryItems={initialGalleryItems} />
+            {/* <NextSpaceSection initialGalleryItems={initialGalleryItems} /> */}
             <DistrictsGallery />
             <TrenchesGallery />
         </main>
