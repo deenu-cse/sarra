@@ -195,6 +195,54 @@ export const researchPartners = [
         reports: [],
         basins: [],
     },
+    {
+        slug: "fri",
+        name: "FRI",
+        fullName: "Forest Research Institute",
+        logo: "/assets/icons/fri.png",
+        role: "Research Support Partner",
+        intro: "FRI Dehradun is responsible for sub-catchment prioritisation and river rejuvenation planning for rivers Chandrabhaga (Chamoli) and Punar (Rudraprayag)."
+    },
+    {
+        slug: "iiswc",
+        name: "IISWC",
+        fullName: "Indian Institute of Soil and Water Conservation",
+        logo: "/assets/icons/iswc.png",
+        role: "Research Support Partner",
+        intro: "IISWC Dehradun has been assigned river Kamal Ganga in Uttarkashi district for sub-catchment prioritisation and rejuvenation planning."
+    },
+    {
+        slug: "earth-science",
+        name: "Earth Science",
+        fullName: "Department of Earth Sciences, IIT Roorkee",
+        logo: "/assets/icons/earth_science.jpeg",
+        role: "Research Support Partner",
+        intro: "The Department of Earth Sciences at IIT Roorkee has been assigned the Fika River in Udham Singh Nagar district for scientific sub-catchment analysis and river rejuvenation planning."
+    },
+    {
+        slug: "wii",
+        name: "WII",
+        fullName: "Wildlife Institute of India",
+        logo: "/assets/icons/wii.png",
+        role: "Research Support Partner",
+        intro: "WII has been engaged under the SARRA program for scientific planning and sub-catchment prioritisation of the Pathri River in Haridwar district."
+    },
+    {
+        slug: "gppnihe",
+        name: "GPPNIHE",
+        fullName: "G.B. Pant National Institute of Himalayan Environment",
+        logo: "/assets/icons/gbpant.jpeg",
+        role: "Research Support By",
+        intro: "GBPNIHE is responsible for sub-catchment prioritisation and river rejuvenation planning for three rivers across the Kumaon Himalayan region."
+    },
+    {
+        slug: "nabcons",
+        name: "NABCONS",
+        fullName: "NABARD Consultancy Services",
+        logo: "/assets/icons/nabcons.jpeg",
+        role: "Carbon Credit Study By",
+        intro: "NABCONS has been engaged for a Carbon Credit Feasibility Study under the Voluntary Carbon Market (VCM) project for the Song River catchment area."
+    }
 ];
 
 export function getPartnerBySlug(slug) {

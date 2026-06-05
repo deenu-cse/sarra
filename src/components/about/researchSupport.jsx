@@ -6,13 +6,15 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ResearchSupport = () => {
     const researchPartners = [
-        { name: "IIT Roorkee", logo: "/assets/icons/iitr.png", role: "Research Support By" },
-        { name: "NIH", logo: "/assets/icons/nih.png", role: "Research Support By" },
-        { name: "CGWB", logo: "/assets/icons/cgwb.png", role: "Research Support By" },
-        { name: "FRI", logo: "/assets/icons/fri.png", role: "Research Support By" },
-        { name: "IISWC", logo: "/assets/icons/iswc.png", role: "Research Support By" },
-        { name: "Earth Science", logo: "/assets/icons/earth_science.jpeg", role: "Research Support By" },
-        { name: "WII", logo: "/assets/icons/wii.png", role: "Research Support By" },
+        { name: "IIT Roorkee", slug: "iit-roorkee", logo: "/assets/icons/iitr.png", role: "Research Support By" },
+        { name: "NIH", slug: "nih", logo: "/assets/icons/nih.png", role: "Research Support By" },
+        { name: "CGWB", slug: "cgwb", logo: "/assets/icons/cgwb.png", role: "Research Support By" },
+        { name: "FRI", slug: "fri", logo: "/assets/icons/fri.png", role: "Research Support By" },
+        { name: "IISWC", slug: "iiswc", logo: "/assets/icons/iswc.png", role: "Research Support By" },
+        { name: "Earth Science", slug: "earth-science", logo: "/assets/icons/earth_science.jpeg", role: "Research Support By" },
+        { name: "WII", slug: "wii", logo: "/assets/icons/wii.png", role: "Research Support By" },
+        { name: "GPPNIHE", slug: "gppnihe", logo: "/assets/icons/gbpant.jpeg", role: "Research Support By" },
+        { name: "NABCONS", slug: "nabcons", logo: "/assets/icons/nabcons.jpeg", role: "Carbon Credit Study By" },
     ];
 
     const departments = [
@@ -80,7 +82,7 @@ const ResearchSupport = () => {
                             return (
                                 <div key={idx} className={`flex-shrink-0 px-3 ${itemsPerView === 1 ? 'w-full' : 'w-1/3'}`}>
                                     <Link
-                                        href={`#`}
+                                        href={`/research-partners/${partner.slug}`}
                                         className="bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b-[5px] border-[#1e3a5f] hover:-translate-y-2 transition-transform duration-300 flex flex-col items-center text-center group cursor-pointer relative overflow-hidden block h-full"
                                     >
                                         <img src={partner.logo} alt={partner.name} className="w-full h-24 object-contain transition-all duration-300" onError={(e) => e.target.style.display = 'none'} />
