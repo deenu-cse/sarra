@@ -75,12 +75,12 @@ const Dignitaries = () => {
 
                     <div
                         ref={cardsRef}
-                        className={`grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-5 lg:gap-7 justify-items-center transition-all duration-1000 ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                        className={`grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 lg:gap-7 justify-items-center transition-all duration-1000 ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                     >
                         {dignitaries.map((person, idx) => (
                             <div
                                 key={idx}
-                                className="group relative flex flex-col rounded-2xl overflow-hidden shadow-lg w-[220px]"
+                                className="group relative flex flex-col rounded-2xl overflow-hidden shadow-lg w-full max-w-[220px]"
                                 style={{
                                     transitionDelay: `${idx * 150}ms`,
                                     animation: cardsVisible ? `fadeSlideUp 0.7s ${idx * 0.15}s both` : 'none'

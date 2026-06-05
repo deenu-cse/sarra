@@ -70,7 +70,7 @@ const ResearchSupport = () => {
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-blue-400/10 blur-3xl rounded-full pointer-events-none"></div>
                 </div>
 
-                <div className="relative overflow-hidden mb-16 pb-4 pt-4">
+                <div className="relative overflow-hidden mb-16 pb-4 pt-4 group">
                     <div
                         className="flex transition-transform duration-700 ease-in-out -mx-3"
                         style={{
@@ -83,7 +83,7 @@ const ResearchSupport = () => {
                                 <div key={idx} className={`flex-shrink-0 px-3 ${itemsPerView === 1 ? 'w-full' : 'w-1/3'}`}>
                                     <Link
                                         href={`/research-partners/${partner.slug}`}
-                                        className="bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b-[5px] border-[#1e3a5f] hover:-translate-y-2 transition-transform duration-300 flex flex-col items-center text-center group cursor-pointer relative overflow-hidden block h-full"
+                                        className="bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b-[5px] border-[#1e3a5f] hover:-translate-y-2 transition-transform duration-300 flex flex-col items-center text-center cursor-pointer relative overflow-hidden block h-full"
                                     >
                                         <img src={partner.logo} alt={partner.name} className="w-full h-24 object-contain transition-all duration-300" onError={(e) => e.target.style.display = 'none'} />
                                         <p className="text-xs text-[#f59e0b] font-bold uppercase tracking-widest mb-2 relative z-10">{partner.role}</p>
@@ -96,14 +96,14 @@ const ResearchSupport = () => {
 
                     <button
                         onClick={prevSlide}
-                        className="absolute left-0 md:-left-4 top-[50%] -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-[#f59e0b] text-white rounded-full flex items-center justify-center transition-all z-50 opacity-0 group-hover:opacity-100"
+                        className="absolute left-0 md:left-2 top-[50%] -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/40 hover:bg-[#f59e0b] text-white rounded-full flex items-center justify-center transition-all z-50 md:opacity-0 md:group-hover:opacity-100"
                     >
                         <ChevronLeft size={24} />
                     </button>
 
                     <button
                         onClick={nextSlide}
-                        className="absolute right-0 md:-right-4 top-[50%] -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-[#f59e0b] text-white rounded-full flex items-center justify-center transition-all z-50 opacity-0 group-hover:opacity-100"
+                        className="absolute right-0 md:right-2 top-[50%] -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/40 hover:bg-[#f59e0b] text-white rounded-full flex items-center justify-center transition-all z-50 md:opacity-0 md:group-hover:opacity-100"
                     >
                         <ChevronRight size={24} />
                     </button>
