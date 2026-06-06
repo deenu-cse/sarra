@@ -9,7 +9,6 @@ import GovLinks from "@/components/links/govLinks";
 import CommunityEngagement from "@/components/community/CommunityEngagement";
 import Dignitaries from "@/components/about/Dignitaries"
 import MapCarousel from "@/components/MapCarousel"
-
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export default async function Home() {
@@ -39,7 +38,7 @@ export default async function Home() {
   return (
     <div>
       <EventSlider />
-      <MinimalAnnouncement initialAnnouncements={announcements} />
+      {/* <MinimalAnnouncement initialAnnouncements={announcements} /> */}
       <Dignitaries />
       <SarraBanner />
       <Department initialAnnouncements={announcements} />

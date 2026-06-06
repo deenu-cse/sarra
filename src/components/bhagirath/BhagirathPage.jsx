@@ -113,7 +113,7 @@ function LaunchPhotosSection() {
 
 function UISection() {
     return (
-        <section className="w-full md:w-[82%] mx-auto bg-white flex flex-col items-center pb-20">
+        <section className="w-full md:w-[74%] mx-auto bg-white flex flex-col items-center pb-20">
             <img src={IMG.ui1} alt="Bhagirath UI 1" className="w-full h-auto block" />
             <img src={IMG.ui2} alt="Bhagirath UI 2" className="w-full h-auto block" />
         </section>

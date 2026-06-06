@@ -15,16 +15,16 @@ const Header = () => {
 
     return (
         <header className="w-full font-sans">
-            <div className="bg-[#1f4e79] p-3 sm:p-4 flex justify-between items-center border-b-[3px] border-[#f59e0b]">
+            <div className="bg-white p-3 sm:p-4 flex justify-between items-center border-b-[3px] border-[#1e3a5f]">
                 <Link href="/" className="flex items-center gap-2 sm:gap-6 flex-1 hover:opacity-90 transition-opacity cursor-pointer">
                     <img src='/assets/nav/logo.png' alt="Logo" className="h-12 sm:h-16 w-auto" />
 
-                    <div className="text-white">
-                        <h1 className="text-sm sm:text-2xl font-serif font-bold leading-tight">
+                    <div>
+                        <h1 className="text-base sm:text-3xl font-serif font-bold leading-tight text-[#1e3a5f]">
                             <span className="hidden sm:inline">Spring and River Rejuvenation Authority</span>
-                            <span className="sm:hidden text-xs">Spring and River Rejuvenation Authority</span>
+                            <span className="sm:hidden text-sm">Spring and River Rejuvenation Authority</span>
                         </h1>                        
-                        <p className="text-[#f59e0b] text-xs sm:text-sm font-semibold mt-1 hidden sm:block">
+                        <p className="text-[#f59e0b] text-sm sm:text-base font-semibold mt-1 hidden sm:block">
                             Anchored in Watershed Management Directorate, Government of Uttarakhand
                         </p>
                     </div>

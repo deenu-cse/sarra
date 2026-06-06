@@ -93,6 +93,9 @@ export default function Footer() {
                 <li>
                   <Link href="https://wmduk.gov.in" target="_blank" className="hover:text-amber-500 transition-colors">Watershed Management Directorate</Link>
                 </li>
+                <li>
+                  <Link href="#" target="_blank" className="hover:text-amber-500 transition-colors">Bhagirath</Link>
+                </li>
               </ul>
             </div>
           </div>

@@ -18,6 +18,9 @@ const VIDEOS = [
         iframe: <iframe src="https://www.youtube.com/embed/gCFs8nd_ROc?si=lypo5QPk1BoweEG2" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
     },
     {
+        iframe: <iframe src="https://www.youtube.com/embed/lUPouTxRRrc?si=jglRM_-8MVb_h_3_" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+    },
+    {
         iframe: <iframe src="https://www.youtube.com/embed/cIkAQkgoDfA?si=WaZX2SRFwdWnM4DJ" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
     }
 ];

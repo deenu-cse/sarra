@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { Calendar, ArrowRight, Search, Newspaper } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -39,7 +40,6 @@ function HeroSection() {
     );
 }
 
-// Image lightbox component
 function ImageLightbox({ src, alt, onClose }) {
     return (
         <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12" onClick={onClose}>
@@ -58,9 +58,60 @@ function ImageLightbox({ src, alt, onClose }) {
     );
 }
 
+function NewsCard({ article, formatDate, onImageClick }) {
+    return (
+        <Link href={`/news/${article.slug || article._id}`} className="group block h-full">
+            <div className="rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                <div className="h-52 bg-slate-100 overflow-hidden relative">
+                    {article.thumbnail ? (
+                        <img
+                            src={article.thumbnail}
+                            alt={article.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            onClick={(e) => { e.preventDefault(); onImageClick({ src: article.thumbnail, alt: article.title }); }}
+                        />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 text-slate-300">
+                            <Newspaper size={40} strokeWidth={1} />
+                        </div>
+                    )}
+                    <div className="absolute top-3 left-3">
+                        <span className="bg-[#1e3a5f] text-[10px] text-white px-2.5 py-1 rounded-full uppercase font-bold tracking-wider shadow-sm">
+                            SARRA News
+                        </span>
+                    </div>
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-serif font-bold text-[#1e3a5f] text-base leading-snug line-clamp-2 group-hover:text-[#f59e0b] transition-colors duration-300 mb-3">
+                        {article.title}
+                    </h3>
+                    <div className="mt-auto flex items-center justify-between pt-3 border-t border-slate-100">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+                            <Calendar size={13} />
+                            <span>{formatDate(article.createdAt)}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-xs font-bold text-[#f59e0b] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Read <ArrowRight size={13} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Link>
+    );
+}
+
 const NewsLayout = ({ initialArticles }) => {
     const articles = initialArticles || [];
     const [lightboxImg, setLightboxImg] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const formatDate = (dateStr) => {
+        return new Date(dateStr).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    };
+
+    const filteredArticles = articles.filter(article =>
+        article.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     if (articles.length === 0) {
         return (
@@ -70,111 +121,50 @@ const NewsLayout = ({ initialArticles }) => {
         );
     }
 
-    const featured = articles[0];
-    const secondary = articles.slice(1, 3);
-    const third = articles[3];
-    const remaining = articles.slice(4);
-
-    const formatDate = (dateStr) => {
-        return new Date(dateStr).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    };
-
     return (
-        <div className="max-w-7xl mx-auto p-4 md:p-8 bg-white text-slate-900 font-sans">
-            {/* Top Feature Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
-                {/* Featured Article */}
-                <Link href={`/news/${featured.slug || featured._id}`} className="md:col-span-2 relative group overflow-hidden rounded-lg h-[450px] block">
-                    <img
-                        src={featured.thumbnail || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800'}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        alt={featured.title}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 bg-white text-slate-900 font-sans">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+                <div className="flex items-center gap-3">
+                    <div className="w-1 h-8 bg-[#f59e0b] rounded-full"></div>
+                    <h2 className="text-2xl font-serif font-bold text-[#1e3a5f]">All News</h2>
+                    <span className="bg-[#1e3a5f] text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
+                        {filteredArticles.length}
+                    </span>
+                </div>
+                <div className="relative w-full sm:w-72">
+                    <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                        type="text"
+                        placeholder="Search articles..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-[#f59e0b] focus:ring-1 focus:ring-[#f59e0b]/30 transition-all bg-slate-50"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <div className="absolute bottom-0 p-6 text-white">
-                        <div className="flex gap-2 mb-3">
-                            <span className="bg-[#1e3a5f] text-[10px] px-2 py-0.5 rounded uppercase font-bold tracking-wider">SARRA News</span>
-                            <span className="bg-[#f59e0b] text-[10px] px-2 py-0.5 rounded uppercase font-bold text-slate-900 tracking-wider">Latest</span>
-                        </div>
-                        <h2 className="text-2xl font-serif font-bold leading-tight mb-3">
-                            {featured.title}
-                        </h2>
-                        <div className="flex items-center gap-2 text-xs opacity-80 font-medium">
-                            <span>By SARRA Media</span>
-                            <span>•</span>
-                            <span>{formatDate(featured.createdAt)}</span>
-                        </div>
-                    </div>
-                </Link>
-
-                {/* Right Stack */}
-                <div className="md:col-span-2 grid grid-rows-2 gap-4">
-                    <div className="grid grid-cols-2 gap-4">
-                        {secondary.map((article, idx) => (
-                            <Link key={article._id} href={`/news/${article.slug || article._id}`} className="relative group overflow-hidden rounded-lg h-full min-h-[200px] block">
-                                <img src={article.thumbnail || `https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=400`} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={article.title} />
-                                <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/50" />
-                                <div className="absolute bottom-0 p-3 text-white">
-                                    <span className="bg-[#1e3a5f] text-[9px] px-2 py-0.5 rounded mb-2 inline-block tracking-wider uppercase font-semibold">Article</span>
-                                    <h3 className="text-sm font-serif font-bold leading-snug line-clamp-2">{article.title}</h3>
-                                </div>
-                            </Link>
-                        ))}
-                        {secondary.length < 2 && Array.from({ length: 2 - secondary.length }).map((_, i) => (
-                            <div key={`placeholder-${i}`} className="bg-slate-100 rounded-lg min-h-[200px]" />
-                        ))}
-                    </div>
-                    {third ? (
-                        <Link href={`/news/${third.slug || third._id}`} className="relative group overflow-hidden rounded-lg block">
-                            <img
-                                src={third.thumbnail || 'https://images.unsplash.com/photo-1543872084-c7bd3822856f?auto=format&fit=crop&q=80&w=800'}
-                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                alt={third.title}
-                            />
-                            <div className="absolute inset-0 bg-black/50" />
-                            <div className="absolute bottom-0 p-4 text-white">
-                                <h3 className="text-lg font-serif font-bold text-white">{third.title}</h3>
-                            </div>
-                        </Link>
-                    ) : (
-                        <div className="bg-slate-100 rounded-lg" />
-                    )}
                 </div>
             </div>
 
-            {/* All Articles Grid */}
-            {remaining.length > 0 && (
-                <div>
-                    <div className="flex items-center justify-between border-b border-gray-200 pb-2 mb-6">
-                        <h2 className="text-xl font-serif font-bold border-l-4 border-[#f59e0b] pl-3 text-[#1e3a5f]">All Articles</h2>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {remaining.map((article) => (
-                            <Link key={article._id} href={`/news/${article.slug || article._id}`} className="group block">
-                                <div className="rounded-lg overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                                    <div className="h-48 bg-slate-100 overflow-hidden">
-                                        {article.thumbnail ? (
-                                            <img
-                                                src={article.thumbnail}
-                                                alt={article.title}
-                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                onClick={(e) => { e.preventDefault(); setLightboxImg({ src: article.thumbnail, alt: article.title }); }}
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-slate-300">
-                                                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="p-4">
-                                        <span className="text-[10px] font-bold text-[#f59e0b] uppercase tracking-wider">SARRA News</span>
-                                        <h3 className="font-serif font-bold text-slate-800 mt-1 leading-tight line-clamp-2 group-hover:text-[#f59e0b] transition-colors">{article.title}</h3>
-                                        <p className="text-xs text-slate-500 mt-2">{formatDate(article.createdAt)}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+            {/* Uniform Cards Grid */}
+            {filteredArticles.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredArticles.map((article) => (
+                        <NewsCard
+                            key={article._id}
+                            article={article}
+                            formatDate={formatDate}
+                            onImageClick={setLightboxImg}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center py-16">
+                    <Search size={40} className="mx-auto text-slate-300 mb-4" />
+                    <p className="text-slate-500 text-lg font-medium">No articles match your search.</p>
+                    <button
+                        onClick={() => setSearchQuery('')}
+                        className="mt-3 text-[#f59e0b] text-sm font-semibold hover:underline"
+                    >
+                        Clear search
+                    </button>
                 </div>
             )}
 

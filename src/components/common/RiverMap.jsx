@@ -229,7 +229,7 @@ export default function RiverMap({ highlightedRivers = [], height = '400px' }) {
 
         polygon.addTo(map);
         if (isHighlighted) {
-            latlngs.forEach(ll => highlightedBounds.extend(ll));
+          latlngs.forEach(ll => highlightedBounds.extend(ll));
         }
       });
 
@@ -310,7 +310,7 @@ export default function RiverMap({ highlightedRivers = [], height = '400px' }) {
           </div>
         </div>
       )}
-      <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[400]">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[400]">
         <div className="bg-[#0a3055]/90 backdrop-blur-sm text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-lg tracking-wide whitespace-nowrap">
           🗺 River Map Locations
         </div>

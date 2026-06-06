@@ -18,7 +18,7 @@ const Department = ({ initialAnnouncements }) => {
                         ABOUT <br /> DEPARTMENT
                     </h2>
                     <div className="w-20 h-1 bg-[#1f4e79]"></div>
-                    <p className="text-gray-700 leading-relaxed text-sm md:text-base text-justify">
+                    <p className="text-black leading-relaxed text-md md:text-xl text-justify">
                         Uttarakhand Government has setup Spring and River Rejuvenation Authority (SARRA) in Nov. 2023 anchored in Watershed Department Govt. of Uttarakhand. In the light of the conditions becoming increasingly difficult day by day for local life due to global climate change and man-made factors and continuously drying up water sources in the state...
                     </p>
                     <Link href="/about" className="inline-flex items-center gap-2 bg-[#0a3055] text-white px-5 py-3 rounded shadow-lg hover:bg-[#154b7d] transition-all font-bold uppercase tracking-widest text-sm">
