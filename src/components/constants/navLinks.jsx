@@ -92,25 +92,25 @@ const NavLinks = () => {
                                 {item.type === 'link' ? (
                                     <Link
                                         href={item.href}
-                                        className={`flex items-center justify-center px-4 py-4 text-base font-bold transition-all duration-200 min-h-[64px] text-center
+                                        className={`flex items-center justify-center px-3 py-4 text-base font-bold transition-all duration-200 min-h-[64px] text-center
                                             ${active
                                                 ? 'bg-[#1e3a5f] text-white'
                                                 : 'text-[#1e3a5f] hover:bg-slate-50'
                                             }`}
                                     >
-                                        <span className="max-w-[200px] leading-tight text-lg font-bold">
+                                        <span className="max-w-[200px] leading-tight text-[16px] font-bold">
                                             {item.title}
                                         </span>
                                     </Link>
                                 ) : (
                                     <button
-                                        className={`flex items-center justify-center px-5 py-4 text-base font-bold transition-all duration-200 min-h-[64px] text-center w-full
+                                        className={`flex items-center justify-center px-3 py-4 text-base font-bold transition-all duration-200 min-h-[64px] text-center w-full
                                             ${active
                                                 ? 'bg-[#1e3a5f] text-white'
                                                 : 'text-[#1e3a5f] hover:bg-slate-50'
                                             }`}
                                     >
-                                        <span className="max-w-[200px] leading-tight text-lg font-bold">
+                                        <span className="max-w-[200px] leading-tight text-[16px] font-bold">
                                             {item.title}
                                         </span>
                                         <ChevronDown size={18} className="ml-2 opacity-70" />
