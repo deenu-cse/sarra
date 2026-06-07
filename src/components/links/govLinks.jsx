@@ -7,7 +7,7 @@ export default function GovLinks() {
 
   return (
     <div className="container mx-auto px-4 bg-white border-y border-gray-200">
-      <div className="w-full py-6 pb-5">
+      <div className="w-full  md:py-6 md:pb-5">
         <marquee
           ref={marqueeRef}
           id="myMarquee"

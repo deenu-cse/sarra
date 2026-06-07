@@ -32,11 +32,13 @@ export default function PartnerDetailPanel() {
         { header: 'District', key: 'district' },
         { header: 'Date of MOU', key: 'mou' },
         { header: 'Inception Report Deadline', key: 'deadline' },
-        { header: 'Inception Report Received', key: 'received', render: (val) => (
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${val === 'Yes (Received)' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                {val}
-            </span>
-        )},
+        {
+            header: 'Inception Report Received', key: 'received', render: (val) => (
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${val === 'Yes (Received)' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                    {val}
+                </span>
+            )
+        },
         { header: 'Final Timeline', key: 'timeline' },
     ];
 
@@ -67,9 +69,7 @@ export default function PartnerDetailPanel() {
                             <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-slate-700 leading-relaxed text-sm md:text-base">
                                 <p>IIT Roorkee conducted scientific sub-basin prioritization studies for two Uttarakhand river basins — Shipra (Nainital) and Gaudi (Champawat) — using morphometric analysis, LULC change detection (1995–2024), and SWAT hydrological modelling, providing actionable frameworks for SARRA's river rejuvenation programme.</p>
                             </div>
-                            <div className="inline-flex items-center gap-2 bg-green-50 text-green-800 px-4 py-2 rounded-full border border-green-200 font-semibold text-xs md:text-sm">
-                                <Info size={16} /> Status: Inception Reports Received
-                            </div>
+
                         </div>
                     </div>
                 </div>

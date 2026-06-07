@@ -97,7 +97,7 @@ const EventSlider = () => {
                     bulletClass: 'custom-bullet',
                     bulletActiveClass: 'custom-bullet-active',
                 }}
-                className="w-full h-[400px] md:h-[550px]" // Responsive height
+                className="w-full h-[550px] md:h-[650px]" // Responsive height
             >
                 {sliderData.map((slide) => (
                     <SwiperSlide

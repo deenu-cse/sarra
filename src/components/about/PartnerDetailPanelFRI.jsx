@@ -11,11 +11,13 @@ export default function PartnerDetailPanelFRI() {
         { header: 'District', key: 'district' },
         { header: 'Date of MOU', key: 'mou' },
         { header: 'Inception Report Deadline', key: 'deadline' },
-        { header: 'Inception Report Received', key: 'received', render: (val) => (
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${val === 'Yes (Received)' ? 'bg-green-100 text-green-700' : val === 'Pending' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'}`}>
-                {val}
-            </span>
-        )},
+        {
+            header: 'Inception Report Received', key: 'received', render: (val) => (
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${val === 'Yes (Received)' ? 'bg-green-100 text-green-700' : val === 'Pending' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'}`}>
+                    {val}
+                </span>
+            )
+        },
         { header: 'Final Timeline', key: 'timeline' },
     ];
 
@@ -58,9 +60,7 @@ export default function PartnerDetailPanelFRI() {
                             <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-slate-700 leading-relaxed text-sm md:text-base">
                                 <p>FRI Dehradun is a premier forestry research institution under the Indian Council of Forestry Research and Education (ICFRE). As a technical support agency under the SARRA (Spring and River Rejuvenation Authority) initiative by the Government of Uttarakhand, FRI is responsible for sub-catchment prioritisation and river rejuvenation planning for rivers Chandrabhaga (Chamoli) and Punar (Rudraprayag). MoUs were signed on 19th May 2026.</p>
                             </div>
-                            <div className="inline-flex items-center gap-2 bg-amber-50 text-amber-800 px-4 py-2 rounded-full border border-amber-200 font-semibold text-xs md:text-sm">
-                                <Info size={16} /> Status: Inception reports awaited — Timeline: 18th October 2026
-                            </div>
+
                         </div>
                     </div>
                 </div>

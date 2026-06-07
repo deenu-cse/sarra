@@ -61,7 +61,7 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                         <div className="flex whitespace-nowrap">
                             <button
                                 onClick={() => setActiveTab('news_announcements')}
-                                className={`px-6 py-3 font-semibold text-md transition-colors ${activeTab === 'news_announcements' || activeTab === 'notifications' || activeTab === 'announcements'
+                                className={`px-6 py-3 font-semibold text-[24px] transition-colors ${activeTab === 'news_announcements' || activeTab === 'notifications' || activeTab === 'announcements'
                                     ? 'bg-white text-[#0056b3] border-t-2 border-t-[#0056b3]'
                                     : 'bg-[#f8f9fa] text-gray-600 border-t-2 border-t-transparent hover:bg-gray-100'
                                     }`}

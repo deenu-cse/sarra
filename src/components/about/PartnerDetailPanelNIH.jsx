@@ -70,9 +70,7 @@ export default function PartnerDetailPanelNIH() {
                             <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-slate-700 leading-relaxed text-sm md:text-base">
                                 <p>National Institute of Hydrology (NIH) conducted scientific sub-basin prioritization studies for two spring-fed Uttarakhand river basins — Song (Dehradun) and Nayar (Pauri Garhwal) — using morphometric analysis, LULC change detection (1995–2024), and detailed rainfall trend assessments to provide actionable frameworks for SARRA's river rejuvenation programme.</p>
                             </div>
-                            <div className="inline-flex items-center gap-2 bg-green-50 text-green-800 px-4 py-2 rounded-full border border-green-200 font-semibold text-xs md:text-sm">
-                                <Info size={16} /> Status: Inception Reports Received
-                            </div>
+
                         </div>
                     </div>
                 </div>

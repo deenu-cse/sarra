@@ -9,16 +9,20 @@ export default function PartnerDetailPanelIISWC() {
     const tableColumns = [
         { header: 'River Name', key: 'name' },
         { header: 'District', key: 'district' },
-        { header: 'MOU Status', key: 'mouStatus', render: (val) => (
-            <span className={`px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
-                {val}
-            </span>
-        ) },
-        { header: 'Inception Report Status', key: 'reportStatus', render: (val) => (
-            <span className={`px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700`}>
-                {val}
-            </span>
-        ) },
+        {
+            header: 'MOU Status', key: 'mouStatus', render: (val) => (
+                <span className={`px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}>
+                    {val}
+                </span>
+            )
+        },
+        {
+            header: 'Inception Report Status', key: 'reportStatus', render: (val) => (
+                <span className={`px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700`}>
+                    {val}
+                </span>
+            )
+        },
     ];
 
     const tableData = [
@@ -59,9 +63,7 @@ export default function PartnerDetailPanelIISWC() {
                             <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-slate-700 leading-relaxed text-sm md:text-base">
                                 <p>IISWC Dehradun is a national institute under the Indian Council of Agricultural Research specialising in soil and water conservation research. Under the SARRA One District-One River initiative, IISWC has been assigned river Kamal Ganga in Uttarkashi district for sub-catchment prioritisation and rejuvenation planning. Budget has been sanctioned and the MoU signing process is currently underway.</p>
                             </div>
-                            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-800 px-4 py-2 rounded-full border border-blue-200 font-semibold text-xs md:text-sm">
-                                <Info size={16} /> Status: 🔄 In Process — MoU under finalization
-                            </div>
+
                         </div>
                     </div>
                 </div>

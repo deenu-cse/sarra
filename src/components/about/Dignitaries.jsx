@@ -111,7 +111,7 @@ const Dignitaries = () => {
                                     <p className="text-[#f59e0b] text-xs md:text-sm font-semibold tracking-wide">
                                         {person.title}
                                     </p>
-                                    <p className="text-[#374151] text-[10px] md:text-xs mt-1 font-light uppercase tracking-wider">
+                                    <p className="text-[#374151] text-[12px] md:text-sm mt-1 font-light uppercase tracking-wider font-semibold">
                                         "{person.subtitle}"
                                     </p>
                                 </div>

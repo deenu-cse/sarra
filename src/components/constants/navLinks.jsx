@@ -20,9 +20,22 @@ const NavLinks = () => {
             const containerWidth = navContainerRef.current.offsetWidth;
             const availableWidth = containerWidth - 50;
 
-            let maxItems = Math.floor(availableWidth / 110);
-            maxItems = Math.max(1, Math.min(maxItems, navItems.length));
+            let currentWidth = 0;
+            let maxItems = 0;
 
+            for (let i = 0; i < navItems.length; i++) {
+                const item = navItems[i];
+                let estWidth = 30 + (item.title.length * 8.5);
+                if (item.type === 'dropdown') estWidth += 24; // Chevron icon + margin
+
+                if (currentWidth + estWidth > availableWidth) {
+                    break;
+                }
+                currentWidth += estWidth;
+                maxItems++;
+            }
+
+            maxItems = Math.max(1, Math.min(maxItems, navItems.length));
             setVisibleCount(maxItems);
         };
 
