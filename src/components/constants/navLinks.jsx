@@ -26,7 +26,7 @@ const NavLinks = () => {
             for (let i = 0; i < navItems.length; i++) {
                 const item = navItems[i];
                 let estWidth = 30 + (item.title.length * 8.5);
-                if (item.type === 'dropdown') estWidth += 24; // Chevron icon + margin
+                if (item.type === 'dropdown') estWidth += 24;
 
                 if (currentWidth + estWidth > availableWidth) {
                     break;
@@ -54,11 +54,11 @@ const NavLinks = () => {
                 { label: 'Contact Us', href: '/contact' }
             ]
         },
+        { title: 'Knowledge Hub', type: 'link', href: '/knowledge-hub' },
         {
             title: 'Announcements',
             type: 'link', href: '/announcements'
         },
-        { title: 'Knowledge Hub', type: 'link', href: '/knowledge-hub' },
         { title: 'Bhagirath App', type: 'link', href: '/bhagirath-app' },
         { title: 'One River One District', type: 'link', href: '/one-river-one-district' },
         {
@@ -91,14 +91,14 @@ const NavLinks = () => {
 
     return (
         <nav className="w-full bg-white shadow-lg relative z-[100]">
-            <div className="max-w-[100%] mx-auto">
+            <div className="max-w-[100%] mx-auto px-1.5">
                 <div className="hidden lg:flex flex-wrap">
                     {navItems.map((item, index) => {
                         const active = isActive(item);
                         return (
                             <div
                                 key={index}
-                                className="relative group border-r border-slate-200 last:border-r-0"
+                                className="relative group border-r border-slate-200 last:border-r-0 "
                                 onMouseEnter={() => setActiveDropdown(index)}
                                 onMouseLeave={() => setActiveDropdown(null)}
                             >
@@ -160,7 +160,7 @@ const NavLinks = () => {
                 </div>
 
                 <div className="lg:hidden flex items-stretch bg-white border-b border-slate-200 relative z-50">
-                    <div ref={navContainerRef} className="flex flex-1 overflow-x-auto hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <div ref={navContainerRef} className="flex flex-1 overflow-x-auto hide-scroll " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                         <style dangerouslySetInnerHTML={{ __html: `.hide-scroll::-webkit-scrollbar { display: none; }` }} />
                         {navItems.slice(0, visibleCount).map((item, index) => {
                             const active = isActive(item);
@@ -196,7 +196,7 @@ const NavLinks = () => {
                             setMobileMenuOpen(!mobileMenuOpen);
                             setActiveDropdown(null);
                         }}
-                        className={`flex-none flex items-center justify-center px-4 py-3 transition-colors border-l border-slate-200 ${mobileMenuOpen ? 'bg-slate-100 text-[#1e3a5f]' : 'text-[#1e3a5f] hover:bg-slate-50'}`}
+                        className={`flex-none flex items-center justify-center px-4 py-3 transition-colors ${mobileMenuOpen ? 'bg-slate-100 text-[#1e3a5f]' : 'text-[#1e3a5f] hover:bg-slate-50'}`}
                         aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -222,7 +222,7 @@ const NavLinks = () => {
                 </div>
 
                 {mobileMenuOpen && (
-                    <div className="lg:hidden bg-white border-t border-slate-200 absolute top-full left-0 w-full z-50 shadow-xl">
+                    <div className="lg:hidden bg-white border-t border-slate-200 absolute top-full left-0 w-full z-50 shadow-xl ">
                         {navItems.slice(visibleCount).map((item, index) => {
                             const actualIndex = index + visibleCount;
                             const active = isActive(item);

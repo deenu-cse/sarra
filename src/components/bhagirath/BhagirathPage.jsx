@@ -3,7 +3,7 @@
 import React from 'react';
 
 const IMG = {
-    hero: '/assets/bhagirithi/banner.png',
+    hero: '/assets/bhagirithi/SARRA_3.jpeg',
     infoImage: '/assets/bhagirithi/SARRA_3.jpeg',
     ui1: '/assets/bhagirithi/bhg1.jpeg',
     ui2: '/assets/bhagirithi/bhg2.jpeg',
