@@ -16,7 +16,7 @@ const goldenYellow = '#f59e0b';
 const sliderData = [
     {
         id: 1,
-        image: "/assets/heroimg/1.jpeg",
+        image: "/assets/heroimg/1.png",
         alt: "Hero Img",
     },
     {
@@ -84,9 +84,9 @@ const EventSlider = () => {
             <Swiper
                 ref={swiperRef}
                 modules={[Navigation, Autoplay, Pagination]}
-                spaceBetween={0} // Full-width flush slides
+                spaceBetween={0}
                 slidesPerView={1}
-                loop={true} // Crucial for INFINITE SCROLL
+                loop={true}
                 autoplay={{
                     delay: 5000,
                     disableOnInteraction: false,
@@ -97,7 +97,7 @@ const EventSlider = () => {
                     bulletClass: 'custom-bullet',
                     bulletActiveClass: 'custom-bullet-active',
                 }}
-                className="w-full h-[550px] md:h-[650px]" // Responsive height
+                className="w-full h-[600px] md:h-[650px]"
             >
                 {sliderData.map((slide) => (
                     <SwiperSlide
