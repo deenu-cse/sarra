@@ -316,6 +316,36 @@ const DISTRICT_DATA = [
 const KUMAON_DATA = DISTRICT_DATA.filter(d => d.region === 'KUMAON');
 const GARHWAL_DATA = DISTRICT_DATA.filter(d => d.region === 'GARHWAL');
 
+const WATERSHED_ALIASES = {
+  'Fika River Watershed': ['Phica River Watershed', 'Fika River WS', 'Phica River WS'],
+};
+
+const MAP_DISTRICT_DATA = DISTRICT_DATA.flatMap((data) => {
+  if (data.watershed !== 'Eastern Nayar Watershed') return [data];
+
+  return [
+    data,
+    {
+      ...data,
+      watershed: 'Western Nayar Watershed',
+      lat: 30.064782,
+      lng: 78.915604,
+      description: 'Western Nayar watershed conservation project in Pauri Garhwal.',
+    },
+  ];
+});
+
+const normalizeMapText = (value = '') => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+const getWatershedCodes = (data) => {
+  const ws = WATERSHED_DATA[data.watershed];
+  return [ws?.code, ws?.swsCodes]
+    .filter(Boolean)
+    .flatMap(value => value.split(','))
+    .map(value => value.trim().toLowerCase())
+    .filter(Boolean);
+};
+
 // ─── Watershed Info Modal ─────────────────────────────────────────────────────
 function WatershedModal({ districtData, onClose }) {
   const ws = WATERSHED_DATA[districtData.watershed] || null;
@@ -584,7 +614,7 @@ function WatershedModal({ districtData, onClose }) {
 }
 
 // ─── Interactive Map ──────────────────────────────────────────────────────────
-function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
+function InteractiveMap({ focusDistrict, onDistrictSelect }) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersRef = useRef({});
@@ -743,19 +773,45 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
     const parser = new DOMParser();
     const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
     const placemarks = kmlDoc.querySelectorAll('Placemark');
+    const renderedLabels = new Set();
+
+    const addRiverLabel = (data, lat, lng) => {
+      const labelKey = `${data?.district}-${data?.watershed}`;
+      if (!data || renderedLabels.has(labelKey)) return;
+
+      const icon = L.divIcon({
+        html: `<div style="font-size:11px;font-weight:800;color:#0a3055;text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;white-space:nowrap;cursor:pointer;display:flex;align-items:center;gap:4px;width:max-content;"><img src="/assets/icons/location.png" alt="" style="width:16px;height:16px;object-fit:contain;flex:0 0 auto;"/>${data.river}</div>`,
+        className: '',
+        iconSize: [180, 24],
+        iconAnchor: [8, 16],
+      });
+      const marker = L.marker([lat, lng], { icon, interactive: true });
+      marker.on('click', () => onDistrictSelect({ ...data, _openModal: true }));
+      marker.addTo(map);
+      renderedLabels.add(labelKey);
+    };
+
+    const findDistrictMatch = (placemark, name) => {
+      const description = placemark.querySelector('description')?.textContent || '';
+      const haystack = normalizeMapText(`${name} ${description}`);
+
+      return MAP_DISTRICT_DATA.find(d => {
+        const watershedNames = [d.watershed, ...(WATERSHED_ALIASES[d.watershed] || [])];
+        const hasNameMatch = watershedNames.some(watershedName => haystack.includes(normalizeMapText(watershedName)));
+        const hasRiverMatch = d.river !== 'Nayar (East & West)' && haystack.includes(normalizeMapText(d.river));
+        const hasCodeMatch = getWatershedCodes(d).some(code => haystack.includes(normalizeMapText(code)));
+
+        return hasNameMatch || hasRiverMatch || hasCodeMatch;
+      });
+    };
 
     placemarks.forEach((placemark) => {
       const name = placemark.querySelector('name')?.textContent?.trim() || '';
       const rawStyle = placemark.querySelector('styleUrl')?.textContent?.trim().replace('#', '') || 'area1';
       // handle stylemap (area13 → area13 normal style)
-      const styleKey = rawStyle.replace(/\d+$/, (m) => m) in styleColors ? rawStyle : rawStyle.replace(/0$/, '').replace(/1$/, '');
       const style = styleColors[rawStyle] || styleColors['area1'];
 
-      // Match to district data by watershed name
-      const match = DISTRICT_DATA.find(d =>
-        d.watershed.toLowerCase() === name.toLowerCase() ||
-        name.toLowerCase().includes(d.river.toLowerCase().split(' ')[0].toLowerCase())
-      );
+      const match = findDistrictMatch(placemark, name);
 
       const coordEls = placemark.querySelectorAll('Polygon outerBoundaryIs LinearRing coordinates');
       coordEls.forEach(coordEl => {
@@ -799,7 +855,7 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
         });
 
         polygon.addTo(map);
-        if (match) layersRef.current[match.district] = polygon;
+        if (match) layersRef.current[`${match.district}-${match.watershed}`] = polygon;
       });
 
       const pointEl = placemark.querySelector('Point coordinates');
@@ -808,21 +864,16 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
         const lat = parseFloat(pts[1]);
         const lng = parseFloat(pts[0]);
         if (!isNaN(lat) && !isNaN(lng)) {
-          const icon = L.divIcon({
-            html: `<div style="font-size:11px;font-weight:800;color:#0a3055;text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;white-space:nowrap;cursor:pointer;display:flex;align-items:center;gap:4px;"><img src="/assets/icons/location.png" alt="" style="width:16px;height:16px;object-fit:contain;"/>${match.river.split(' ')[0]}</div>`,
-            className: '',
-            iconAnchor: [40, 10],
-          });
-          const marker = L.marker([lat, lng], { icon });
-          marker.on('click', () => onDistrictSelect({ ...match, _openModal: true }));
-          marker.addTo(map);
+          addRiverLabel(match, lat, lng);
         }
       }
+
+      if (match) addRiverLabel(match, match.lat, match.lng);
     });
   };
 
   const renderFallbackMarkers = (map, L) => {
-    DISTRICT_DATA.forEach(d => {
+    MAP_DISTRICT_DATA.forEach(d => {
       const marker = L.circleMarker([d.lat, d.lng], {
         radius: 10, fillColor: d.color, color: '#0a3055',
         weight: 2, opacity: 1, fillOpacity: 0.8,
@@ -832,16 +883,18 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
       });
       marker.on('click', () => onDistrictSelect({ ...d, _openModal: true }));
       marker.addTo(map);
-      layersRef.current[d.district] = marker;
+      layersRef.current[`${d.district}-${d.watershed}`] = marker;
     });
   };
 
   useEffect(() => {
-    if (!selectedDistrict || !mapInstanceRef.current) return;
-    mapInstanceRef.current.flyTo([selectedDistrict.lat, selectedDistrict.lng], 9, {
-      duration: 1.2, easeLinearity: 0.25,
+    if (!focusDistrict || !mapInstanceRef.current) return;
+
+    mapInstanceRef.current.flyTo([focusDistrict.lat, focusDistrict.lng], 9, {
+      duration: 1.2,
+      easeLinearity: 0.25,
     });
-  }, [selectedDistrict]);
+  }, [focusDistrict]);
 
   return (
     <div className="relative w-[95%] mx-auto overflow-hidden border-y border-blue-100 rounded-2xl" style={{ height: '75vh', minHeight: '600px' }}>
@@ -860,31 +913,11 @@ function InteractiveMap({ selectedDistrict, onDistrictSelect }) {
         `,
       }} />
 
-      {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-[400] bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-blue-100">
-        <div className="text-[11px] font-bold text-[#0a3055] mb-2 uppercase tracking-wide">Legend</div>
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-3 rounded-sm border border-[#543070]" style={{ background: 'rgba(114,128,251,0.5)' }} />
-            <span className="text-[10px] text-gray-600 font-medium">Kumaon Region</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-3 rounded-sm border border-[#543070]" style={{ background: 'rgba(2,147,247,0.35)' }} />
-            <span className="text-[10px] text-gray-600 font-medium">Garhwal Region</span>
-          </div>
-          <div className="flex items-center gap-2 mt-1 pt-1 border-t border-gray-100">
-            <div className="w-4 h-0 border-t-2 border-dashed border-[#0a3055]" />
-            <span className="text-[10px] text-gray-600 font-medium">State Boundary</span>
-          </div>
-        </div>
-      </div>
 
-      {/* Click hint */}
       <div className="absolute bottom-4 right-14 z-[400] bg-white/90 backdrop-blur-sm rounded-xl px-3 py-2 shadow-sm border border-blue-100">
         <span className="text-[10px] text-gray-500 font-medium">🖱 Click a watershed for details</span>
       </div>
 
-      {/* Loading overlay */}
       {!mapLoaded && (
         <div className="absolute inset-0 z-[500] bg-[#f8fafc] flex items-center justify-center">
           <div className="text-center">
@@ -934,6 +967,7 @@ function HeroSection() {
 // ─── Content Section ──────────────────────────────────────────────────────────
 function ContentSection() {
   const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [mapFocusDistrict, setMapFocusDistrict] = useState(null);
   const [modalDistrict, setModalDistrict] = useState(null);
 
   // When click (with _openModal flag) → open modal; hover → just highlight
@@ -951,13 +985,14 @@ function ContentSection() {
   // Table row click → open modal
   const handleRowClick = (row) => {
     setSelectedDistrict(row);
+    setMapFocusDistrict({ ...row });
     setModalDistrict(row);
   };
 
   return (
     <section className="w-full py-8 bg-white">
       <div className="w-full mb-8">
-        <InteractiveMap selectedDistrict={selectedDistrict} onDistrictSelect={handleDistrictSelect} />
+        <InteractiveMap focusDistrict={mapFocusDistrict} onDistrictSelect={handleDistrictSelect} />
       </div>
 
       <div className="w-full flex flex-col gap-6 max-w-[1100px] mx-auto px-4 md:px-8 lg:px-12">
