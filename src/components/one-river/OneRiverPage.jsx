@@ -8,34 +8,36 @@ const IMG = {
 };
 
 const riverImages = [
-  { image: '/assets/one_river/Jata Ganga.png', title: 'Jata Ganga' },
-  { image: '/assets/one_river/gaur ganga.jpg.jpeg', title: 'Gaur Ganga' },
-  { image: '/assets/one_river/Gaudi.png', title: 'Gaudi' },
-  { image: '/assets/one_river/Shipra.jpg.jpeg', title: 'Shipra' },
-  { image: '/assets/one_river/Poorvi Ramganga.webp', title: 'Poorvi Ramganga' },
+  { image: '/assets/one_river/Jata Ganga.png', title: 'Jata Ganga Almora' },
+  { image: '/assets/one_river/gaur ganga.jpg.jpeg', title: 'Garud Ganga Bageshwar' },
+  { image: '/assets/one_river/Gaudi.png', title: 'Gaudi Champawat' },
+  { image: '/assets/one_river/Shipra.jpg.jpeg', title: 'Shipra Nainital' },
+  { image: '/assets/one_river/Poorvi Ramganga.webp', title: 'Poorvi Ramganga Pithoragarh' },
   { image: '/assets/one_river/fika us nagar.jpeg', title: 'Fika Us Nagar' },
   { image: '/assets/one_river/chandrabhaga chmoli.jpeg', title: 'Chandrabhaga Chmoli' },
-  { image: '/assets/one_river/Song.jpg.jpeg', title: 'Song' },
+  { image: '/assets/one_river/Song.jpg.jpeg', title: 'Song Dehradun' },
   { image: '/assets/one_river/pathari haridwar.jpeg', title: 'Pathari Haridwar' },
-  { image: '/assets/one_river/Nayar.png', title: 'Nayar' },
+  { image: '/assets/one_river/Nayar.png', title: 'Nayar Pauri Garhwal' },
   { image: '/assets/one_river/punaar rudraprayag.jpeg', title: 'Punaar Rudraprayag' },
-  { image: '/assets/one_river/kamal ganga.jpg.jpeg', title: 'Kamal Ganga' },
+  { image: '/assets/one_river/kamal ganga.jpg.jpeg', title: 'Kamal Ganga Uttarkashi' },
 ];
 
 const getRiverImage = (riverName) => {
   const mapping = {
-    'Jata Ganga': 'Jata Ganga',
-    'Garud Ganga': 'Gaur Ganga',
-    'Gaudi River': 'Gaudi',
-    'Shipra River': 'Shipra',
-    'Purvi Ramganga': 'Poorvi Ramganga',
+    'Jata Ganga': 'Jata Ganga Almora',
+    'Garud Ganga': 'Garud Ganga Bageshwar',
+    'Gaudi River': 'Gaudi Champawat',
+    'Shipra River': 'Shipra Nainital',
+    'Purvi Ramganga': 'Poorvi Ramganga Pithoragarh',
     'Fika River': 'Fika Us Nagar',
     'Chandra Bhaga': 'Chandrabhaga Chmoli',
-    'Song River': 'Song',
+    'Song River': 'Song Dehradun & Tehri',
     'Pathari River': 'Pathari Haridwar',
-    'Nayar (East & West)': 'Nayar',
+    'Nayar (East & West)': 'Nayar Pauri Garhwal',
+    'Nayar (East)': 'Nayar Pauri Garhwal',
+    'Nayar (West)': 'Nayar Pauri Garhwal',
     'Punaar Nadi': 'Punaar Rudraprayag',
-    'Kamal Nadi': 'Kamal Ganga',
+    'Kamal Nadi': 'Kamal Ganga Uttarkashi',
   };
   const title = mapping[riverName] || riverName;
   return riverImages.find(img => img.title === title)?.image || null;
@@ -324,9 +326,13 @@ const MAP_DISTRICT_DATA = DISTRICT_DATA.flatMap((data) => {
   if (data.watershed !== 'Eastern Nayar Watershed') return [data];
 
   return [
-    data,
     {
       ...data,
+      river: 'Nayar (East)',
+    },
+    {
+      ...data,
+      river: 'Nayar (West)',
       watershed: 'Western Nayar Watershed',
       lat: 30.064782,
       lng: 78.915604,
@@ -798,7 +804,7 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
       return MAP_DISTRICT_DATA.find(d => {
         const watershedNames = [d.watershed, ...(WATERSHED_ALIASES[d.watershed] || [])];
         const hasNameMatch = watershedNames.some(watershedName => haystack.includes(normalizeMapText(watershedName)));
-        const hasRiverMatch = d.river !== 'Nayar (East & West)' && haystack.includes(normalizeMapText(d.river));
+        const hasRiverMatch = !d.river.includes('Nayar') && haystack.includes(normalizeMapText(d.river));
         const hasCodeMatch = getWatershedCodes(d).some(code => haystack.includes(normalizeMapText(code)));
 
         return hasNameMatch || hasRiverMatch || hasCodeMatch;
@@ -1072,7 +1078,6 @@ function ContentSection() {
         </div>
       </div>
 
-      {/* Watershed Modal */}
       {modalDistrict && (
         <WatershedModal
           districtData={modalDistrict}
@@ -1083,7 +1088,6 @@ function ContentSection() {
   );
 }
 
-// ─── Carousel (unchanged) ─────────────────────────────────────────────────────
 function RiverImageCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);

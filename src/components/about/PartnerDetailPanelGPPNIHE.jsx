@@ -61,9 +61,7 @@ export default function PartnerDetailPanelGPPNIHE() {
                             <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-slate-700 leading-relaxed text-sm md:text-base">
                                 <p>G.B. Pant National Institute of Himalayan Environment (GBPNIHE), Almora is a premier research institute under the Ministry of Environment, Forest and Climate Change. As a key technical partner under SARRA's One District-One River program, GBPNIHE is responsible for sub-catchment prioritisation and river rejuvenation planning for three rivers across the Kumaon Himalayan region — Jata Ganga (Almora), Garud Ganga (Bageshwar), and Purvi Ramganga (Pithoragarh). All MoUs were signed on 27th March 2026 and inception reports have been received ahead of schedule.</p>
                             </div>
-                            <div className="inline-flex items-center gap-2 bg-green-50 text-green-800 px-4 py-2 rounded-full border border-green-200 font-semibold text-xs md:text-sm">
-                                <CheckCircle2 size={16} /> Reports received ahead of schedule
-                            </div>
+
                         </div>
                     </div>
                 </div>
