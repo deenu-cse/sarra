@@ -1058,7 +1058,7 @@ function ContentSection() {
           </div>
         </div>
 
-        {/* Tagline */}
+        <img src="/assets/one_river/staticMap.jpeg" alt="Tagline" className="w-full h-auto mt-6" />
         <div className="bg-[#97c0e6] rounded-[16px] p-5 flex flex-col sm:flex-row items-center gap-5 text-white shadow-md border border-[#1a5b9e] w-[80%] mx-auto mt-6">
           <div className="w-[52px] h-[52px] rounded-full bg-white flex items-center justify-center shrink-0 shadow-inner">
             <Droplet size={26} className="text-[#0f4b89]" fill="#0f4b89" />
