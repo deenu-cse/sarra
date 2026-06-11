@@ -25,7 +25,7 @@ const ResearchSupport = () => {
         { name: "Urban Development", logo: "/assets/icons/uk-gov-logo.png", url: "https://udd.uk.gov.in/" },
         { name: "Peyjal Nigam", logo: "/assets/icons/peyjal.jpg", url: "https://peyjal.uk.gov.in/" },
         { name: "Uttarakhand Jal Sansthan", logo: "/assets/icons/jal-sansthan.png", url: "https://ujs.uk.gov.in/" },
-        { name: "WMD", logo: "/assets/icons/WMD_LOGO.jpg", url: "https://wmduk.gov.in/" },
+        { name: "UCRRFP", logo: "/assets/icons/WMD_LOGO.jpg", url: "https://wmduk.gov.in/" },
         { name: "Horticulture", logo: "/assets/icons/horticulture.png", url: "https://shm.uk.gov.in/" },
         { name: "Agriculture", logo: "/assets/icons/agriculture.jpg", url: "https://agriculture.uk.gov.in/" },
     ];

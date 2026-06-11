@@ -6,33 +6,103 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 const communityData = [
   {
     id: 1,
-    title: "Jal Utsav Pakhwada",
-    description: "Jal utasw pakhwada at Ghamsali, Chamoli",
-    image: "/assets/homeimgslider/Jal utasw pakhwada at ghamsali, chamoli.jpeg",
+    description: "General awareness program at district bageshwar",
+    image: "/assets/homeimgslider/1.jpeg",
   },
   {
     id: 2,
-    title: "Jal Utsav 2025",
-    description: "Jal Utsav 2025 at Tehri Garhwal",
-    image: "/assets/homeimgslider/Jal utsav 25 tehri.jpg",
+    description: "Plantation drive at district Chamoli",
+    image: "/assets/homeimgslider/2.jpeg",
   },
   {
     id: 3,
-    title: "Nadi Mahotsav",
-    description: "Nadi Mahotsav at Pati Jairoli, Champawat",
-    image: "/assets/homeimgslider/nadi mahotsaw at Pati Jairoli, champawat.jpeg",
+    description: "District Level Workshop at District Champawat",
+    image: "/assets/homeimgslider/3.jpeg",
   },
   {
     id: 4,
-    title: "Plantation Drive",
-    description: "Plantation Drive at Pithoragarh",
-    image: "/assets/homeimgslider/Plantation drive at Pithoragarh.jpg",
+    description: "Celebrating World Environment Day 2026 Programme in Nainital",
+    image: "/assets/homeimgslider/4.jpeg",
   },
   {
     id: 5,
-    title: "Harela at WMD",
-    description: "Harela Festival 2025 at WMD, Dehradun",
-    image: "/assets/homeimgslider/Hrela at wmd.jpg",
+    description: "Jal Sanrakshan Abhiyan Program 2026 at Nainital",
+    image: "/assets/homeimgslider/5.jpeg",
+  },
+  {
+    id: 6,
+    description: "Jal Utsav- Jal Sanrakshan Abhiyan 2026 at district Pauri Garhwal",
+    image: "/assets/homeimgslider/6.jpeg",
+  },
+  {
+    id: 7,
+    description: "Children Art Competition Program under JSA 2026 at district Pithoragarh",
+    image: "/assets/homeimgslider/7.jpeg",
+  },
+  {
+    id: 8,
+    description: "Cycle Race Rally & Awareness Program 2026 at district U S Nagar",
+    image: "/assets/homeimgslider/8.jpeg",
+  },
+  {
+    id: 9,
+    description: "Signature Campaign Event under JSA 2026 at district Uttarkashi",
+    image: "/assets/homeimgslider/9.jpeg",
+  },
+  {
+    id: 10,
+    description: "Cleanliness Activities under JSA 2026 at District Chamoli",
+    image: "/assets/homeimgslider/10.jpeg",
+  },
+  {
+    id: 11,
+    description: "Jal Sanrakshan Abhiyan 2026 at District Pithoragarh",
+    image: "/assets/homeimgslider/11.jpeg",
+  },
+  {
+    id: 12,
+    description: "World Environment Day 2026 Celebration at district Uttarkashi",
+    image: "/assets/homeimgslider/12.jpeg",
+  },
+  {
+    id: 13,
+    description: "Cultural Programme at District Level Workshop 2026, Chamoli",
+    image: "/assets/homeimgslider/13.jpeg",
+  },
+  {
+    id: 14,
+    description: "Village Level Workshop under JSA 2026 at District U S Nagar",
+    image: "/assets/homeimgslider/14.jpeg",
+  },
+  {
+    id: 15,
+    description: "One-Day Capacity Building Workshop at District Haridwar",
+    image: "/assets/homeimgslider/15.jpeg",
+  },
+  {
+    id: 16,
+    description: "General awareness program in district Bageshwar at RSETI centre",
+    image: "/assets/homeimgslider/16.jpeg",
+  },
+  {
+    id: 17,
+    description: "Jal Sanrakshan Abhiyan 2026 Events at district Dehradun",
+    image: "/assets/homeimgslider/17.jpeg",
+  },
+  {
+    id: 18,
+    description: "Jal Utsav Event under JSA 2026 at district Almora",
+    image: "/assets/homeimgslider/18.jpeg",
+  },
+  {
+    id: 19,
+    description: "Oath ceremony on the occasion of World Environment Day 2026 at district U S Nagar",
+    image: "/assets/homeimgslider/19.jpeg",
+  },
+  {
+    id: 20,
+    description: "Block Level Workshop under JSA 2026 at district Champawat",
+    image: "/assets/homeimgslider/20.jpeg",
   },
 ];
 
@@ -105,11 +175,10 @@ const CommunityEngagement: React.FC = () => {
                 >
                   <div className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 border border-slate-100 flex flex-col h-full">
                     <div className="relative h-64 md:h-72 overflow-hidden bg-gray-100 flex items-center justify-center">
-                      <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <img src={item.image} alt={item.description} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     </div>
 
                     <div className="p-4 md:p-5 bg-white">
-                      <h3 className="text-lg md:text-xl font-bold text-[#1e3a5f] mb-2 leading-tight">{item.title}</h3>
                       <p className="text-gray-600 text-sm md:text-base">{item.description}</p>
                     </div>
                   </div>
@@ -144,13 +213,11 @@ const CommunityEngagement: React.FC = () => {
             </button>
 
             <div className="relative w-full h-[60vh] md:h-[72vh] bg-transparent">
-              <img src={communityData[lightboxIndex].image} alt={communityData[lightboxIndex].title} className="w-full h-full object-contain" />
+              <img src={communityData[lightboxIndex].image} alt={communityData[lightboxIndex].description} className="w-full h-full object-contain" />
             </div>
 
             <div className="p-5 md:p-7 bg-white">
               <div className="flex items-center justify-between gap-4 mb-2">
-                <h3 className="text-2xl md:text-3xl font-bold font-serif text-[#1e3a5f]">{communityData[lightboxIndex].title}</h3>
-
                 <span className="text-sm font-semibold text-gray-500 whitespace-nowrap">{lightboxIndex + 1} / {communityData.length}</span>
               </div>
 

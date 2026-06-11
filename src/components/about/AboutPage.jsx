@@ -27,7 +27,7 @@ const IMG = {
     collage3: '/assets/about/wmd.jpg',
     why1: '/assets/about/DJI_20250411113213_0031_D.jpg',
     why2: '/assets/about/sarra_front.jpeg',
-    vision: '/assets/about/7.jpeg',
+    vision: '/assets/about/office.jpeg',
 };
 
 const allImages = [
@@ -140,12 +140,6 @@ function IntroductionSection({ openLightbox }) {
 
                     <div className="absolute top-[20%] right-0 w-[65%] h-[55%] rounded-2xl overflow-hidden shadow-2xl z-20 border-[6px] border-white cursor-pointer" onClick={() => openLightbox(2)}>
                         <img src={IMG.collage2} alt="Fieldwork" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                        <div className="absolute bottom-6 -left-4 bg-[#1e3a5f] border-b-4 border-[#f59e0b] p-4 rounded-xl shadow-xl flex flex-col items-center justify-center min-w-[120px] z-30">
-                            <Leaf className="text-white mb-1" size={24} />
-                            <p className="text-white text-[10px] font-bold uppercase text-center leading-tight">
-                                Embrace <br /> the tradition
-                            </p>
-                        </div>
                     </div>
 
                     <div className="absolute bottom-0 left-10 w-[50%] h-[35%] rounded-2xl overflow-hidden shadow-xl z-10 cursor-pointer" onClick={() => openLightbox(3)}>

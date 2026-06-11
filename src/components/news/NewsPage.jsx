@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Calendar, ArrowRight, Search, Newspaper } from 'lucide-react';
+import { Calendar, ArrowRight, Search, Newspaper, MapPin } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -58,6 +58,7 @@ function ImageLightbox({ src, alt, onClose }) {
     );
 }
 
+/* ─── Regular News Card ─── */
 function NewsCard({ article, formatDate, onImageClick }) {
     return (
         <Link href={`/news/${article.slug || article._id}`} className="group block h-full">
@@ -68,7 +69,6 @@ function NewsCard({ article, formatDate, onImageClick }) {
                             src={article.thumbnail}
                             alt={article.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            onClick={(e) => { e.preventDefault(); onImageClick({ src: article.thumbnail, alt: article.title }); }}
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 text-slate-300">
@@ -100,6 +100,48 @@ function NewsCard({ article, formatDate, onImageClick }) {
     );
 }
 
+function DistrictNewsCard({ article, formatDate, onImageClick }) {
+    return (
+        <Link href={`/news/${article.slug || article._id}`} className="group block h-full">
+            <div className="rounded-2xl overflow-hidden bg-white border border-amber-100 shadow-sm hover:shadow-xl hover:shadow-amber-100/40 transition-all duration-300 h-full flex flex-col">
+                <div className="h-52 bg-slate-100 overflow-hidden relative">
+                    {article.thumbnail ? (
+                        <img
+                            src={article.thumbnail}
+                            alt={article.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50 text-amber-300">
+                            <MapPin size={40} strokeWidth={1} />
+                        </div>
+                    )}
+                    <div className="absolute top-3 left-3">
+                        <span className="text-[10px] text-white px-2.5 py-1 rounded-full uppercase font-bold tracking-wider shadow-sm flex items-center gap-1 bg-[#1e3a5f]">
+                            District News
+                        </span>
+                    </div>
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-serif font-bold text-[#1e3a5f] text-base leading-snug line-clamp-2 group-hover:text-amber-600 transition-colors duration-300 mb-3">
+                        {article.title}
+                    </h3>
+                    <div className="mt-auto flex items-center justify-between pt-3 border-t border-amber-100/60">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+                            <Calendar size={13} />
+                            <span>{formatDate(article.createdAt)}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-xs font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Read <ArrowRight size={13} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Link>
+    );
+}
+
+/* ─── Main Layout ─── */
 const NewsLayout = ({ initialArticles }) => {
     const articles = initialArticles || [];
     const [lightboxImg, setLightboxImg] = useState(null);
@@ -109,9 +151,14 @@ const NewsLayout = ({ initialArticles }) => {
         return new Date(dateStr).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
     };
 
-    const filteredArticles = articles.filter(article =>
-        article.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Split articles
+    const districtArticles = articles.filter(a => a.district_news === true);
+    const regularArticles = articles.filter(a => !a.district_news);
+
+    // Apply search
+    const q = searchQuery.toLowerCase();
+    const allFilteredArticles = articles.filter(a => a.title.toLowerCase().includes(q));
+    const totalFiltered = allFilteredArticles.length;
 
     if (articles.length === 0) {
         return (
@@ -123,12 +170,14 @@ const NewsLayout = ({ initialArticles }) => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 bg-white text-slate-900 font-sans">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
                 <div className="flex items-center gap-3">
-                    <div className="w-1 h-8 bg-[#f59e0b] rounded-full"></div>
-                    <h2 className="text-2xl font-serif font-bold text-[#1e3a5f]">All News</h2>
+                    <div className="w-1 h-8 bg-[#1e3a5f] rounded-full"></div>
+                    <h2 className="text-2xl font-serif font-bold text-[#1e3a5f]">
+                        {searchQuery ? 'Search Results' : 'Latest Updates'}
+                    </h2>
                     <span className="bg-[#1e3a5f] text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
-                        {filteredArticles.length}
+                        {totalFiltered}
                     </span>
                 </div>
                 <div className="relative w-full sm:w-72">
@@ -143,29 +192,102 @@ const NewsLayout = ({ initialArticles }) => {
                 </div>
             </div>
 
-            {/* Uniform Cards Grid */}
-            {filteredArticles.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredArticles.map((article) => (
-                        <NewsCard
-                            key={article._id}
-                            article={article}
-                            formatDate={formatDate}
-                            onImageClick={setLightboxImg}
-                        />
-                    ))}
-                </div>
+            {searchQuery ? (
+                /* ─── Search Results View ─── */
+                <section className="mb-14">
+                    {allFilteredArticles.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {allFilteredArticles.map((article) => (
+                                article.district_news ? (
+                                    <DistrictNewsCard
+                                        key={article._id}
+                                        article={article}
+                                        formatDate={formatDate}
+                                        onImageClick={setLightboxImg}
+                                    />
+                                ) : (
+                                    <NewsCard
+                                        key={article._id}
+                                        article={article}
+                                        formatDate={formatDate}
+                                        onImageClick={setLightboxImg}
+                                    />
+                                )
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-16">
+                            <Search size={40} className="mx-auto text-slate-300 mb-4" />
+                            <p className="text-slate-500 text-lg font-medium">No articles match your search.</p>
+                            <button
+                                onClick={() => setSearchQuery('')}
+                                className="mt-3 text-[#f59e0b] text-sm font-semibold hover:underline"
+                            >
+                                Clear search
+                            </button>
+                        </div>
+                    )}
+                </section>
             ) : (
-                <div className="text-center py-16">
-                    <Search size={40} className="mx-auto text-slate-300 mb-4" />
-                    <p className="text-slate-500 text-lg font-medium">No articles match your search.</p>
-                    <button
-                        onClick={() => setSearchQuery('')}
-                        className="mt-3 text-[#f59e0b] text-sm font-semibold hover:underline"
-                    >
-                        Clear search
-                    </button>
-                </div>
+                /* ─── Default View (No Search) ─── */
+                <>
+                    {/* ─── All News (non-district) Section ─── */}
+                    <section className="mb-14">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-1 h-8 bg-[#f59e0b] rounded-full"></div>
+                            <h2 className="text-2xl font-serif font-bold text-[#1e3a5f]">All News</h2>
+                            <span className="bg-[#1e3a5f] text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
+                                {regularArticles.length}
+                            </span>
+                        </div>
+
+                        {regularArticles.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {regularArticles.map((article) => (
+                                    <NewsCard
+                                        key={article._id}
+                                        article={article}
+                                        formatDate={formatDate}
+                                        onImageClick={setLightboxImg}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-12 bg-slate-50/50 rounded-2xl border border-slate-100">
+                                <Newspaper size={36} className="mx-auto text-slate-200 mb-3" />
+                                <p className="text-slate-400 font-medium">No news articles yet.</p>
+                            </div>
+                        )}
+                    </section>
+
+                    {/* ─── District News Section ─── */}
+                    {districtArticles.length > 0 && (
+                        <section>
+                            <div className="relative rounded-2xl overflow-hidden mb-8 p-6 sm:p-8">
+                                <div className="relative z-10 flex items-center gap-3">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-1 h-8 bg-[#f59e0b] rounded-full"></div>
+                                        <h2 className="text-2xl font-serif font-bold text-[#1e3a5f]">District News</h2>
+                                        <span className="bg-[#1e3a5f] text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
+                                            {districtArticles.length} {districtArticles.length === 1 ? 'Article' : 'Articles'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {districtArticles.map((article) => (
+                                    <DistrictNewsCard
+                                        key={article._id}
+                                        article={article}
+                                        formatDate={formatDate}
+                                        onImageClick={setLightboxImg}
+                                    />
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </>
             )}
 
             {lightboxImg && <ImageLightbox src={lightboxImg.src} alt={lightboxImg.alt} onClose={() => setLightboxImg(null)} />}

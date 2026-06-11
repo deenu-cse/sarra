@@ -26,26 +26,31 @@ const sliderData = [
     },
     {
         id: 3,
-        image: "/assets/heroimg/2.jpeg",
+        image: "/assets/heroimg/33.jpeg",
         alt: "Hero Img",
     },
     {
         id: 4,
-        image: "/assets/heroimg/3.jpeg",
+        image: "/assets/heroimg/2.jpeg",
         alt: "Hero Img",
     },
     {
         id: 5,
-        image: "/assets/heroimg/4.jpeg",
+        image: "/assets/heroimg/3.jpeg",
         alt: "Hero Img",
     },
     {
         id: 6,
-        image: "/assets/heroimg/5.jpeg",
+        image: "/assets/heroimg/4.jpeg",
         alt: "Hero Img",
     },
     {
         id: 7,
+        image: "/assets/heroimg/5.jpeg",
+        alt: "Hero Img",
+    },
+    {
+        id: 8,
         image: "/assets/heroimg/6.jpeg",
         alt: "Hero Img",
     }
