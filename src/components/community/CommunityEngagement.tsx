@@ -104,6 +104,16 @@ const communityData = [
     description: "Block Level Workshop under JSA 2026 at district Champawat",
     image: "/assets/homeimgslider/20.jpeg",
   },
+  {
+    id: 21
+    description: "Community Participation during Jal Sanrakshan Abhiyan 2026 at district Rudraprayag",
+    image: "/assets/homeimgslider/21.jpeg",
+  },
+  {
+    id: 22,
+    description: "Awareness program during Jal Sanrakshan Abhiyan 2026 at district Rudraprayag",
+    image: "/assets/homeimgslider/22.jpeg",
+  },
 ];
 
 const CommunityEngagement: React.FC = () => {

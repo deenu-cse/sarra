@@ -136,7 +136,7 @@ export default function Footer() {
             <span className="text-gray-600">|</span>
             <Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link>
             <span className="text-gray-600">|</span>
-            <Link href="/help" className="hover:text-white transition-colors">Help</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Help</Link>
             <span className="text-gray-600">|</span>
             <Link href="/feedback" className="hover:text-white transition-colors">Feedback</Link>
             <span className="text-gray-600">|</span>
