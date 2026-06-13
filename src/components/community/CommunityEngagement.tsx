@@ -105,7 +105,7 @@ const communityData = [
     image: "/assets/homeimgslider/20.jpeg",
   },
   {
-    id: 21
+    id: 21,
     description: "Community Participation during Jal Sanrakshan Abhiyan 2026 at district Rudraprayag",
     image: "/assets/homeimgslider/21.jpeg",
   },
