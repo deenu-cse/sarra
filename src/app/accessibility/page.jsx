@@ -1,10 +1,11 @@
 import React from "react";
+import { generatePageMeta } from "@/lib/seo.config";
 
-export const metadata = {
-  title: "Accessibility Statement",
-  description:
-    "Accessibility Statement for the SARRA website — WCAG 2.1 AA compliance, Government of Uttarakhand.",
-};
+export const metadata = generatePageMeta({
+  title: "Accessibility Statement | SARRA Uttarakhand",
+  description: "Accessibility Statement for the SARRA website — WCAG 2.1 AA compliance, Government of Uttarakhand.",
+  path: "/accessibility",
+});
 
 export default function AccessibilityPage() {
   return (

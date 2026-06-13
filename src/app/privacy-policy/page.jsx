@@ -1,10 +1,11 @@
 import React from "react";
+import { generatePageMeta } from "@/lib/seo.config";
 
-export const metadata = {
-  title: "Privacy Policy",
-  description:
-    "Privacy Policy for the SARRA (Spring and River Rejuvenation Authority) website, Government of Uttarakhand.",
-};
+export const metadata = generatePageMeta({
+  title: "Privacy Policy | SARRA Uttarakhand",
+  description: "Privacy Policy for the SARRA (Spring and River Rejuvenation Authority) website, Government of Uttarakhand.",
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
   return (

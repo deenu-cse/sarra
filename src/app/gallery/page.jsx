@@ -1,12 +1,15 @@
 import React from 'react';
 import GalleryPage from '@/components/gallery/GalleryPage';
+import { generatePageMeta } from "@/lib/seo.config";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
-export const metadata = {
+export const metadata = generatePageMeta({
     title: 'Gallery | SARRA',
     description: 'Visual gallery showcasing SARRA\'s water rejuvenation projects and initiatives across Uttarakhand.',
-};
+    keywords: 'SARRA gallery, Uttarakhand rivers, spring rejuvenation photos, water conservation images, Jal Sanrakshan gallery',
+    path: '/gallery',
+});
 
 export default async function Page() {
     let galleryItems = [];

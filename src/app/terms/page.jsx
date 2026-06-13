@@ -1,10 +1,11 @@
 import React from "react";
+import { generatePageMeta } from "@/lib/seo.config";
 
-export const metadata = {
-  title: "Terms of Service",
-  description:
-    "Terms of Service for the SARRA website, Government of Uttarakhand.",
-};
+export const metadata = generatePageMeta({
+  title: "Terms of Service | SARRA Uttarakhand",
+  description: "Terms of Service for the SARRA website, Government of Uttarakhand.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

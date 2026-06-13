@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "X-Frame-Options",
-            value: "DENY",
+            value: "SAMEORIGIN",
           },
           {
             key: "X-Content-Type-Options",
@@ -42,6 +42,14 @@ const nextConfig: NextConfig = {
               "camera=(), microphone=(), geolocation=(self), browsing-topics=()",
           },
           {
+            key: "X-Robots-Tag",
+            value: "index, follow",
+          },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=3600, stale-while-revalidate=86400",
+          },
+          {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
@@ -55,9 +63,18 @@ const nextConfig: NextConfig = {
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-              "frame-ancestors 'none'",
+              "frame-ancestors 'self'",
               "upgrade-insecure-requests",
             ].join("; "),
+          },
+        ],
+      },
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
           },
         ],
       },

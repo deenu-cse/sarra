@@ -1,10 +1,11 @@
 import React from "react";
+import { generatePageMeta } from "@/lib/seo.config";
 
-export const metadata = {
-  title: "Copyright Policy",
-  description:
-    "Copyright Policy for the SARRA website, Government of Uttarakhand.",
-};
+export const metadata = generatePageMeta({
+  title: "Copyright Policy | SARRA Uttarakhand",
+  description: "Copyright Policy for the SARRA website, Government of Uttarakhand.",
+  path: "/copyright",
+});
 
 export default function CopyrightPage() {
   return (

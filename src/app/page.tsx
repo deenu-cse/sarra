@@ -1,4 +1,13 @@
 import Image from "next/image";
+import JsonLd from "@/components/seo/JsonLd";
+import { getWebsiteSchema, getOrganizationSchema } from "@/lib/schemas";
+import { generatePageMeta } from "@/lib/seo.config";
+
+export const metadata = generatePageMeta({
+  title: "SARRA - Spring and River Rejuvenation Authority, Government of Uttarakhand",
+  description: "Official website of the Spring and River Rejuvenation Authority (SARRA), Government of Uttarakhand. Dedicated to water conservation, spring restoration, and river rejuvenation across the Himalayan state through Jal Sanrakshan Abhiyan.",
+  path: "/",
+});
 import EventSlider from "@/components/constants/slider";
 import MinimalAnnouncement from "@/components/announcement/MinimalAnnouncement";
 import Department from "@/components/about/aboutDepartment";
@@ -37,6 +46,8 @@ export default async function Home() {
 
   return (
     <div>
+      <JsonLd data={getWebsiteSchema()} />
+      <JsonLd data={getOrganizationSchema()} />
       <EventSlider />
       {/* <MinimalAnnouncement initialAnnouncements={announcements} /> */}
       <Dignitaries />

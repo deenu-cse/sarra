@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPartnerBySlug } from "@/data/researchPartners";
+import { generatePageMeta } from "@/lib/seo.config";
 import PartnerDetailPanel from "@/components/about/PartnerDetailPanel";
 import PartnerDetailPanelNIH from "@/components/about/PartnerDetailPanelNIH";
 import PartnerDetailPanelCGWB from "@/components/about/PartnerDetailPanelCGWB";
@@ -13,11 +14,14 @@ import PartnerDetailPanelNABCONS from "@/components/about/PartnerDetailPanelNABC
 export async function generateMetadata({ params }) {
     const { slug } = await params;
     const partner = getPartnerBySlug(slug);
-    if (!partner) return {};
-    return {
+    if (!partner) return generatePageMeta({ title: 'Partner Not Found | SARRA' });
+    
+    return generatePageMeta({
         title: `${partner.fullName} — Research Partners | SARRA Uttarakhand`,
-        description: partner.intro,
-    };
+        description: partner.intro || `Learn about the partnership between SARRA and ${partner.fullName} for river and spring rejuvenation in Uttarakhand.`,
+        keywords: `SARRA research partner, ${partner.fullName}, ${partner.name}, Uttarakhand water research`,
+        path: `/research-partners/${slug}`,
+    });
 }
 
 export default async function ResearchPartnerPage({ params }) {

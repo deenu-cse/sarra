@@ -4,10 +4,14 @@ import { Megaphone, Calendar, ArrowRight, FileText } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
-export const metadata = {
+import { generatePageMeta } from "@/lib/seo.config";
+
+export const metadata = generatePageMeta({
     title: 'Announcements | SARRA',
     description: 'Latest official updates, notices, and important information from SARRA.',
-};
+    keywords: 'SARRA announcements, official notices, Uttarakhand government updates, Jal Sanrakshan Abhiyan news',
+    path: '/announcements',
+});
 
 export default async function AnnouncementsListPage() {
     let announcements = [];
