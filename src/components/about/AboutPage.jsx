@@ -23,10 +23,10 @@ const C = {
 const IMG = {
     hero: '/assets/about/hero-bg.png',
     collage1: '/assets/about/5.jpeg',
-    collage2: '/assets/about/sarra-office.jpeg',
+    collage2: '/assets/about/sarra-office1.jpeg',
     collage3: '/assets/about/wmd.jpeg',
     why1: '/assets/about/DJI_20250411113213_0031_D.jpg',
-    why2: '/assets/about/sarra-office.jpeg',
+    why2: '/assets/about/sarra-office1.jpeg',
     vision: '/assets/about/office.jpeg',
 };
 
