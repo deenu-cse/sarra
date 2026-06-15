@@ -26,7 +26,7 @@ const sliderData = [
     },
     {
         id: 3,
-        image: "/assets/heroimg/33.jpeg",
+        image: "/assets/heroimg/what.jpeg",
         alt: "Hero Img",
     },
     {
