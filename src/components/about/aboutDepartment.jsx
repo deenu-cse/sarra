@@ -48,7 +48,7 @@ const Department = ({ initialAnnouncements }) => {
                             &times;
                         </button>
                         <img
-                            src="/assets/about/sarra_front.jpeg"
+                            src="/assets/about/sarra-office.jpeg"
                             alt="Districtwise Map Large"
                             className="w-auto h-auto max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain border-2 border-white/20"
                             onClick={(e) => e.stopPropagation()}
