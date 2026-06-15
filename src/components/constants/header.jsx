@@ -21,8 +21,8 @@ const Header = () => {
 
                     <div>
                         <h1 className="text-base sm:text-3xl font-bold leading-tight text-[#1e3a5f]">
-                            <span className="hidden sm:inline ">Spring and River Rejuvenation Authority</span>
-                            <span className="sm:hidden text-sm ">Spring and River Rejuvenation Authority</span>
+                            <span className="hidden sm:inline italic">Spring and River Rejuvenation Authority</span>
+                            <span className="sm:hidden text-sm italic">Spring and River Rejuvenation Authority</span>
                         </h1>
                         <p className="text-[#f59e0b] text-sm sm:text-base font-semibold mt-1 hidden sm:block ">
                             Anchored in Watershed Management Directorate, Government of Uttarakhand
