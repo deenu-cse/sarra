@@ -42,7 +42,7 @@ const Dignitaries = () => {
             img: "/assets/icons/CPDShriDJ.png"
         },
         {
-            name: "Mrs. Kahkashan Naseem, I.F.S",
+            name: "Ms. Kahkashan Naseem, I.F.S",
             title: "ACEO SARRA",
             subtitle: "जल बचाओ! भविष्य बचाओ!",
             img: "/assets/icons/kn_aceo-removebg-preview.png"

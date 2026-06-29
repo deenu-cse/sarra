@@ -100,7 +100,7 @@ export default function Footer() {
                   <Link href="https://pmksy.mowr.gov.in" target="_blank" className="hover:text-amber-500 transition-colors">PMKSY</Link>
                 </li>
                 <li>
-                  <Link href="https://ejalshakti.gov.in" target="_blank" className="hover:text-amber-500 transition-colors">JJM</Link>
+                  <Link href="https://ejalshakti.gov.in" target="_blank" className="hover:text-amber-500 transition-colors">Jal Jeevan Mission</Link>
                 </li>
                 <li>
                   <Link href="https://dolr.gov.in" target="_blank" className="hover:text-amber-500 transition-colors">DOLR</Link>

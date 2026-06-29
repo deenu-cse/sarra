@@ -27,7 +27,7 @@ const Department = ({ initialAnnouncements }) => {
                 </div>
                 <div className="space-y-4 rounded-2xl">
                     <img
-                        src="/assets/about/sarra-office.jpeg"
+                        src="/assets/about/sarra-office2.jpeg"
                         alt="Districtwise Map"
                         className="w-full max-h-[420px] rounded-2xl shadow-md cursor-pointer hover:scale-[1.02] transition-transform duration-500 border-4 border-gray-100 object-cover"
                         onClick={() => setIsModalOpen(true)}
@@ -48,7 +48,7 @@ const Department = ({ initialAnnouncements }) => {
                             &times;
                         </button>
                         <img
-                            src="/assets/about/sarra_front.jpeg"
+                            src="/assets/about/sarra-office2.jpeg"
                             alt="Districtwise Map Large"
                             className="w-auto h-auto max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain border-2 border-white/20"
                             onClick={(e) => e.stopPropagation()}
