@@ -31,6 +31,9 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formRef, formVisible] = useReveal();
   const [mapRef, mapVisible] = useReveal();
+  const [email, setEmail] = useState('');
+
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -82,10 +85,25 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: 'Email',
-      content: (
-        <a href="mailto:sarrauttarakhand@gmail.com" className="text-[#f59e0b] hover:text-[#fbbf24] transition-colors text-sm font-medium">
-          sarrauttarakhand@gmail.com
+      content: email ? (
+        <a
+          href={`mailto:${email}`}
+          className="text-[#f59e0b] hover:text-[#fbbf24] transition-colors text-sm font-medium"
+        >
+          {email}
         </a>
+      ) : (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            const user = ['s', 'a', 'r', 'r', 'a', 'u', 't', 't', 'a', 'r', 'a', 'k', 'h', 'a', 'n', 'd'].join('');
+            const domain = ['g', 'm', 'a', 'i', 'l', '.', 'c', 'o', 'm'].join('');
+            setEmail(`${user}@${domain}`);
+          }}
+          className="text-[#f59e0b] hover:text-[#fbbf24] transition-colors text-sm font-medium underline underline-offset-2"
+        >
+          Click to reveal email
+        </button>
       ),
     },
     {

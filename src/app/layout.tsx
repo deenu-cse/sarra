@@ -24,11 +24,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 };
 
+import { headers } from "next/headers";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-nonce") || "";
+
   let tickerItems = [];
   try {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';

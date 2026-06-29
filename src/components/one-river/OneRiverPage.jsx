@@ -604,7 +604,8 @@ function WatershedModal({ districtData, onClose }) {
         </div>
       )}
 
-      <style>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes wsModalIn {
           from { opacity: 0; transform: scale(0.94) translateY(16px); }
           to   { opacity: 1; transform: scale(1) translateY(0); }
@@ -614,7 +615,7 @@ function WatershedModal({ districtData, onClose }) {
           to   { opacity: 1; transform: scale(1); }
         }
         .scale-in-center { animation: scaleInCenter 0.25s cubic-bezier(0.16,1,0.3,1) forwards; }
-      `}</style>
+      `}} />
     </div>
   );
 }
@@ -1174,7 +1175,8 @@ function RiverImageCarousel() {
         </div>
       )}
 
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .river-lightbox-fade-in { animation: riverFadeIn 0.3s ease-out forwards; }
         .river-lightbox-slide-up { animation: riverSlideUp 0.35s cubic-bezier(0.16,1,0.3,1) forwards; }
         @keyframes riverFadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -1182,7 +1184,7 @@ function RiverImageCarousel() {
           from { opacity: 0; transform: translateY(30px) scale(0.97); }
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-      `}</style>
+      `}} />
     </section>
   );
 }

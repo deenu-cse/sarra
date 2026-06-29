@@ -49,24 +49,6 @@ const nextConfig: NextConfig = {
             key: "Cache-Control",
             value: "public, max-age=3600, stale-while-revalidate=86400",
           },
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com",
-              "img-src 'self' data: blob: https://res.cloudinary.com https://*.cloudinary.com https://*.basemaps.cartocdn.com https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.ggpht.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "connect-src 'self' https://sarrabackend.onrender.com http://localhost:5000",
-              "media-src 'self' https://res.cloudinary.com https://*.cloudinary.com https://www.youtube.com",
-              "frame-src 'self' https://www.youtube.com https://youtube.com https://www.google.com https://maps.google.com https://*.google.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'self'",
-              "upgrade-insecure-requests",
-            ].join("; "),
-          },
         ],
       },
       {
@@ -78,7 +60,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-    ];
+    ]
   },
 
   // Image domains for Cloudinary
