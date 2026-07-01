@@ -51,19 +51,13 @@ const Dignitaries = () => {
 
     return (
         <>
-            <div className="relative w-full overflow-hidden"
-                style={{
-                    background: 'linear-gradient(135deg, #0a3055 0%, #122d4d 40%, #1a3f62 70%, #0f2942 100%)'
-                }}
+            <div className="relative w-full overflow-hidden bg-[linear-gradient(135deg,#0a3055_0%,#122d4d_40%,#1a3f62_70%,#0f2942_100%)]"
             >
-                <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full opacity-[0.07]"
-                    style={{ background: 'radial-gradient(circle, #f59e0b 0%, transparent 70%)' }}
+                <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full opacity-[0.07] bg-[radial-gradient(circle,#f59e0b_0%,transparent_70%)]"
                 />
-                <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full opacity-[0.05]"
-                    style={{ background: 'radial-gradient(circle, #ffffff 0%, transparent 70%)' }}
+                <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full opacity-[0.05] bg-[radial-gradient(circle,#ffffff_0%,transparent_70%)]"
                 />
-                <div className="absolute top-0 left-0 w-full h-[1px]"
-                    style={{ background: 'linear-gradient(90deg, transparent 0%, #f59e0b 50%, transparent 100%)' }}
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-[linear-gradient(90deg,transparent_0%,#f59e0b_50%,transparent_100%)]"
                 />
 
                 <div className="relative z-10 max-w-[1440px] mx-auto px-4 md:px-12 py-3 md:py-6 bg-white">
@@ -80,11 +74,7 @@ const Dignitaries = () => {
                         {dignitaries.map((person, idx) => (
                             <div
                                 key={idx}
-                                className="group relative flex flex-col rounded-2xl overflow-hidden shadow-lg w-full max-w-[220px]"
-                                style={{
-                                    transitionDelay: `${idx * 150}ms`,
-                                    animation: cardsVisible ? `fadeSlideUp 0.7s ${idx * 0.15}s both` : 'none'
-                                }}
+                                className={`group relative flex flex-col rounded-2xl overflow-hidden shadow-lg w-full max-w-[220px] ${cardsVisible ? '[animation:fadeSlideUp_0.7s_both]' : ''}`}
                             >
                                 <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-white flex items-center justify-center p-4 shadow-xl">
                                     <img
@@ -120,29 +110,12 @@ const Dignitaries = () => {
                     </div>
                 </div>
 
-                <div className="absolute bottom-0 left-0 w-full h-[1px]"
-                    style={{ background: 'linear-gradient(90deg, transparent 0%, #f59e0b 50%, transparent 100%)' }}
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[linear-gradient(90deg,transparent_0%,#f59e0b_50%,transparent_100%)]"
                 />
             </div>
 
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                @keyframes fadeSlideUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(30px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                .dignitary-img {
-                    image-rendering: -webkit-optimize-contrast;
-                    image-rendering: crisp-edges;
-                    image-rendering: pixelated;
-                }
-            `}} />
+
+
         </>
     );
 };

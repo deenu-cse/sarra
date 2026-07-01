@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChevronRight, ChevronLeft, X } from 'lucide-react';
 
 const mapImages = [
@@ -57,6 +57,14 @@ export default function MapCarousel() {
 
     const closeLightbox = () => setIsLightboxOpen(false);
 
+    const carouselRef = useRef(null);
+
+    useEffect(() => {
+        if (carouselRef.current) {
+            carouselRef.current.style.transform = `translateX(-${currentIndex * (100 / itemsPerView)}%)`;
+        }
+    }, [currentIndex, itemsPerView]);
+
     const nextLightboxSlide = (e) => {
         e?.stopPropagation();
         setLightboxIndex((prev) => (prev + 1) % mapImages.length);
@@ -73,10 +81,8 @@ export default function MapCarousel() {
                 <div className="relative group">
                     <div className="overflow-hidden">
                         <div
+                            ref={carouselRef}
                             className="flex gap-5 transition-transform duration-700 ease-in-out"
-                            style={{
-                                transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
-                            }}
                         >
                             {mapImages.concat(mapImages).map((item, index) => (
                                 <div
@@ -170,35 +176,8 @@ export default function MapCarousel() {
                 </div>
             )}
 
-            <style jsx global>{`
-                .lightbox-fade-in {
-                    animation: fadeIn 0.3s ease-out forwards;
-                }
 
-                .lightbox-slide-up {
-                    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                }
 
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                    }
-                    to {
-                        opacity: 1;
-                    }
-                }
-
-                @keyframes slideUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(30px) scale(0.97);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0) scale(1);
-                    }
-                }
-            `}</style>
         </section>
     );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -59,6 +59,13 @@ const ResearchSupport = () => {
         setCurrentIndex((prev) => (prev - 1 + researchPartners.length) % researchPartners.length);
     };
 
+    const carouselRef = useRef(null);
+    useEffect(() => {
+        if (carouselRef.current) {
+            carouselRef.current.style.transform = `translateX(-${currentIndex * (100 / itemsPerView)}%)`;
+        }
+    }, [currentIndex, itemsPerView]);
+
     return (
         <section className="w-full bg-[#f8fafc] py-8 px-4 md:px-12 font-sans border-t border-gray-200">
             <div className="max-w-[1200px] mx-auto">
@@ -72,10 +79,8 @@ const ResearchSupport = () => {
 
                 <div className="relative overflow-hidden mb-16 pb-4 pt-4 group">
                     <div
+                        ref={carouselRef}
                         className="flex transition-transform duration-700 ease-in-out -mx-3"
-                        style={{
-                            transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
-                        }}
                     >
                         {researchPartners.concat(researchPartners).map((partner, idx) => {
                             const slug = partner.name.toLowerCase().replace(/\s+/g, '-');

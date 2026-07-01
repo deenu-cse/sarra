@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { ChevronUp } from "lucide-react";
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -28,12 +30,11 @@ export default function Footer() {
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1544.896740616198!2d77.9987396!3d30.3190645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092b960780896d%3A0xfdeb0e4d80ad4f96!2sOffice%20of%20the%20watershed%20project%20management%20unit%20%2C%20UTTARAKHAND!5e0!3m2!1sen!2sin!4v1715694240361!5m2!1sen!2sin"
                 width="100%"
                 height="180"
-                style={{ border: 0, pointerEvents: 'none' }}
+                className="w-full border-0 pointer-events-none"
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="SARRA Office Location"
-                className="w-full"
               ></iframe>
             </a>
             <p className="text-xs text-gray-400 mt-2">Click map to open in Google Maps</p>
@@ -119,7 +120,27 @@ export default function Footer() {
                 <strong className="text-white">Phone:</strong> 0135-2768712, 2760312, 2761002
               </p>
               <p>
-                <strong className="text-white">Email:</strong> sarrauttarakhand@gmail.com
+                <strong className="text-white">Email:</strong>{' '}
+                {email ? (
+                  <a
+                    href={`mailto:${email}`}
+                    className="hover:text-amber-500 transition-colors"
+                  >
+                    {email}
+                  </a>
+                ) : (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const user = ['s', 'a', 'r', 'r', 'a', 'u', 't', 't', 'a', 'r', 'a', 'k', 'h', 'a', 'n', 'd'].join('');
+                      const domain = ['g', 'm', 'a', 'i', 'l', '.', 'c', 'o', 'm'].join('');
+                      setEmail(`${user}@${domain}`);
+                    }}
+                    className="hover:text-amber-500 transition-colors underline underline-offset-2"
+                  >
+                    Click to reveal email
+                  </button>
+                )}
               </p>
             </div>
           </div>

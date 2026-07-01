@@ -101,14 +101,8 @@ const TrenchesGallery = () => {
           </div>
         </div>
       )}
-      <style jsx global>{`
-        .lightbox-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        .lightbox-slide-up { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .trenches-pagination .swiper-pagination-bullet { width: 10px; height: 10px; background: #cbd5e1; opacity: 1; transition: all 0.3s; }
-        .trenches-pagination .swiper-pagination-bullet-active { width: 30px; background: #f59e0b; border-radius: 5px; }
-      `}</style>
+
+
     </section>
   );
 };

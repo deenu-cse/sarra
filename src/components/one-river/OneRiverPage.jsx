@@ -378,32 +378,21 @@ function WatershedModal({ districtData, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-      style={{ background: 'rgba(10,48,85,0.55)', backdropFilter: 'blur(6px)' }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-[rgba(10,48,85,0.55)] backdrop-blur-[6px]"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl"
-        style={{
-          background: 'linear-gradient(145deg, #f0f7ff 0%, #ffffff 60%, #f5f0ff 100%)',
-          border: '1.5px solid rgba(10,48,85,0.12)',
-          animation: 'wsModalIn 0.28s cubic-bezier(0.16,1,0.3,1) forwards',
-        }}
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl bg-[linear-gradient(145deg,#f0f7ff_0%,#ffffff_60%,#f5f0ff_100%)] border-[1.5px] border-solid border-[rgba(10,48,85,0.12)] [animation:wsModalIn_0.28s_cubic-bezier(0.16,1,0.3,1)_forwards]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div
-          className="relative px-7 pt-7 pb-5 rounded-t-3xl overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0a3055 0%, #1e4d8c 60%, #0f6b9e 100%)' }}
+          className="relative px-7 pt-7 pb-5 rounded-t-3xl overflow-hidden bg-[linear-gradient(135deg,#0a3055_0%,#1e4d8c_60%,#0f6b9e_100%)]"
         >
-          <div className="absolute inset-0 opacity-10"
-            style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #60a5fa 0%, transparent 60%)' }} />
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_70%_50%,#60a5fa_0%,transparent_60%)]" />
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all"
-            style={{ background: 'rgba(255,255,255,0.15)' }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(245,158,11,0.8)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
+            className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all bg-white/15 hover:bg-[rgba(245,158,11,0.8)]"
           >
             <X size={18} className="text-white" />
           </button>
@@ -418,8 +407,7 @@ function WatershedModal({ districtData, onClose }) {
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
               </div>
             ) : (
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 mt-1"
-                style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}>
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 mt-1 bg-white/15 backdrop-blur-[8px]">
                 <Droplet size={22} className="text-[#60d8f5]" fill="rgba(96,216,245,0.5)" />
               </div>
             )}
@@ -480,8 +468,8 @@ function WatershedModal({ districtData, onClose }) {
                     ].map(({ label, value, color, h }) => (
                       <div key={label} className="flex-1 flex flex-col items-center gap-1">
                         <span className="text-[13px] font-bold text-[#0a3055]">{value.toLocaleString()} m</span>
-                        <div className="w-full rounded-t-lg transition-all"
-                          style={{ height: `${parseInt(h) * 0.5}px`, background: color, opacity: 0.85 }} />
+                        <div className="w-full rounded-t-lg transition-all opacity-[0.85]"
+                          ref={el => { if (el) { el.style.height = `${parseInt(h) * 0.5}px`; el.style.background = color; } }} />
                         <span className="text-[10px] text-gray-500 font-medium">{label}</span>
                       </div>
                     ))}
@@ -518,7 +506,7 @@ function WatershedModal({ districtData, onClose }) {
                         </div>
                         <div className="w-full h-1.5 rounded-full bg-blue-100 overflow-hidden">
                           <div className="h-full rounded-full bg-gradient-to-r from-[#0a3055] to-[#0f6b9e]"
-                            style={{ width: `${Math.min((deg / 90) * 100, 100)}%` }} />
+                            ref={el => { if (el) el.style.width = `${Math.min((deg / 90) * 100, 100)}%`; }} />
                         </div>
                       </div>
                     ))}
@@ -604,18 +592,8 @@ function WatershedModal({ districtData, onClose }) {
         </div>
       )}
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        @keyframes wsModalIn {
-          from { opacity: 0; transform: scale(0.94) translateY(16px); }
-          to   { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes scaleInCenter {
-          from { opacity: 0; transform: scale(0.95); }
-          to   { opacity: 1; transform: scale(1); }
-        }
-        .scale-in-center { animation: scaleInCenter 0.25s cubic-bezier(0.16,1,0.3,1) forwards; }
-      `}} />
+
+
     </div>
   );
 }
@@ -629,10 +607,10 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
 
   // Tooltip HTML (lightweight, no popup)
   const createTooltipHTML = (data) => `
-    <div style="font-family:system-ui;padding:2px 0;">
-      <b style="font-size:13px;color:#0a3055;">${data.district}</b><br/>
-      <span style="color:#0ea5e9;font-size:12px;">🌊 ${data.river}</span><br/>
-      <span style="font-size:10px;color:#888;">${data.watershed}</span>
+    <div class="font-sans py-0.5">
+      <b class="text-[13px] text-[#0a3055]">${data.district}</b><br/>
+      <span class="text-sky-500 text-xs">🌊 ${data.river}</span><br/>
+      <span class="text-[10px] text-gray-400">${data.watershed}</span>
     </div>`;
 
   const addUttarakhandBoundary = (map, L) => {
@@ -787,7 +765,7 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
       if (!data || renderedLabels.has(labelKey)) return;
 
       const icon = L.divIcon({
-        html: `<div style="font-size:11px;font-weight:800;color:#0a3055;text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;white-space:nowrap;cursor:pointer;display:flex;align-items:center;gap:4px;width:max-content;"><img src="/assets/icons/location.png" alt="" style="width:16px;height:16px;object-fit:contain;flex:0 0 auto;"/>${data.river}</div>`,
+        html: `<div class="text-[11px] font-extrabold text-[#0a3055] [text-shadow:1px_1px_0_#fff,-1px_-1px_0_#fff,1px_-1px_0_#fff,-1px_1px_0_#fff] whitespace-nowrap cursor-pointer flex items-center gap-1 w-max"><img src="/assets/icons/location.png" alt="" class="w-4 h-4 object-contain shrink-0"/>${data.river}</div>`,
         className: '',
         iconSize: [180, 24],
         iconAnchor: [8, 16],
@@ -904,21 +882,11 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
   }, [focusDistrict]);
 
   return (
-    <div className="relative w-[95%] mx-auto overflow-hidden border-y border-blue-100 rounded-2xl" style={{ height: '75vh', minHeight: '600px' }}>
-      <div ref={mapRef} className="absolute inset-0 rounded-2xl" style={{ zIndex: 1 }} />
+    <div className="relative w-[95%] mx-auto overflow-hidden border-y border-blue-100 rounded-2xl h-[75vh] min-h-[600px]">
+      <div ref={mapRef} className="absolute inset-0 rounded-2xl z-10" />
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          .district-tooltip {
-            background: white !important;
-            border: 1px solid rgba(10,48,85,0.12) !important;
-            border-radius: 10px !important;
-            padding: 8px 12px !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12) !important;
-          }
-          .district-tooltip::before { border-top-color: white !important; }
-        `,
-      }} />
+
+
 
 
       <div className="absolute bottom-4 right-14 z-[400] bg-white/90 backdrop-blur-sm rounded-xl px-3 py-2 shadow-sm border border-blue-100">
@@ -947,15 +915,12 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
+    <section className="relative w-full overflow-hidden min-h-[480px]">
       <img src={IMG.hero} alt="One River One District Banner"
-        className="absolute inset-0 w-full h-full object-cover" style={{ zIndex: 0 }} />
-      <div className="absolute inset-0" style={{
-        background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1
-      }} />
+        className="absolute inset-0 w-full h-full object-cover z-0" />
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(15,23,42,0.88)_0%,rgba(30,58,95,0.82)_50%,rgba(10,48,85,0.75)_100%)]" />
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
-          style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight [text-shadow:0_2px_20px_rgba(0,0,0,0.3)]">
           One River <span className="text-[#f59e0b]">One District</span>
         </h1>
         <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-8 font-light leading-relaxed">
@@ -1095,6 +1060,13 @@ function RiverImageCarousel() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
+  const carouselRef = useRef(null);
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `translateX(-${currentIndex * (100 / itemsPerView)}%)`;
+    }
+  }, [currentIndex, itemsPerView]);
+
   useEffect(() => {
     const updateItemsPerView = () => {
       if (window.innerWidth < 640) setItemsPerView(1);
@@ -1124,8 +1096,7 @@ function RiverImageCarousel() {
       <div className="w-full px-4 md:px-8">
         <div className="relative group">
           <div className="overflow-hidden">
-            <div className="flex gap-5 transition-transform duration-700 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}>
+            <div ref={carouselRef} className="flex gap-5 transition-transform duration-700 ease-in-out">
               {riverImages.concat(riverImages).map((item, index) => (
                 <div key={index}
                   className={`flex-shrink-0 ${itemsPerView === 1 ? 'w-full' : itemsPerView === 2 ? 'w-[calc(50%-10px)]' : 'w-[calc(33.333%-14px)]'}`}
@@ -1175,16 +1146,8 @@ function RiverImageCarousel() {
         </div>
       )}
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .river-lightbox-fade-in { animation: riverFadeIn 0.3s ease-out forwards; }
-        .river-lightbox-slide-up { animation: riverSlideUp 0.35s cubic-bezier(0.16,1,0.3,1) forwards; }
-        @keyframes riverFadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes riverSlideUp {
-          from { opacity: 0; transform: translateY(30px) scale(0.97); }
-          to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-      `}} />
+
+
     </section>
   );
 }

@@ -137,25 +137,8 @@ const EventSlider = () => {
                 </button>
             </div>
 
-            <style>{`
-        .custom-bullet {
-          display: block;
-          width: 14px;
-          height: 14px;
-          border-radius: 50%;
-          background: #e2e8f0; /* Light gray base */
-          cursor: pointer;
-          transition: all 0.3s;
-          border: 2px solid white;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .custom-bullet-active {
-          background: #f59e0b; /* Thematic Golden Yellow */
-          width: 32px; /* Stretched look for active state */
-          border-radius: 20px;
-          border-color: white;
-        }
-      `}</style>
+
+
         </div>
     );
 };

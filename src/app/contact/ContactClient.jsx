@@ -121,27 +121,20 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-[#f8fafc]">
 
-      <section className="relative w-full overflow-hidden" style={{ minHeight: '380px' }}>
+      <section className="relative w-full overflow-hidden min-h-[380px]">
         <img
           src="/assets/about/hero-bg.png"
           alt="Uttarakhand mountain landscape"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ zIndex: 0 }}
+          className="absolute inset-0 w-full h-full object-cover z-0"
         />
 
         <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,58,95,0.85) 50%, rgba(10,48,85,0.80) 100%)',
-            zIndex: 1,
-          }}
+          className="absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(15,23,42,0.92)_0%,rgba(30,58,95,0.85)_50%,rgba(10,48,85,0.80)_100%)]"
         />
 
-        <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 2 }}>
-          <div className="absolute -top-16 -left-16 w-80 h-80 rounded-full opacity-[0.07]"
-            style={{ background: 'radial-gradient(circle, #f59e0b 0%, transparent 70%)' }} />
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full opacity-[0.06]"
-            style={{ background: 'radial-gradient(circle, #38bdf8 0%, transparent 70%)' }} />
+        <div className="absolute inset-0 overflow-hidden z-20">
+          <div className="absolute -top-16 -left-16 w-80 h-80 rounded-full opacity-[0.07] bg-[radial-gradient(circle,#f59e0b_0%,transparent_70%)]" />
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full opacity-[0.06] bg-[radial-gradient(circle,#38bdf8_0%,transparent_70%)]" />
         </div>
 
         {/* Content */}
@@ -152,8 +145,7 @@ export default function ContactPage() {
           </div>
 
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-5 tracking-tight leading-tight"
-            style={{ textShadow: '0 2px 24px rgba(0,0,0,0.3)' }}
+            className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-5 tracking-tight leading-tight [text-shadow:0_2px_24px_rgba(0,0,0,0.3)]"
           >
             Contact <span className="text-[#f59e0b]">Us</span>
           </h1>
@@ -176,20 +168,12 @@ export default function ContactPage() {
         >
 
           <div
-            className="lg:col-span-2 p-8 md:p-10 relative overflow-hidden"
-            style={{
-              background: 'linear-gradient(160deg, #0f172a 0%, #1e3a5f 50%, #0a3055 100%)',
-            }}
+            className="lg:col-span-2 p-8 md:p-10 relative overflow-hidden bg-[linear-gradient(160deg,#0f172a_0%,#1e3a5f_50%,#0a3055_100%)]"
           >
             <div
-              className="absolute inset-0 opacity-[0.04]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5 Q35 15 30 25 Q25 35 30 45 Q35 55 30 55' stroke='white' fill='none' stroke-width='0.5'/%3E%3Cpath d='M10 0 Q15 10 10 20 Q5 30 10 40 Q15 50 10 60' stroke='white' fill='none' stroke-width='0.5'/%3E%3Cpath d='M50 0 Q55 10 50 20 Q45 30 50 40 Q55 50 50 60' stroke='white' fill='none' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                backgroundSize: '60px 60px',
-              }}
+              className="absolute inset-0 opacity-[0.04] bg-[url('data:image/svg+xml,%3Csvg_xmlns=\'http://www.w3.org/2000/svg\'_width=\'60\'_height=\'60\'%3E%3Cpath_d=\'M30_5_Q35_15_30_25_Q25_35_30_45_Q35_55_30_55\'_stroke=\'white\'_fill=\'none\'_stroke-width=\'0.5\'/%3E%3Cpath_d=\'M10_0_Q15_10_10_20_Q5_30_10_40_Q15_50_10_60\'_stroke=\'white\'_fill=\'none\'_stroke-width=\'0.5\'/%3E%3Cpath_d=\'M50_0_Q55_10_50_20_Q45_30_50_40_Q55_50_50_60\'_stroke=\'white\'_fill=\'none\'_stroke-width=\'0.5\'/%3E%3C/svg%3E')] [background-size:60px_60px]"
             />
-            <div className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full opacity-[0.08]"
-              style={{ background: 'radial-gradient(circle, #f59e0b 0%, transparent 70%)' }} />
+            <div className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full opacity-[0.08] bg-[radial-gradient(circle,#f59e0b_0%,transparent_70%)]" />
 
             <div className="relative z-10">
               <h2 className="text-2xl font-bold text-white mb-2 font-serif">Get In Touch</h2>
@@ -303,10 +287,7 @@ export default function ContactPage() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="w-full md:w-auto px-10 py-3.5 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#1e3a5f]/25 hover:shadow-xl hover:shadow-[#1e3a5f]/30 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-                style={{
-                  background: 'linear-gradient(135deg, #1e3a5f 0%, #0a3055 100%)',
-                }}
+                className="w-full md:w-auto px-10 py-3.5 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#1e3a5f]/25 hover:shadow-xl hover:shadow-[#1e3a5f]/30 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer bg-[linear-gradient(135deg,#1e3a5f_0%,#0a3055_100%)]"
               >
                 {isSubmitting ? (
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
@@ -335,12 +316,11 @@ export default function ContactPage() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1544.896740616198!2d77.9987396!3d30.3190645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092b960780896d%3A0xfdeb0e4d80ad4f96!2sOffice%20of%20the%20watershed%20project%20management%20unit%20%2C%20UTTARAKHAND!5e0!3m2!1sen!2sin!4v1715694240361!5m2!1sen!2sin"
               width="100%"
               height="450"
-              style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title="SARRA Office Location"
-              className="w-full grayscale group-hover:grayscale-0 transition-all duration-700"
+              className="w-full grayscale group-hover:grayscale-0 transition-all duration-700 border-0"
             ></iframe>
           </div>
         </div>

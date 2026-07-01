@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const communityData = [
@@ -161,6 +161,13 @@ const CommunityEngagement: React.FC = () => {
     setLightboxIndex((prev) => (prev - 1 + communityData.length) % communityData.length);
   };
 
+  const carouselRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `translateX(-${currentIndex * (100 / itemsPerView)}%)`;
+    }
+  }, [currentIndex, itemsPerView]);
+
   return (
     <section className="py-8 bg-white relative overflow-hidden">
       <div className="w-full px-4 md:px-8">
@@ -172,8 +179,8 @@ const CommunityEngagement: React.FC = () => {
         <div className="relative">
           <div className="overflow-hidden">
             <div
+              ref={carouselRef}
               className="flex gap-6 transition-transform duration-700 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
             >
               {communityData.concat(communityData).map((item, idx) => (
                 <div
@@ -237,13 +244,8 @@ const CommunityEngagement: React.FC = () => {
         </div>
       )}
 
-      <style jsx global>{`
-        .lightbox-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        .lightbox-slide-up { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-      `}</style>
+
     </section>
   );
 };

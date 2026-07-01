@@ -36,19 +36,19 @@ export default function RiverMap({ highlightedRivers = [], height = '400px' }) {
   };
 
   const createPopupHTML = (data) => `
-    <div style="min-width:210px;max-width:270px;font-family:system-ui,-apple-system,sans-serif;">
-      <div style="background:linear-gradient(135deg,#0a3055,#1e3a5f);color:white;padding:10px 14px;border-radius:6px 6px 0 0;margin:-14px -20px 10px -20px;">
-        <div style="font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px;">${data.region} Region</div>
-        <div style="font-size:16px;font-weight:800;letter-spacing:0.3px;">${data.district}</div>
+    <div class="min-w-[210px] max-w-[270px] font-sans">
+      <div class="bg-gradient-to-br from-[#0a3055] to-[#1e3a5f] text-white px-3.5 py-2.5 rounded-t-md -mx-5 -mt-3.5 mb-2.5">
+        <div class="text-[10px] opacity-70 uppercase tracking-[1.5px] mb-0.5">${data.region} Region</div>
+        <div class="text-base font-extrabold tracking-wide">${data.district}</div>
       </div>
-      <div style="padding:2px 0 0;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span style="color:#0ea5e9;font-weight:700;font-size:14px;">🌊 ${data.river}</span>
+      <div class="pt-0.5">
+        <div class="flex items-center gap-1.5 mb-1.5">
+          <span class="text-sky-500 font-bold text-sm">🌊 ${data.river}</span>
         </div>
-        <div style="font-size:11px;color:#666;margin-bottom:6px;display:flex;align-items:center;gap:4px;">
+        <div class="text-[11px] text-gray-500 mb-1.5 flex items-center gap-1">
           📍 ${data.watershed}
         </div>
-        <div style="font-size:11px;color:#888;line-height:1.4;">${data.description}</div>
+        <div class="text-[11px] text-gray-400 leading-relaxed">${data.description}</div>
       </div>
     </div>`;
 
@@ -210,7 +210,7 @@ export default function RiverMap({ highlightedRivers = [], height = '400px' }) {
 
         if (match) {
           polygon.bindTooltip(
-            `<div style="font-family:system-ui;padding:2px 0;"><b style="font-size:13px;color:#0a3055;">${match.district}</b><br/><span style="color:#0ea5e9;font-size:12px;">🌊 ${match.river}</span><br/><span style="font-size:10px;color:#888;">${match.watershed}</span></div>`,
+            `<div class="font-sans py-0.5"><b class="text-[13px] text-[#0a3055]">${match.district}</b><br/><span class="text-sky-500 text-xs">🌊 ${match.river}</span><br/><span class="text-[10px] text-gray-400">${match.watershed}</span></div>`,
             { sticky: true, direction: 'top', offset: [0, -10], className: 'district-tooltip' }
           );
           polygon.bindPopup(createPopupHTML(match), {
@@ -240,7 +240,7 @@ export default function RiverMap({ highlightedRivers = [], height = '400px' }) {
         const lng = parseFloat(pts[0]);
         if (!isNaN(lat) && !isNaN(lng)) {
           const icon = L.divIcon({
-            html: `<div style="background:white;border:1.5px solid #0a3055;border-radius:20px;padding:3px 8px;font-size:10px;font-weight:700;color:#0a3055;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.15);cursor:pointer;display:flex;align-items:center;gap:4px;"><img src="/assets/icons/location.png" alt="River Icon" style="width:12px;height:12px;object-fit:contain;"/>${match.river.split(' ')[0]}</div>`,
+            html: `<div class="bg-white border-[1.5px] border-[#0a3055] rounded-full px-2 py-1 text-[10px] font-bold text-[#0a3055] whitespace-nowrap shadow-sm cursor-pointer flex items-center gap-1"><img src="/assets/icons/location.png" alt="River Icon" class="w-3 h-3 object-contain"/>${match.river.split(' ')[0]}</div>`,
             className: '',
             iconAnchor: [40, 10],
           });
@@ -261,46 +261,11 @@ export default function RiverMap({ highlightedRivers = [], height = '400px' }) {
   };
 
   return (
-    <div className="relative w-full rounded-[24px] overflow-hidden shadow-sm border border-blue-100 mt-6" style={{ height }}>
-      <div ref={mapRef} className="absolute inset-0" style={{ zIndex: 1 }} />
+    <div ref={el => { if (el) el.style.height = height; }} className="relative w-full rounded-[24px] overflow-hidden shadow-sm border border-blue-100 mt-6">
+      <div ref={mapRef} className="absolute inset-0 z-10" />
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .district-info-popup .leaflet-popup-content-wrapper {
-          border-radius: 10px;
-          padding: 0;
-          overflow: hidden;
-          box-shadow: 0 8px 30px rgba(0,0,0,0.18);
-          border: 1px solid rgba(10,48,85,0.1);
-        }
-        .district-info-popup .leaflet-popup-content {
-          margin: 14px 20px;
-          line-height: 1.4;
-        }
-        .district-info-popup .leaflet-popup-tip {
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .district-info-popup .leaflet-popup-close-button {
-          color: white !important;
-          font-size: 18px;
-          top: 6px !important;
-          right: 8px !important;
-          z-index: 10;
-        }
-        .district-info-popup .leaflet-popup-close-button:hover {
-          color: #f59e0b !important;
-        }
-        .district-tooltip {
-          background: white !important;
-          border: 1px solid rgba(10,48,85,0.12) !important;
-          border-radius: 10px !important;
-          padding: 8px 12px !important;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.12) !important;
-        }
-        .district-tooltip::before {
-          border-top-color: white !important;
-        }
-      `}} />
+
+
 
       {!mapLoaded && (
         <div className="absolute inset-0 z-[500] bg-[#f8fafc] flex items-center justify-center">

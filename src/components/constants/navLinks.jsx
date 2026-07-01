@@ -160,8 +160,8 @@ const NavLinks = () => {
                 </div>
 
                 <div className="lg:hidden flex items-stretch bg-white border-b border-slate-200 relative z-50">
-                    <div ref={navContainerRef} className="flex flex-1 overflow-x-auto hide-scroll justify-center" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                        <style dangerouslySetInnerHTML={{ __html: `.hide-scroll::-webkit-scrollbar { display: none; }` }} />
+                    <div ref={navContainerRef} className="flex flex-1 overflow-x-auto hide-scroll justify-center [scrollbar-width:none] [-ms-overflow-style:none]">
+
                         {navItems.slice(0, visibleCount).map((item, index) => {
                             const active = isActive(item);
                             return (

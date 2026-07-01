@@ -76,23 +76,20 @@ function Counter({ end, suffix = '' }) {
 
 function HeroSection({ openLightbox }) {
     return (
-        <section id="about-hero" className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
+        <section id="about-hero" className="relative w-full overflow-hidden min-h-[480px]">
             <img
                 src={IMG.hero}
                 alt="Uttarakhand Himalayan river landscape"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ zIndex: 0 }}
+                className="absolute inset-0 w-full h-full object-cover z-0"
             />
             <div
-                className="absolute inset-0 cursor-pointer"
-                style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }}
+                className="absolute inset-0 cursor-pointer z-10 bg-[linear-gradient(135deg,rgba(15,23,42,0.88)_0%,rgba(30,58,95,0.82)_50%,rgba(10,48,85,0.75)_100%)]"
                 onClick={() => openLightbox(0)}
             />
 
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-16 md:py-32">
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
-                    style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight [text-shadow:0_2px_20px_rgba(0,0,0,0.3)]">
                     About <span className="text-[#f59e0b]">SARRA</span>
                 </h1>
                 <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-8 font-light leading-relaxed">
@@ -120,7 +117,7 @@ function IntroductionSection({ openLightbox }) {
                     <div>
                         <span className="text-sm font-bold tracking-widest uppercase text-[#f59e0b] block mb-2 font-sans">An introduction about SARRA</span>
                         <h2 className="text-4xl md:text-5xl font-serif font-bold leading-tight text-[#1e3a5f]">
-                            Welcome to <span style={{ color: C.amber }}>SARRA</span>
+                            Welcome to <span className="text-[#f59e0b]">SARRA</span>
                         </h2>
                     </div>
                     <div className="space-y-4 text-gray-600 text-base leading-relaxed text-justify">
@@ -192,14 +189,13 @@ function NeedForRejuvenationSection({ openLightbox }) {
 function GreenBanner() {
     const [ref, visible] = useReveal();
     return (
-        <section id="about-banner" className="relative w-full overflow-hidden" style={{ background: `linear-gradient(135deg, ${C.greenDk} 0%, ${C.green} 50%, ${C.greenMid} 100%)` }}>
-            <div className="absolute inset-0 opacity-[0.06]"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50 10 Q60 30 50 50 Q40 70 50 90' stroke='white' fill='none' stroke-width='0.5'/%3E%3Cpath d='M20 0 Q30 25 20 50 Q10 75 20 100' stroke='white' fill='none' stroke-width='0.5'/%3E%3Cpath d='M80 0 Q90 25 80 50 Q70 75 80 100' stroke='white' fill='none' stroke-width='0.5'/%3E%3C/svg%3E")`, backgroundSize: '100px 100px' }} />
-            <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
-            <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
+        <section id="about-banner" className="relative w-full overflow-hidden bg-[linear-gradient(135deg,#14532d_0%,#166534_50%,#15803d_100%)]">
+            <div className="absolute inset-0 opacity-[0.06] bg-[url('data:image/svg+xml,%3Csvg_xmlns=\'http://www.w3.org/2000/svg\'_width=\'100\'_height=\'100\'%3E%3Cpath_d=\'M50_10_Q60_30_50_50_Q40_70_50_90\'_stroke=\'white\'_fill=\'none\'_stroke-width=\'0.5\'/%3E%3Cpath_d=\'M20_0_Q30_25_20_50_Q10_75_20_100\'_stroke=\'white\'_fill=\'none\'_stroke-width=\'0.5\'/%3E%3Cpath_d=\'M80_0_Q90_25_80_50_Q70_75_80_100\'_stroke=\'white\'_fill=\'none\'_stroke-width=\'0.5\'/%3E%3C/svg%3E')] [background-size:100px_100px]" />
+            <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full opacity-10 bg-[radial-gradient(circle,white_0%,transparent_70%)]" />
+            <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full opacity-10 bg-[radial-gradient(circle,white_0%,transparent_70%)]" />
 
             <div ref={ref} className={`relative z-10 max-w-4xl mx-auto text-center py-8 md:py-16 px-6 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
+                <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight [text-shadow:0_2px_20px_rgba(0,0,0,0.2)]">
                     Conserving Water, <br className="hidden md:block" />Sustaining Life
                 </h2>
                 <p className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
@@ -401,22 +397,8 @@ export default function AboutPage() {
                 </div>
             )}
 
-            <style jsx global>{`
-                .lightbox-fade-in {
-                    animation: fadeIn 0.3s ease-out forwards;
-                }
-                .lightbox-slide-up {
-                    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                }
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                @keyframes slideUp {
-                    from { opacity: 0; transform: translateY(30px) scale(0.97); }
-                    to { opacity: 1; transform: translateY(0) scale(1); }
-                }
-            `}</style>
+
+
         </main>
     );
 }

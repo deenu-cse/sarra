@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 export function proxy(request: NextRequest) {
     // Generate a random nonce for each request
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+    const isDev = process.env.NODE_ENV === "development";
 
     const cspHeader = `
       default-src 'self';
-      script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://unpkg.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com;
+      script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ""} https://unpkg.com;
+      style-src 'self' ${isDev ? "'unsafe-inline'" : `'nonce-${nonce}'`} https://fonts.googleapis.com https://unpkg.com;
       img-src 'self' data: blob: https://res.cloudinary.com https://*.cloudinary.com https://*.basemaps.cartocdn.com https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.ggpht.com;
       font-src 'self' https://fonts.gstatic.com;
       connect-src 'self' https://sarrabackend.onrender.com http://localhost:5000;
@@ -47,6 +48,12 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        "/((?!api|_next/static|_next/image|favicon.ico).*)",
+        {
+            source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+            missing: [
+                { type: "header", key: "next-router-prefetch" },
+                { type: "header", key: "purpose", value: "prefetch" },
+            ],
+        },
     ],
 };

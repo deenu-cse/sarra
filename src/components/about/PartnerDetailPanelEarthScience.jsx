@@ -31,8 +31,8 @@ export default function PartnerDetailPanelEarthScience() {
 
     return (
         <main className="min-h-screen bg-slate-50 font-sans pb-16">
-            <section className="relative w-full overflow-hidden" style={{ minHeight: '300px' }}>
-                <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a5f] to-[#0f172a]" style={{ zIndex: 1 }} />
+            <section className="relative w-full overflow-hidden min-h-[300px]">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a5f] to-[#0f172a] z-10" />
                 <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-16 md:py-20">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4 tracking-tight leading-tight">
                         Research <span className="text-[#f59e0b]">Partners</span>

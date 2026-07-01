@@ -33,19 +33,17 @@ export default async function AnnouncementsListPage() {
 
     return (
         <main className="w-full bg-[#f8fafc] font-sans min-h-screen pb-24">
-            <section className="relative w-full overflow-hidden" style={{ minHeight: '400px' }}>
+            <section className="relative w-full overflow-hidden min-h-[400px]">
                 <img
                     src="/assets/Announcement/banner.png"
                     alt="Announcements Banner"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ zIndex: 0 }}
+                    className="absolute inset-0 w-full h-full object-cover z-0"
                 />
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
+                <div className="absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(15,23,42,0.88)_0%,rgba(30,58,95,0.82)_50%,rgba(10,48,85,0.75)_100%)]" />
 
                 <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32 h-full min-h-[400px]">
                     <span className="text-[#f59e0b] font-bold uppercase tracking-widest text-sm mb-4 block">Stay Updated</span>
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight"
-                        style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight [text-shadow:0_2px_20px_rgba(0,0,0,0.3)]">
                         Official Announcements
                     </h1>
                     <p className="text-white/80 text-lg md:text-xl max-w-2xl font-light leading-relaxed">

@@ -9,9 +9,6 @@ const Header = () => {
         root.style.fontSize = `${newSize}px`;
     };
 
-    const resetResize = () => {
-        document.documentElement.style.fontSize = '16px';
-    };
 
     return (
         <header className="w-full">

@@ -57,20 +57,12 @@ const MinimalAnnouncement = ({ initialAnnouncements }) => {
             <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-white/5 to-transparent pointer-events-none transform skew-x-12 translate-x-10 group-hover:translate-x-4 transition-transform duration-700"></div>
 
             {announcements.length > 1 && (
-                <div className="absolute bottom-0 left-0 h-[2px] bg-[#f59e0b] opacity-70"
-                    style={{
-                        width: '100%',
-                        animation: 'progressBar 5s linear infinite'
-                    }}>
+                <div className="absolute bottom-0 left-0 h-[2px] bg-[#f59e0b] opacity-70 w-full [animation:progressBar_5s_linear_infinite]">
                 </div>
             )}
 
-            <style jsx>{`
-                @keyframes progressBar {
-                    0% { width: 0%; }
-                    100% { width: 100%; }
-                }
-            `}</style>
+
+
         </div>
     );
 };

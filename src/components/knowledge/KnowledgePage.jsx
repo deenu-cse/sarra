@@ -14,18 +14,16 @@ const IMG = {
 
 function HeroSection() {
     return (
-        <section className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
+        <section className="relative w-full overflow-hidden min-h-[480px]">
             <img
                 src={IMG.hero}
                 alt="Knowledge Hub Banner"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ zIndex: 0 }}
+                className="absolute inset-0 w-full h-full object-cover z-0"
             />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,58,95,0.82) 50%, rgba(10,48,85,0.75) 100%)', zIndex: 1 }} />
+            <div className="absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(15,23,42,0.88)_0%,rgba(30,58,95,0.82)_50%,rgba(10,48,85,0.75)_100%)]" />
 
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:py-32">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight"
-                    style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight leading-tight [text-shadow:0_2px_20px_rgba(0,0,0,0.3)]">
                     Knowledge <span className="text-[#f59e0b]">Hub</span>
                 </h1>
                 <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-8 font-light leading-relaxed">

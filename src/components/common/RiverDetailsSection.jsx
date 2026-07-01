@@ -156,32 +156,8 @@ const RiverDetailsSection = ({ title = "Rivers Assigned", data, highlightedRiver
                 </div>
             )}
 
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                .lightbox-fade-in {
-                    animation: fadeIn 0.3s ease-out forwards;
-                }
 
-                .lightbox-slide-up {
-                    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                }
 
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-
-                @keyframes slideUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(30px) scale(0.97);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0) scale(1);
-                    }
-                }
-            `}} />
         </div>
     );
 };
