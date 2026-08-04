@@ -16,7 +16,7 @@ const goldenYellow = '#f59e0b';
 const sliderData = [
     {
         id: 1,
-        image: "/assets/heroimg/1.png",
+        image: "/assets/heroimg/new1.jpg",
         alt: "Hero Img",
     },
     {

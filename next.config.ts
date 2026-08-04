@@ -1,5 +1,11 @@
 import type { NextConfig } from "next";
 
+const enableHttps = process.env.ENABLE_HTTPS === "true";
+
+console.log(
+  `[startup] NODE_ENV=${process.env.NODE_ENV ?? "(unset)"} ENABLE_HTTPS=${process.env.ENABLE_HTTPS ?? "(unset)"} enableHttps=${enableHttps}`,
+);
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
@@ -16,10 +22,14 @@ const nextConfig: NextConfig = {
             key: "X-DNS-Prefetch-Control",
             value: "on",
           },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains; preload",
-          },
+          ...(enableHttps
+            ? [
+                {
+                  key: "Strict-Transport-Security",
+                  value: "max-age=31536000; includeSubDomains; preload",
+                },
+              ]
+            : []),
           {
             key: "X-Frame-Options",
             value: "SAMEORIGIN",

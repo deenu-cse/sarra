@@ -2,7 +2,7 @@ import React from 'react';
 import KnowledgePage from '@/components/knowledge/KnowledgePage';
 import { generatePageMeta } from "@/lib/seo.config";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.API_INTERNAL_URL || 'http://localhost:5000/api';
 
 export const metadata = generatePageMeta({
     title: 'Knowledge Hub | SARRA - Spring and River Rejuvenation Authority, Uttarakhand',

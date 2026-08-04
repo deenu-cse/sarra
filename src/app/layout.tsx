@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "../components/constants/header";
 import NavLinks from "../components/constants/navLinks";
 import Ticker from "../components/constants/ticker";
 import Footer from "../components/constants/footer";
 import Providers from "../components/Providers";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 import { DEFAULT_SEO, SITE_URL } from "@/lib/seo.config";
 
@@ -48,7 +37,12 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
+      style={{
+        // @ts-ignore
+        "--font-geist-sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+        "--font-geist-mono": "ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace",
+      }}
     >
       <head>
         <link rel="icon" href="/favicon.ico" />

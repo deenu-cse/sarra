@@ -52,7 +52,7 @@ export default function CityGallery({ citySlug }) {
         const fetchDistrictImages = async () => {
             try {
                 const res = await axios.get(`${API_URL}/gallery?type=district&district=${cityName}`);
-                setDynamicImages(res.data.map(item => item.image));
+                setDynamicImages((res.data.data || []).map(item => item.image));
             } catch (err) {
                 console.error('Failed to fetch district gallery:', err);
             }

@@ -4,17 +4,17 @@ import { generatePageMeta } from "@/lib/seo.config";
 import JsonLd from "@/components/seo/JsonLd";
 import { getArticleSchema, getBreadcrumbSchema } from "@/lib/schemas";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE = process.env.API_INTERNAL_URL || 'http://localhost:5000/api';
 
 export async function generateMetadata({ params }) {
     const { slug } = await params;
-    
+
     try {
         const res = await fetch(`${API_BASE}/announcements/slug/${slug}`, { next: { revalidate: 60 } });
         if (!res.ok) return generatePageMeta({ title: 'Announcement Not Found | SARRA' });
-        
+
         const data = await res.json();
-        
+
         return generatePageMeta({
             title: `${data.title} | SARRA Announcements`,
             description: data.description?.substring(0, 160) + '...',

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Megaphone, Calendar, ArrowRight, FileText } from 'lucide-react';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.API_INTERNAL_URL || 'http://localhost:5000/api';
 
 import { generatePageMeta } from "@/lib/seo.config";
 

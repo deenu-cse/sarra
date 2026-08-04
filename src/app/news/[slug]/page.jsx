@@ -4,7 +4,7 @@ import { generatePageMeta } from "@/lib/seo.config";
 import JsonLd from "@/components/seo/JsonLd";
 import { getArticleSchema, getBreadcrumbSchema } from "@/lib/schemas";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE = process.env.API_INTERNAL_URL || 'http://localhost:5000/api';
 
 export async function generateMetadata({ params }) {
     const { slug } = await params;
@@ -82,10 +82,10 @@ export default async function NewsArticle({ params }) {
                 })} />
             )}
             <JsonLd data={getBreadcrumbSchema([{ name: "Home", url: "/" }, { name: "News", url: "/news" }, { name: article?.title || "Article", url: `/news/${slug}` }])} />
-            <ArticlePage 
-                initialArticle={article} 
-                initialRelatedArticles={relatedArticles} 
-                initialNotFound={notFound} 
+            <ArticlePage
+                initialArticle={article}
+                initialRelatedArticles={relatedArticles}
+                initialNotFound={notFound}
             />
         </main>
     );
