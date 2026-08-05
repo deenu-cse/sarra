@@ -10,7 +10,7 @@ export function proxy(request: NextRequest) {
         "default-src 'self';",
         `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ""} https://unpkg.com;`,
         `style-src 'self' ${isDev ? "'unsafe-inline'" : `'nonce-${nonce}'`} https://fonts.googleapis.com https://unpkg.com;`,
-        "img-src 'self' data: blob: https://res.cloudinary.com https://*.cloudinary.com https://*.basemaps.cartocdn.com https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.ggpht.com;",
+        "img-src 'self' data: blob: https://res.cloudinary.com https://*.cloudinary.com https://*.basemaps.cartocdn.com https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.ggpht.com https://sarra.uk.gov.in;",
         "font-src 'self' https://fonts.gstatic.com;",
         "connect-src 'self' https://sarrabackend.onrender.com http://localhost:5000;",
         "media-src 'self' https://res.cloudinary.com https://*.cloudinary.com https://www.youtube.com;",
