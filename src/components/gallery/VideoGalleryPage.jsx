@@ -1,27 +1,35 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Play } from 'lucide-react';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const IMG = {
     hero: '/assets/images/banner.png',
 };
 
-const VIDEOS = [
+const STATIC_VIDEOS = [
     {
-        iframe: <iframe src="https://www.youtube.com/embed/PIN1M1UFr6w?si=rKlVsl1V_VzgoLbK" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        videoId: "PIN1M1UFr6w",
+        title: "SARRA - Mission Overview & Water Conservation"
     },
     {
-        iframe: <iframe src="https://www.youtube.com/embed/-F2JnUuXkEw?si=nDc24v2DUlIyXB66" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        videoId: "-F2JnUuXkEw",
+        title: "Community Engagement & Fieldwork Uttarakhand"
     },
     {
-        iframe: <iframe src="https://www.youtube.com/embed/gCFs8nd_ROc?si=lypo5QPk1BoweEG2" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        videoId: "gCFs8nd_ROc",
+        title: "Spring & River Basin Rejuvenation Drive"
     },
     {
-        iframe: <iframe src="https://www.youtube.com/embed/lUPouTxRRrc?si=jglRM_-8MVb_h_3_" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        videoId: "lUPouTxRRrc",
+        title: "Field Progress & Community Action"
     },
     {
-        iframe: <iframe src="https://www.youtube.com/embed/cIkAQkgoDfA?si=WaZX2SRFwdWnM4DJ" className="w-full h-full rounded-2xl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        videoId: "cIkAQkgoDfA",
+        title: "Awareness Campaign & Ecological Restoration"
     }
 ];
 
@@ -53,35 +61,68 @@ function HeroSection() {
     );
 }
 
-function VideosSection() {
-    return (
-        <section className="w-full py-8 px-6 md:px-12 bg-[#f8fafc]">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-12">
-                    <span className="text-[#f59e0b] font-sans font-bold uppercase tracking-widest text-sm mb-2 block">Our Stories</span>
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#1e3a5f]">Visual Documentation</h2>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
-                    {VIDEOS.map((vid, idx) => (
-                        <div key={idx} className="flex flex-col gap-4">
-                            <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black group">
-                                {vid.iframe}
-                                <div className="absolute inset-0 pointer-events-none border-4 border-white/10 rounded-3xl" />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-}
-
 export default function VideoGalleryPage() {
+    const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchVideos = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/videos`);
+                const data = res.data.data || res.data || [];
+                setVideos(data);
+            } catch (err) {
+                console.error("Failed to fetch gallery videos:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchVideos();
+    }, []);
+
+    const allVideos = [...videos, ...STATIC_VIDEOS];
+
     return (
         <main className="w-full font-sans">
             <HeroSection />
-            <VideosSection />
+            
+            <section className="w-full py-8 px-6 md:px-12 bg-[#f8fafc]">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-12">
+                        <span className="text-[#f59e0b] font-sans font-bold uppercase tracking-widest text-sm mb-2 block">Our Stories</span>
+                        <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#1e3a5f]">Visual Documentation</h2>
+                    </div>
+
+                    {loading ? (
+                        <div className="flex justify-center items-center py-20">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1e3a5f]"></div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
+                            {allVideos.map((vid, idx) => (
+                                <div key={vid._id || `static-${idx}`} className="flex flex-col gap-4">
+                                    <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black group">
+                                        <iframe
+                                            src={`https://www.youtube.com/embed/${vid.videoId}`}
+                                            className="w-full h-full rounded-2xl"
+                                            title={vid.title || "YouTube video player"}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowFullScreen
+                                        ></iframe>
+                                        <div className="absolute inset-0 pointer-events-none border-4 border-white/10 rounded-3xl" />
+                                    </div>
+                                    {vid.title && (
+                                        <h3 className="text-xl font-serif font-bold text-[#1e3a5f] px-2 leading-snug">
+                                            {vid.title}
+                                        </h3>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
         </main>
     );
 }
