@@ -66,6 +66,7 @@ const NavLinks = () => {
             type: 'dropdown',
             options: [
                 { label: 'Photo Gallery', href: '/gallery' },
+                { label: 'Tranches & Ponds', href: '/gallery/tranches-ponds' },
                 { label: 'Video Gallery', href: '/video-gallery' }
             ]
         },

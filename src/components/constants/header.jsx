@@ -12,9 +12,9 @@ const Header = () => {
 
     return (
         <header className="w-full">
-            <div className="bg-white p-3 sm:p-4 flex justify-between items-center border-b-[3px] border-[#1e3a5f]">
+            <div className="bg-white p-3 sm:p-4 flex justify-between items-center border-b-[3px] border-[#1e3a5f] min-h-[72px] sm:min-h-[96px]">
                 <Link href="/" className="flex items-center gap-2 sm:gap-5 flex-1 hover:opacity-90 transition-opacity cursor-pointer">
-                    <img src='/assets/nav/logo.png' alt="Logo" className="h-12 sm:h-16 w-auto" />
+                    <img src='/assets/nav/logo.png' alt="Logo" className="h-12 sm:h-16 w-auto" loading="eager" fetchPriority="high" width={64} height={64} />
 
                     <div>
                         <h1 className="text-base sm:text-3xl font-bold leading-tight text-[#1e3a5f]">
@@ -29,10 +29,10 @@ const Header = () => {
 
                 <div className="flex items-center gap-2 sm:gap-4">
                     <Link href={'https://uk.gov.in'}>
-                        <img src='/assets/icons/ukgov.png' alt="Emblem" className="h-10 sm:h-20 w-auto" />
+                        <img src='/assets/icons/ukgov.png' alt="Emblem" className="h-10 sm:h-20 w-auto" loading="eager" fetchPriority="high" width={80} height={80} />
                     </Link>
                     <Link href={'https://wmduk.gov.in'}>
-                        <img src="/assets/icons/WMD_LOGO.jpg" alt="UCRRFP" className='h-10 sm:h-20 w-auto' />
+                        <img src="/assets/icons/WMD_LOGO.jpg" alt="UCRRFP" className='h-10 sm:h-20 w-auto' loading="eager" fetchPriority="high" width={80} height={80} />
                     </Link>
                 </div>
             </div>

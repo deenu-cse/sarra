@@ -2,6 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { FileText } from 'lucide-react';
+import { getMediaUrl } from '@/lib/getMediaUrl';
 
 const NotificationSection = ({ initialNews, initialAnnouncements }) => {
     const [activeTab, setActiveTab] = useState('notifications');
@@ -22,12 +24,23 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
         isArticle: true,
     }));
 
-    const mappedAnnouncements = announcements.map(item => ({
-        title: item.title,
-        date: new Date(item.date || item.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        slug: item.slug || item._id,
-        isAnnouncement: true
-    }));
+    const mappedAnnouncements = announcements.map(item => {
+        const isClosed = item.lastDate ? (() => {
+            const d = new Date(item.lastDate);
+            d.setHours(23, 59, 59, 999);
+            return new Date() > d;
+        })() : false;
+
+        return {
+            title: item.title,
+            date: new Date(item.date || item.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+            lastDate: item.lastDate ? new Date(item.lastDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : null,
+            isClosed,
+            slug: item.slug || item._id,
+            isAnnouncement: true,
+            pdfUrl: item.pdfUrl || ""
+        };
+    });
 
     notificationsToDisplay = [...mappedNews, ...mappedAnnouncements];
 
@@ -127,6 +140,28 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                                                 <>
                                                     <span className="text-gray-300">|</span>
                                                     <span className="text-orange-500 text-xs font-bold uppercase">📢 Announcement</span>
+                                                    {item.lastDate && (
+                                                        <>
+                                                            <span className="text-gray-300">|</span>
+                                                            {item.isClosed ? (
+                                                                <span className="text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded text-[11px] font-bold">
+                                                                    Closed (Deadline: {item.lastDate})
+                                                                </span>
+                                                            ) : (
+                                                                <span className="text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded text-[11px] font-bold">
+                                                                    Last Date: {item.lastDate}
+                                                                </span>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                </>
+                                            )}
+                                            {item.pdfUrl && (
+                                                <>
+                                                    <span className="text-gray-300">|</span>
+                                                    <span className="text-red-500 text-xs font-semibold flex items-center gap-1">
+                                                        <FileText size={12} /> PDF Attached
+                                                    </span>
                                                 </>
                                             )}
                                         </div>
@@ -139,12 +174,24 @@ const NotificationSection = ({ initialNews, initialAnnouncements }) => {
                                             Read
                                         </Link>
                                     ) : item.isAnnouncement ? (
-                                        <Link
-                                            href={`/announcements/${item.slug}`}
-                                            className="border border-orange-500 text-orange-500 px-6 py-1 rounded-sm text-sm font-bold hover:bg-orange-500 hover:text-white transition-all whitespace-nowrap"
-                                        >
-                                            View
-                                        </Link>
+                                        <div className="flex items-center gap-2">
+                                            <Link
+                                                href={`/announcements/${item.slug}`}
+                                                className="border border-orange-500 text-orange-500 px-6 py-1 rounded-sm text-sm font-bold hover:bg-orange-500 hover:text-white transition-all whitespace-nowrap"
+                                            >
+                                                View
+                                            </Link>
+                                            {item.pdfUrl && (
+                                                <a
+                                                    href={getMediaUrl(item.pdfUrl)}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="border border-red-500 text-red-500 bg-red-50 px-4 py-1 rounded-sm text-sm font-bold hover:bg-red-500 hover:text-white transition-all whitespace-nowrap flex items-center gap-1"
+                                                >
+                                                    <FileText size={14} /> PDF
+                                                </a>
+                                            )}
+                                        </div>
                                     ) : (
                                         <button className="border border-[#0056b3] text-[#0056b3] px-6 py-1 rounded-sm text-sm font-semibold hover:bg-[#0056b3] hover:text-white transition-all whitespace-nowrap">
                                             View

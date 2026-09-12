@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Megaphone, Calendar, ArrowRight, FileText } from 'lucide-react';
+import { Megaphone, Calendar, ArrowRight, FileText, Image as ImageIcon, Clock } from 'lucide-react';
+import { getMediaUrl } from '@/lib/getMediaUrl';
 
 const API_URL = process.env.API_INTERNAL_URL || 'http://localhost:5000/api';
 
@@ -29,6 +30,13 @@ export default async function AnnouncementsListPage() {
         return new Date(dateString).toLocaleDateString('en-US', {
             day: 'numeric', month: 'long', year: 'numeric'
         });
+    };
+
+    const isClosed = (lastDate) => {
+        if (!lastDate) return false;
+        const d = new Date(lastDate);
+        d.setHours(23, 59, 59, 999);
+        return new Date() > d;
     };
 
     return (
@@ -69,8 +77,8 @@ export default async function AnnouncementsListPage() {
                                 className="group flex flex-col sm:flex-row bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 overflow-hidden"
                             >
                                 <div className="sm:w-2/5 h-48 sm:h-auto bg-slate-100 relative overflow-hidden shrink-0">
-                                    {item.image ? (
-                                        <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                    {item.image || (item.images && item.images.length > 0) ? (
+                                        <img src={getMediaUrl(item.image || item.images[0])} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                     ) : (
                                         <div className="w-full h-full bg-gradient-to-br from-[#1e3a5f]/10 to-[#1e3a5f]/5 flex items-center justify-center">
                                             <Megaphone className="w-16 h-16 text-[#1e3a5f]/20" />
@@ -80,19 +88,53 @@ export default async function AnnouncementsListPage() {
                                         <Calendar size={14} className="text-[#f59e0b]" />
                                         <span className="text-xs font-bold text-[#1e3a5f]">{formatDate(item.date)}</span>
                                     </div>
+
                                 </div>
                                 <div className="p-6 sm:w-3/5 flex flex-col">
-                                    <div className="mb-2">
+                                    <div className="mb-2 flex items-center justify-between gap-2 flex-wrap">
                                         <span className="text-[10px] font-bold uppercase tracking-widest text-[#f59e0b] bg-[#f59e0b]/10 px-2 py-1 rounded">
                                             Announcement
                                         </span>
+                                        {item.lastDate && (
+                                            isClosed(item.lastDate) ? (
+                                                <span className="text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Closed
+                                                </span>
+                                            ) : (
+                                                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                                                </span>
+                                            )
+                                        )}
                                     </div>
                                     <h3 className="text-xl font-bold text-[#1e3a5f] mb-3 line-clamp-2 group-hover:text-[#f59e0b] transition-colors leading-tight">
                                         {item.title}
                                     </h3>
-                                    <p className="text-slate-500 text-sm line-clamp-3 mb-6 flex-1">
+                                    <p className="text-slate-500 text-sm line-clamp-3 mb-4 flex-1">
                                         {item.description}
                                     </p>
+
+                                    {item.lastDate && (
+                                        <div className={`mb-4 px-3 py-2 rounded-xl text-xs flex items-center justify-between font-sans ${
+                                            isClosed(item.lastDate)
+                                                ? 'bg-rose-50/80 border border-rose-200 text-rose-800'
+                                                : 'bg-amber-50/80 border border-amber-200 text-amber-900'
+                                        }`}>
+                                            <span className="font-semibold flex items-center gap-1.5">
+                                                <Clock size={13} className={isClosed(item.lastDate) ? 'text-rose-500' : 'text-amber-600'} />
+                                                {isClosed(item.lastDate) ? 'Closed On:' : 'Last Date:'}
+                                            </span>
+                                            <span className="font-bold">
+                                                {formatDate(item.lastDate)}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {item.pdfUrl && (
+                                        <div className="mb-4 flex items-center gap-1.5 text-xs text-red-600 font-bold font-sans">
+                                            <FileText size={14} /> PDF Document Attached
+                                        </div>
+                                    )}
                                     <div className="mt-auto flex items-center text-sm font-bold text-[#1e3a5f] group-hover:text-[#f59e0b] transition-colors">
                                         Read Details <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
                                     </div>
