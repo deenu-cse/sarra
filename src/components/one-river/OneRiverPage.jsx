@@ -20,6 +20,8 @@ const riverImages = [
   { image: '/assets/one_river/Nayar.png', title: 'Nayar Pauri Garhwal' },
   { image: '/assets/one_river/punaar rudraprayag.jpeg', title: 'Punaar Rudraprayag' },
   { image: '/assets/one_river/kamal ganga.jpg.jpeg', title: 'Kamal Ganga Uttarkashi' },
+  // Gaula: drop the photo in /public/assets/one_river/ and uncomment the line below.
+  // { image: '/assets/one_river/gaula nainital.jpeg', title: 'Gaula Nainital' },
 ];
 
 const getRiverImage = (riverName) => {
@@ -38,7 +40,7 @@ const getRiverImage = (riverName) => {
     'Nayar (West)': 'Nayar Pauri Garhwal',
     'Punaar Nadi': 'Punaar Rudraprayag',
     'Kamal Nadi': 'Kamal Ganga Uttarkashi',
-    'Gaula River': null,
+    'Gaula River': 'Gaula Nainital',
   };
   const title = mapping[riverName] || riverName;
   return riverImages.find(img => img.title === title)?.image || null;
@@ -81,6 +83,19 @@ const WATERSHED_DATA = {
     maxSlopeDeg: 63.61, maxSlopePct: 201.58,
     avgSlopeDeg: 27.47, avgSlopePct: 51.99,
     avgAspect: 'N (20°)', closed: 'YES',
+  },
+  // ─── NEW: from Gaula_Watershed.kml ───────────────────────────────────────────
+  'Gaula River Watershed': {
+    code: '—', surfaceArea: '686.44 sq km', subCatchment: '—',
+    swsNo: 4, mwsNo: 16,
+    swsCodes: '—',
+    ongoingWorks: 0, ongoingNames: '—',
+    minElev: 489, avgElev: 1488.67, maxElev: 2514,
+    minElevCoord: '79.5490°E, 29.2690°N',
+    maxElevCoord: '79.5960°E, 29.4250°N',
+    maxSlopeDeg: 68.12, maxSlopePct: 248.99,
+    avgSlopeDeg: 26.15, avgSlopePct: 49.10,
+    avgAspect: 'S (176°)', closed: 'YES',
   },
   'Gaudi River Watershed': {
     code: '2B3G3', surfaceArea: '43.439 sq km', subCatchment: '2B3G',
@@ -202,18 +217,6 @@ const WATERSHED_DATA = {
     avgSlopeDeg: 7.06, avgSlopePct: 12.39,
     avgAspect: 'S (194°)', closed: 'YES',
   },
-  'Gaula River Watershed': {
-    code: '—', surfaceArea: '686.44 sq km', subCatchment: '—',
-    swsNo: 4, mwsNo: 16,
-    swsCodes: '—',
-    ongoingWorks: 0, ongoingNames: '—',
-    minElev: 489, avgElev: 1488.67, maxElev: 2514,
-    minElevCoord: '79.549°E, 29.269°N',
-    maxElevCoord: '79.596°E, 29.425°N',
-    maxSlopeDeg: 68.12, maxSlopePct: 248.99,
-    avgSlopeDeg: 26.15, avgSlopePct: 49.10,
-    avgAspect: 'S (176°)', closed: 'YES',
-  },
 };
 
 const DISTRICT_DATA = [
@@ -251,14 +254,6 @@ const DISTRICT_DATA = [
   },
   {
     region: 'KUMAON',
-    sr: '4a.', district: 'Nainital', river: 'Gaula River',
-    watershed: 'Gaula River Watershed',
-    lat: 29.350, lng: 79.630,
-    color: '#FF9F43', fill: 'rgba(255,159,67,0.55)',
-    description: 'Gaula River originates from the hills of Nainital district and flows southward through the Kumaon region, supporting agriculture and local livelihoods.'
-  },
-  {
-    region: 'KUMAON',
     sr: '5.', district: 'Pithoragarh', river: 'Purvi Ramganga',
     watershed: 'Ramganga East Watershed',
     lat: 29.845337, lng: 80.146835,
@@ -276,6 +271,15 @@ const DISTRICT_DATA = [
     color: '#BEBADA',
     fill: 'rgba(190,186,218,0.55)',
     description: 'The watershed supports agriculture, groundwater recharge, wetlands, and local biodiversity before contributing to the larger Ramganga river system.'
+  },
+  // ─── NEW: Gaula River (Nainital) ────────────────────────────────────────────
+  {
+    region: 'KUMAON',
+    sr: '7.', district: 'Nainital', river: 'Gaula River',
+    watershed: 'Gaula River Watershed',
+    lat: 29.327259, lng: 79.649821,
+    color: '#FFB3C1', fill: 'rgba(255,179,193,0.55)',
+    description: 'Rising in the Nainital hills and descending past Kathgodam to the Bhabar plains, the Gaula is the lifeline of Haldwani — supplying drinking water, irrigation and groundwater recharge across the district.'
   },
   // GARHWAL
   {
@@ -341,26 +345,26 @@ const GARHWAL_DATA = DISTRICT_DATA.filter(d => d.region === 'GARHWAL');
 
 const WATERSHED_ALIASES = {
   'Fika River Watershed': ['Phica River Watershed', 'Fika River WS', 'Phica River WS'],
+  'Gaula River Watershed': ['Gaula Watershed', 'Gaula River WS', 'Gola River Watershed'],
 };
 
 const MAP_DISTRICT_DATA = DISTRICT_DATA.flatMap((data) => {
-  if (data.watershed === 'Eastern Nayar Watershed') {
-    return [
-      {
-        ...data,
-        river: 'Nayar (East)',
-      },
-      {
-        ...data,
-        river: 'Nayar (West)',
-        watershed: 'Western Nayar Watershed',
-        lat: 30.064782,
-        lng: 78.915604,
-        description: 'Western Nayar watershed conservation project in Pauri Garhwal.',
-      },
-    ];
-  }
-  return [data];
+  if (data.watershed !== 'Eastern Nayar Watershed') return [data];
+
+  return [
+    {
+      ...data,
+      river: 'Nayar (East)',
+    },
+    {
+      ...data,
+      river: 'Nayar (West)',
+      watershed: 'Western Nayar Watershed',
+      lat: 30.064782,
+      lng: 78.915604,
+      description: 'Western Nayar watershed conservation project in Pauri Garhwal.',
+    },
+  ];
 });
 
 const normalizeMapText = (value = '') => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -370,8 +374,10 @@ const getWatershedCodes = (data) => {
   return [ws?.code, ws?.swsCodes]
     .filter(Boolean)
     .flatMap(value => value.split(','))
-    .map(value => value.trim().toLowerCase())
-    .filter(Boolean);
+    .map(value => normalizeMapText(value))
+    // drop placeholders like "—" that normalize to an empty string,
+    // otherwise haystack.includes('') matches every single placemark
+    .filter(value => value.length >= 3);
 };
 
 // ─── Watershed Info Modal ─────────────────────────────────────────────────────
@@ -443,7 +449,7 @@ function WatershedModal({ districtData, onClose }) {
                 <span className="inline-flex items-center gap-1.5 text-[11px] bg-white/15 text-blue-100 rounded-full px-3 py-1 font-medium">
                   {districtData.watershed}
                 </span>
-                {ws && (
+                {ws && ws.code !== '—' && (
                   <span className="inline-flex items-center gap-1.5 text-[11px] bg-[#f59e0b]/30 text-yellow-200 rounded-full px-3 py-1 font-medium border border-yellow-300/20">
                     Code: {ws.code}
                   </span>
@@ -696,6 +702,31 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
     }
   };
 
+  // ─── NEW: Gaula watershed comes from its own standalone KML file ────────────
+  // Put Gaula_Watershed.kml in  /public/assets/one_river/
+  const loadGaulaKML = async (map, L) => {
+    try {
+      const response = await fetch('/assets/one_river/Gaula_Watershed.kml');
+      if (!response.ok) throw new Error('Gaula KML fetch failed');
+      const kmlText = await response.text();
+      // forced style so Gaula gets its own colour, independent of the KML styleUrl
+      parseAndRenderKML(kmlText, map, L, { fill: 'rgba(255,179,193,0.45)', stroke: '#543070' });
+    } catch (err) {
+      console.error('Gaula KML load error:', err);
+      // fall back to a simple marker so the river is still clickable on the map
+      const gaula = MAP_DISTRICT_DATA.find(d => d.watershed === 'Gaula River Watershed');
+      if (gaula) {
+        const marker = L.circleMarker([gaula.lat, gaula.lng], {
+          radius: 10, fillColor: gaula.color, color: '#0a3055',
+          weight: 2, opacity: 1, fillOpacity: 0.8,
+        });
+        marker.bindTooltip(createTooltipHTML(gaula), { direction: 'top', className: 'district-tooltip' });
+        marker.on('click', () => onDistrictSelect({ ...gaula, _openModal: true }));
+        marker.addTo(map);
+      }
+    }
+  };
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -732,6 +763,36 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
     };
   }, []);
 
+  // ─── Basemap: Esri light-grey canvas (key-free, no "API KEY REQUIRED" tiles) ─
+  const addBaseTiles = (map, L) => {
+    const base = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+      {
+        maxZoom: 19, maxNativeZoom: 16,
+        attribution: '&copy; Esri, HERE, Garmin, OpenStreetMap contributors',
+      }
+    ).addTo(map);
+
+    const labels = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+      { maxZoom: 19, maxNativeZoom: 16, opacity: 0.9 }
+    ).addTo(map);
+
+    // If Esri is ever unreachable, silently switch to plain OSM tiles
+    let errorCount = 0;
+    base.on('tileerror', () => {
+      errorCount += 1;
+      if (errorCount === 8) {
+        map.removeLayer(base);
+        map.removeLayer(labels);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors',
+        }).addTo(map);
+      }
+    });
+  };
+
   const initMap = () => {
     if (!mapRef.current || !window.L) return;
     if (mapInstanceRef.current) {
@@ -744,15 +805,16 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
       center: [30.1, 79.0],
       zoom: 8,
       zoomControl: false,
-      attributionControl: false,
+      attributionControl: true,
       maxBounds: [[27.5, 76.0], [32.5, 82.0]],
       minZoom: 7,
     });
 
+    map.attributionControl.setPrefix('');
+
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', { maxZoom: 19, opacity: 0.7 }).addTo(map);
+    addBaseTiles(map, L);
 
     mapInstanceRef.current = map;
     addUttarakhandBoundary(map, L);
@@ -775,10 +837,9 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
     'area11': { fill: 'rgba(154,61,106,0.40)', stroke: '#543070' },
     'area12': { fill: 'rgba(229,205,252,0.45)', stroke: '#543070' },
     'area13': { fill: 'rgba(192,128,192,0.40)', stroke: '#543070' },
-    'gaula': { fill: 'rgba(255,159,67,0.45)', stroke: '#c76e15' },
   };
 
-  const parseAndRenderKML = (kmlText, map, L) => {
+  const parseAndRenderKML = (kmlText, map, L, forcedStyle = null) => {
     const parser = new DOMParser();
     const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
     const placemarks = kmlDoc.querySelectorAll('Placemark');
@@ -808,7 +869,7 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
         const watershedNames = [d.watershed, ...(WATERSHED_ALIASES[d.watershed] || [])];
         const hasNameMatch = watershedNames.some(watershedName => haystack.includes(normalizeMapText(watershedName)));
         const hasRiverMatch = !d.river.includes('Nayar') && haystack.includes(normalizeMapText(d.river));
-        const hasCodeMatch = getWatershedCodes(d).some(code => haystack.includes(normalizeMapText(code)));
+        const hasCodeMatch = getWatershedCodes(d).some(code => haystack.includes(code));
 
         return hasNameMatch || hasRiverMatch || hasCodeMatch;
       });
@@ -818,7 +879,7 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
       const name = placemark.querySelector('name')?.textContent?.trim() || '';
       const rawStyle = placemark.querySelector('styleUrl')?.textContent?.trim().replace('#', '') || 'area1';
       // handle stylemap (area13 → area13 normal style)
-      const style = styleColors[rawStyle] || styleColors['area1'];
+      const style = forcedStyle || styleColors[rawStyle] || styleColors['area1'];
 
       const match = findDistrictMatch(placemark, name);
 
@@ -879,82 +940,6 @@ function InteractiveMap({ focusDistrict, onDistrictSelect }) {
 
       if (match) addRiverLabel(match, match.lat, match.lng);
     });
-  };
-
-  const loadGaulaKML = async (map, L) => {
-    try {
-      const response = await fetch('/assets/one_river/Gaula_Watershed.kml');
-      if (!response.ok) throw new Error('Gaula KML fetch failed');
-      const kmlText = await response.text();
-
-      const parser = new DOMParser();
-      const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
-      const placemarks = kmlDoc.querySelectorAll('Placemark');
-      const gaulaStyle = styleColors['gaula'];
-      const gaulaDistrictData = MAP_DISTRICT_DATA.find(d => d.watershed === 'Gaula River Watershed');
-
-      placemarks.forEach((placemark) => {
-        const coordEls = placemark.querySelectorAll('Polygon outerBoundaryIs LinearRing coordinates');
-        coordEls.forEach(coordEl => {
-          const raw = coordEl.textContent.trim();
-          const latlngs = raw.split(/\s+/).map(pt => {
-            const parts = pt.split(',');
-            if (parts.length >= 2) {
-              const lng = parseFloat(parts[0]);
-              const lat = parseFloat(parts[1]);
-              if (!isNaN(lat) && !isNaN(lng)) return [lat, lng];
-            }
-            return null;
-          }).filter(Boolean);
-
-          if (latlngs.length < 3) return;
-
-          const polygon = L.polygon(latlngs, {
-            color: gaulaStyle.stroke,
-            weight: 1.5,
-            fillColor: gaulaStyle.fill.replace(/,\s*[\d.]+\)$/, ')').replace('rgba', 'rgb'),
-            fillOpacity: 0.45,
-            opacity: 0.85,
-          });
-
-          if (gaulaDistrictData) {
-            polygon.bindTooltip(createTooltipHTML(gaulaDistrictData), {
-              sticky: true, direction: 'top', offset: [0, -10],
-              className: 'district-tooltip',
-            });
-          }
-
-          polygon.on('mouseover', function () {
-            this.setStyle({ weight: 2.5, fillOpacity: 0.68 });
-            if (gaulaDistrictData) onDistrictSelect(gaulaDistrictData);
-          });
-          polygon.on('mouseout', function () {
-            this.setStyle({ weight: 1.5, fillOpacity: 0.45 });
-          });
-          polygon.on('click', function () {
-            if (gaulaDistrictData) onDistrictSelect({ ...gaulaDistrictData, _openModal: true });
-          });
-
-          polygon.addTo(map);
-          if (gaulaDistrictData) layersRef.current[`${gaulaDistrictData.district}-${gaulaDistrictData.watershed}`] = polygon;
-        });
-      });
-
-      // Add river label for Gaula
-      if (gaulaDistrictData) {
-        const icon = L.divIcon({
-          html: `<div class="text-[11px] font-extrabold text-[#0a3055] [text-shadow:1px_1px_0_#fff,-1px_-1px_0_#fff,1px_-1px_0_#fff,-1px_1px_0_#fff] whitespace-nowrap cursor-pointer flex items-center gap-1 w-max"><img src="/assets/icons/location.png" alt="" class="w-4 h-4 object-contain shrink-0"/>${gaulaDistrictData.river}</div>`,
-          className: '',
-          iconSize: [180, 24],
-          iconAnchor: [8, 16],
-        });
-        const marker = L.marker([gaulaDistrictData.lat, gaulaDistrictData.lng], { icon, interactive: true });
-        marker.on('click', () => onDistrictSelect({ ...gaulaDistrictData, _openModal: true }));
-        marker.addTo(map);
-      }
-    } catch (err) {
-      console.error('Gaula KML load error:', err);
-    }
   };
 
   const renderFallbackMarkers = (map, L) => {
@@ -1088,7 +1073,7 @@ function ContentSection() {
                   {KUMAON_DATA.map((row, idx) => (
                     <tr key={idx}
                       onClick={() => handleRowClick(row)}
-                      className={`border-b border-gray-100 last:border-none cursor-pointer transition-colors ${selectedDistrict?.district === row.district ? 'bg-[#e9f1e1]' : 'hover:bg-gray-50'}`}>
+                      className={`border-b border-gray-100 last:border-none cursor-pointer transition-colors ${selectedDistrict?.watershed === row.watershed ? 'bg-[#e9f1e1]' : 'hover:bg-gray-50'}`}>
                       <td className="py-3.5 px-4 text-center font-bold text-gray-800 border-r border-gray-100">{row.sr}</td>
                       <td className="py-3.5 px-4 text-gray-700 font-medium border-r border-gray-100">{row.district}</td>
                       <td className="py-3.5 px-4 text-gray-700 font-medium">{row.river}</td>
@@ -1118,7 +1103,7 @@ function ContentSection() {
                   {GARHWAL_DATA.map((row, idx) => (
                     <tr key={idx}
                       onClick={() => handleRowClick(row)}
-                      className={`border-b border-gray-100 last:border-none cursor-pointer transition-colors ${selectedDistrict?.district === row.district ? 'bg-[#e0effe]' : 'hover:bg-gray-50'}`}>
+                      className={`border-b border-gray-100 last:border-none cursor-pointer transition-colors ${selectedDistrict?.watershed === row.watershed ? 'bg-[#e0effe]' : 'hover:bg-gray-50'}`}>
                       <td className="py-3.5 px-4 text-center font-bold text-gray-800 border-r border-gray-100">{row.sr}</td>
                       <td className="py-3.5 px-4 text-gray-700 font-medium border-r border-gray-100">{row.district}</td>
                       <td className="py-3.5 px-4 text-gray-700 font-medium">{row.river}</td>

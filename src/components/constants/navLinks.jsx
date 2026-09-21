@@ -60,13 +60,13 @@ const NavLinks = () => {
             type: 'link', href: '/announcements'
         },
         { title: 'Bhagirath App', type: 'link', href: '/bhagirath-app' },
-        { title: 'One River One District', type: 'link', href: '/one-river-one-district' },
+        { title: 'One District One River', type: 'link', href: '/one-river-one-district' },
         {
             title: 'Media Corner',
             type: 'dropdown',
             options: [
                 { label: 'Photo Gallery', href: '/gallery' },
-                { label: 'Tranches & Ponds', href: '/gallery/tranches-ponds' },
+                { label: 'Water Source Interventions', href: '/gallery/tranches-ponds' },
                 { label: 'Video Gallery', href: '/video-gallery' }
             ]
         },

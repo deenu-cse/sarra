@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-const communityData = [
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+
+const staticCommunityData = [
   {
     id: 1,
     description: "General awareness program at district bageshwar",
@@ -121,6 +124,27 @@ const CommunityEngagement: React.FC = () => {
   const [itemsPerView, setItemsPerView] = useState(3);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [dynamicCommunityData, setDynamicCommunityData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchCommunityImages = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/community-engagement`);
+        const dynamicItems = (res.data?.data || []).map((item: any) => ({
+          id: item._id,
+          description: item.description,
+          image: item.image.startsWith('http') ? item.image : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '')}${item.image}`,
+        }));
+        setDynamicCommunityData(dynamicItems);
+      } catch (error) {
+        console.error("Failed to fetch community engagement images:", error);
+      }
+    };
+
+    fetchCommunityImages();
+  }, []);
+
+  const communityData = [...staticCommunityData, ...dynamicCommunityData];
 
   useEffect(() => {
     const updateItemsPerView = () => {
@@ -135,16 +159,18 @@ const CommunityEngagement: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (communityData.length === 0) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % communityData.length);
     }, 3500);
     return () => clearInterval(interval);
-  }, []);
+  }, [communityData.length]);
 
   const next = () => setCurrentIndex((prev) => (prev + 1) % communityData.length);
   const prev = () => setCurrentIndex((prev) => (prev - 1 + communityData.length) % communityData.length);
 
   const openLightbox = (index: number) => {
+    if (communityData.length === 0) return;
     setLightboxIndex(index % communityData.length);
     setIsLightboxOpen(true);
   };
@@ -184,11 +210,11 @@ const CommunityEngagement: React.FC = () => {
             >
               {communityData.concat(communityData).map((item, idx) => (
                 <div
-                  key={idx}
+                  key={`${item.id || item.image}-${idx}`}
                   className={
                     `flex-shrink-0 pb-2 ${itemsPerView === 1 ? 'w-full' : itemsPerView === 2 ? 'w-[calc(50%-12px)]' : 'w-[calc(33.333%-16px)]'}`
                   }
-                  onClick={() => openLightbox(idx)}
+                  onClick={() => openLightbox(idx % communityData.length)}
                 >
                   <div className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 border border-slate-100 flex flex-col h-full">
                     <div className="relative h-64 md:h-72 overflow-hidden bg-gray-100 flex items-center justify-center">
@@ -230,7 +256,7 @@ const CommunityEngagement: React.FC = () => {
             </button>
 
             <div className="relative w-full h-[60vh] md:h-[72vh] bg-transparent">
-              <img src={communityData[lightboxIndex].image} alt={communityData[lightboxIndex].description} className="w-full h-full object-contain" />
+              <img src={communityData[lightboxIndex]?.image} alt={communityData[lightboxIndex]?.description} className="w-full h-full object-contain" />
             </div>
 
             <div className="p-5 md:p-7 bg-white">
@@ -238,7 +264,7 @@ const CommunityEngagement: React.FC = () => {
                 <span className="text-sm font-semibold text-gray-500 whitespace-nowrap">{lightboxIndex + 1} / {communityData.length}</span>
               </div>
 
-              <p className="text-gray-600 text-base md:text-lg font-medium leading-relaxed">{communityData[lightboxIndex].description}</p>
+              <p className="text-gray-600 text-base md:text-lg font-medium leading-relaxed">{communityData[lightboxIndex]?.description}</p>
             </div>
           </div>
         </div>

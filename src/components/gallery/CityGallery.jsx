@@ -36,7 +36,7 @@ const CITY_CONFIG = {
     'tehri-garhwal': { count: 10, ext: 'jpg' },
     'udham-singh-nagar': { count: 5, ext: 'jpg' },
     'uttarkashi': { count: 6, ext: 'jpg' },
-    'Rudraprayag': { count: 9, ext: 'jpeg' }
+    'Rudraprayag': { count: 0, ext: 'jpeg' }
 };
 
 export default function CityGallery({ citySlug }) {

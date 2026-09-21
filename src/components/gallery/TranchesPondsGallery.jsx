@@ -26,7 +26,7 @@ export default function TranchesPondsGallery({ initialImages = [] }) {
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b-2 border-gray-100 pb-8 gap-4">
                     <div>
-                        <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1e3a5f] mb-2">Water Source Intervention Initiatives</h1>
+                        <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1e3a5f] mb-2">Water Source Intervention</h1>
                         <p className="text-gray-500 font-sans tracking-widest uppercase text-sm">Water Conservation structures and rejuvenation initiatives</p>
                     </div>
                     <Link href="/gallery" className="text-[#f59e0b] font-bold flex items-center gap-2 hover:translate-x-1 transition-transform">
@@ -50,7 +50,7 @@ export default function TranchesPondsGallery({ initialImages = [] }) {
                             >
                                 <img
                                     src={getMediaUrl(item.image)}
-                                    alt={item.label || `Tranches & Ponds ${idx + 1}`}
+                                    alt={item.label || `Water Source Interventions ${idx + 1}`}
                                     className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                                 />
                                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -107,7 +107,7 @@ export default function TranchesPondsGallery({ initialImages = [] }) {
                         </button>
 
                         <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black to-transparent">
-                            <span className="text-[#f59e0b] font-bold text-sm tracking-widest uppercase">Tranches & Ponds</span>
+                            <span className="text-[#f59e0b] font-bold text-sm tracking-widest uppercase">Water Source Interventions</span>
                             <h4 className="text-white text-xl font-serif">
                                 {initialImages[selectedImgIdx].label || `Image ${selectedImgIdx + 1} of ${initialImages.length}`}
                             </h4>

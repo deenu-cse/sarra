@@ -5,7 +5,7 @@ import { generatePageMeta } from "@/lib/seo.config";
 const API_URL = process.env.API_INTERNAL_URL || 'http://localhost:5000/api';
 
 export const metadata = generatePageMeta({
-    title: 'Tranches & Ponds Gallery | SARRA',
+    title: 'Water Source Interventions Gallery | SARRA',
     description: 'Visual gallery showcasing water conservation structures, trenches, and ponds rejuvenation projects by SARRA in Uttarakhand.',
     keywords: 'SARRA tranches, water ponds Uttarakhand, spring rejuvenation, water conservation structures, Uttarakhand jal sanrakshan',
     path: '/gallery/tranches-ponds',
