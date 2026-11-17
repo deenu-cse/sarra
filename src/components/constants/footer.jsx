@@ -74,6 +74,9 @@ export default function Footer() {
                   <Link href="/knowledge-hub" className="hover:text-amber-500 transition-colors">Knowledge Hub</Link>
                 </li>
                 <li>
+                  <Link href="/careers" className="hover:text-amber-500 transition-colors">Careers</Link>
+                </li>
+                <li>
                   <Link href="/contact" className="hover:text-amber-500 transition-colors">Contact Us</Link>
                 </li>
                 <li>

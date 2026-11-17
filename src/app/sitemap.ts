@@ -15,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: SITE_URL, lastModified: new Date(), changeFrequency: 'daily', priority: 1.0 },
         { url: `${SITE_URL}/news`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
         { url: `${SITE_URL}/announcements`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+        { url: `${SITE_URL}/careers`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
         { url: `${SITE_URL}/gallery`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${SITE_URL}/knowledge-hub`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${SITE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
@@ -82,8 +83,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Sitemap: Failed to fetch announcements for sitemap', err);
     }
 
+    // Dynamic job pages
+    let jobPages: MetadataRoute.Sitemap = [];
+    try {
+        const res = await fetch(`${API_BASE}/jobs?limit=100`, { cache: 'no-store' });
+        if (res.ok) {
+            const data = await res.json();
+            jobPages = (data?.data || []).map((job: any) => ({
+                url: `${SITE_URL}/careers/${job.slug}`,
+                lastModified: new Date(job.updatedAt),
+                changeFrequency: 'weekly',
+                priority: 0.7,
+            }));
+        }
+    } catch (err) {
+        console.error('Sitemap: Failed to fetch jobs for sitemap', err);
+    }
+
     // Map all pages to include alternates (Hreflang)
-    const allPages = [...staticPages, ...districtPages, ...partnerPages, ...newsPages, ...announcementPages];
+    const allPages = [...staticPages, ...districtPages, ...partnerPages, ...newsPages, ...announcementPages, ...jobPages];
 
     return allPages.map(page => ({
         ...page,
